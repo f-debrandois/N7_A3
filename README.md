@@ -7,4 +7,4 @@ Ressources pour les TPs du cours ModIA _"Statistique en grande dimension et Appr
 ## PARTIE I : Premières notions d'apprentissage profond
 
 **TP 1** - [Réseaux de neuronnes avec Numpy](TP1/TP1_Reseaux_de_neurones_avec_Numpy.ipynb) <br>
-_But_ : Construire et entraîner un perceptron mono-couche (TP1) et multi-couches (TP2), étape par étape. <br>
+_But_ : Construire et entraîner un perceptron mono-couche et multi-couches, étape par étape. <br>
