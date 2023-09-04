@@ -1,4 +1,4 @@
-# ModIA-HDDL
+# 5ModIA-HDDL
 Ressources pour les TPs du cours ModIA _"Statistique en grande dimension et Apprentissage profond"_
 
 > [Page moodle du cours](https://moodle-n7.inp-toulouse.fr/course/view.php?id=2777)
