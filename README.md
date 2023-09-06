@@ -21,7 +21,7 @@ N'installez pas Julia via conda !
 2. Exécutez les cellules du notebook [`tp/install.ipynb`](tp/install.ipynb) sous `VSCode`. Il vous faudra peut-être choisir le noyau Julia à l'ouverture du notebook pour pouvoir l'exécuter. Il y a trois cellules qui permettent :
 
     - d'activer le projet dans le répertoire courant ;
-    - d'installer les packages dans le projet courant (cela créer deux fichiers `.toml`);
+    - d'installer les packages dans le projet courant (cela créer deux fichiers `.toml`) -- environ 13 min ;
     - de charger les packages pour vérifier que cela fonctionne.
 
 
