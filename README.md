@@ -22,6 +22,6 @@ N'installez pas Julia via conda !
 
     - d'activer le projet dans le répertoire courant ;
     - d'installer les packages dans le projet courant (cela créer deux fichiers `.toml`) - environ 13 min ;
-    - de charger les packages pour vérifier que cela fonctionne.
+    - de charger les packages pour vérifier que cela fonctionne - environ 11 min.
 
 
