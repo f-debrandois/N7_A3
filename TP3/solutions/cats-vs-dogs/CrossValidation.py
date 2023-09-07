@@ -3,9 +3,8 @@ tf.keras.backend.clear_session()
 VALIDATION_ACCURACY = []
 VALIDATION_LOSS = []
 
-n_folds = 3
+n_folds = 5
 kf = KFold(n_splits=n_folds, shuffle=True)
-  # A COMPLETER
 
 save_dir = './saved_models/'
 
@@ -56,7 +55,7 @@ for fold_no, (train_index, validation_index) in enumerate(kf.split(np.zeros(len(
     # FIT THE MODEL
     history = model.fit(
         train_generator,
-        epochs = 2,
+        epochs = 30,
         callbacks = callbacks_list,
         validation_data = validation_generator)
     # Model weights are saved at the end of every epoch, if it's the best seen so far.

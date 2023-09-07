@@ -1,4 +1,4 @@
-def create_new_model(image_size=150, choice='CNN'):
+def create_new_model(image_size=150, choice='VGG16'):
     model = models.Sequential()
     
     if choice == 'CNN':
