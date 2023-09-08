@@ -15,8 +15,8 @@ _But_ : Manipuler la librairie [keras](https://keras.io/) et éprouver la métho
 
 ## PARTIE II : Réseaux de neurones supervisés
 
-**TP 3** - [Classification binaire : Chiens _vs._ Chats](TP3/TP3_Classification_de_chiens_et_chats.ipynb) <br>
-**TP 3** - [Classification multiclasse : Le jeu de données CIFAR-10](TP3/TP3_Classification_cifar10.ipynb) <br>
+**TP 3** - [Classification binaire : Chiens _vs._ Chats](TP3/TP3_Classification_de_chiens_et_chats.ipynb) - [Notebook executé](TP3/solutions/cats-vs-dogs/Correction_TP3_Classification_de_chiens_et_chats.ipynb)<br>
+**TP 3** - [Classification multiclasse : Le jeu de données CIFAR-10](TP3/TP3_Classification_cifar10.ipynb) - [Notebook executé](TP3/solutions/cifar10/Correction_TP3_Classification_cifar10.ipynb)<br>
 _But_ : Prise en main des réseaux convolutifs (CNN) sur des problèmes usuels de classification. Réaliser de l'augmentation de données simple, validation croisée à l'aide de la librairie [scikit-learn](https://scikit-learn.org/). <br>
 
 
