@@ -18,7 +18,9 @@ Nous allons utiliser le langage [Julia](https://julialang.org) pour les TPs. Nou
 N'installez pas Julia via conda !
 ```
 
-2. Exécutez les cellules du notebook [`tp/install.ipynb`](tp/install.ipynb) sous `VSCode`. Il vous faudra peut-être choisir le noyau Julia à l'ouverture du notebook pour pouvoir l'exécuter. Il y a trois cellules qui permettent :
+2. Vous aurez besoin d'installer le noyau `Julia` et des extensions sous `VSCode` si vous souhaitez l'utiliser. Suivez les instructions [ici](https://gitlab.irit.fr/toc/etu-n7/documentation/-/wikis/Utilisation-de-Julia-à-l'N7).
+
+3. Exécutez les cellules du notebook [`tp/install.ipynb`](tp/install.ipynb) sous `VSCode`. Il vous faudra peut-être choisir le noyau Julia à l'ouverture du notebook pour pouvoir l'exécuter. Il y a trois cellules qui permettent :
 
     - d'activer le projet dans le répertoire courant ;
     - d'installer les packages dans le projet courant (cela créer deux fichiers `.toml`) - environ 13 min ;
