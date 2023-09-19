@@ -20,8 +20,10 @@ _But_ : Manipuler la librairie [keras](https://keras.io/) et éprouver la métho
 _But_ : Prise en main des réseaux convolutifs (CNN) sur des problèmes usuels de classification. Réaliser de l'augmentation de données simple, validation croisée à l'aide de la librairie [scikit-learn](https://scikit-learn.org/). <br>
 
 **TP 5** - [Estimation de posture dans une image](TP5/TP5_Estimation_de_Posture.ipynb) <br>
-_But_ : Traiter le problème de la détection du "squelette" d'un humain dans une image.
+_But_ : Traiter le problème de la détection du "squelette" d'un humain dans une image. <br>
 
+**TP 6** - [Analyse de sentiments par réseaux récurrents](TP6/TP6_RNN.ipynb) <br>
+_But_ : Construire et entraîner un RNN, étape par étape. 
 
 
 ##  PARTIE III : Apprentissage non supervisé, et faiblement supervisé
