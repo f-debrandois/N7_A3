@@ -1,0 +1,3 @@
+[submodule "S7/Calcul_diff"]
+	path = S7/Calcul_diff
+	url = https://gitlab.irit.fr/toc/etu-n7/calcul-differentiel-edo.git
