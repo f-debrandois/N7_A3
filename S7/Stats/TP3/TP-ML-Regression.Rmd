@@ -419,7 +419,7 @@ Vous pouvez utiliser la fonction `extract.coef()` de la librairie `coefplot`
 
 ```{r}
 # Extraire les coefficients pour les valeurs optimales de lambda
-extract.coef(lasso_cv, s = best_lambda)
+extract.coef(lasso_cv, lambda = "lambda.min")
 extract.coef(lasso_cv, lambda = "lambda.1se")
 ```
 
