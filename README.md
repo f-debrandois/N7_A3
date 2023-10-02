@@ -27,3 +27,6 @@ _But_ : Construire et entraîner un RNN, étape par étape.
 
 
 ##  PARTIE III : Apprentissage non supervisé, et faiblement supervisé
+
+**TP 8** - [Auto-encodeurs](TP8/TP8_Autoencodeurs.ipynb) <br>
+_But_ : Manipuler des auto-encodeurs sur un exemple simple, la base de données MNIST, et ainsi pouvoir visualiser les concepts vus en cours, et notamment illustrer la notion d'espace latent.
