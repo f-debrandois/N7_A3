@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}		       
+\usepackage{lmodern}			       
+\usepackage{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[text={18cm,27cm},centering]{geometry}
+
+\begin{document}
+
+\begin{center}
+    \textbf{Equations aux dérivées partielles}\\
+\end{center}
+
+\section{Problème 1}
+On veut résoudre :
+
+\begin{equation}
+    \frac{\partial u}{\partial t} - D \frac{\partial^2 u}{\partial x^2} = 0
+    \text{ pour } x \in [0, L] \text{ et } t \in [0, T]
+\end{equation} 
+
+avec 
+$$
+\begin{cases}
+    u(t, 0) = u(t, L) = 0\\
+    u(0, x) = u_0(x)
+\end{cases}
+$$
+
+\begin{enumerate}
+    \item Cherchez toutes les solutions possibles de la forme :
+    $u(t, x) = w(t)v(x)$
+    
+    \item En déduire l'expression de la solution de l'équation (1).
+    
+    \item Généralisez au cas où les conditions limites ne sont pas homogènes et où on a une solution\dots
+
+\end{enumerate}
+
+\color{blue}
+solution
+
+\begin{enumerate}
+    \item Soit $u(t, x) = w(t)v(x)$, alors, d'après (1) :
+    \begin{align*}
+        \frac{\partial u}{\partial t} - D \frac{\partial^2 u}{\partial x^2} = 0
+        &\Leftrightarrow 
+        w'(t)v(x) - D w(t) v''(x) = 0\\
+        &\Leftrightarrow
+        \frac{w'(t)}{w(t)} = D \frac{v''(x)}{v(x)}\\
+        &\Leftrightarrow
+        \exists \lambda \in \mathbb{R},
+        \begin{cases}
+            \frac{w'(t)}{w(t)} = -\lambda \text{ pour } t \in [0, T]\\
+            \frac{-D v''(x)}{v(x)} = \lambda \text{ pour } x \in [0, L]
+        \end{cases}
+    \end{align*}
+    
+\end{enumerate}
+
+\end{document}
