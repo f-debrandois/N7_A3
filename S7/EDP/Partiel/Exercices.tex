@@ -162,9 +162,48 @@ solution
         \begin{equation}
             v_n(x) = \alpha \sin\left(\frac{n\pi}{L} x\right), n \in \mathbb{N}^*, \alpha \in \mathbb{R}^*
         \end{equation}
-
-
     \end{itemize}
+
+    On va normaliser les solutions en choisissant $\alpha$ tel que :
+    $$
+    \|v_n\|_{L^2([0, L])} = 1
+    \Leftrightarrow
+    \int_0^L v_n^2(x) \mathrm{d}x = 1
+    \Leftrightarrow
+    \alpha^2 \int_0^L \sin^2\left(\frac{n\pi}{L} x\right) \mathrm{d}x = 1
+    \Leftrightarrow
+    \alpha^2 \frac{L}{2} = 1
+    \Leftrightarrow
+    \alpha = \sqrt{\frac{2}{L}}
+    $$\\
+
+    On s'intéresse maintenant à l'équation en $t$ : $w'(t) = -\lambda_n w(t)$ avec $\lambda_n = \frac{n^2 \pi^2 D}{L^2}$.
+    $$
+    w'(t) = -\lambda_n w(t)
+    \Leftrightarrow
+    w(t) = w_n \mathrm{e}^{-\lambda_n t}, w_n \in \mathbb{R}
+    $$\\
+
+    \underline{Conclusion :} Les solutions de (1) de la forme $u(t, x) = w(t)v(x)$ sont :
+    \begin{equation}
+        u_n(t, x) = w_n \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi}{L} x\right) \mathrm{e}^{-\frac{n \pi^2 D}{L^2} t}, n \in \mathbb{N}^*, w_n \in \mathbb{R}
+    \end{equation}
+
+    Reste à verifier les conditions initiales :
+    $$
+    u_n(0, x) = u_0(x)
+    \Leftrightarrow
+    u_0(x) = w_n \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi}{L} x\right)
+    $$
+
+    Deux cas possibles :
+    \begin{itemize}
+        \item tetetdjg
+    \end{itemize}
+
+
+
+
     
 \end{enumerate}
 
