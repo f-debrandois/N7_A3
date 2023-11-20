@@ -1,4 +1,7 @@
 .vscode/
+__pycache__/
+*.py[cod]
+
 *.aux
 *.log
 *.synctex.gz

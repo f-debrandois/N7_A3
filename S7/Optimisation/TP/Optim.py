@@ -263,36 +263,37 @@ class BFGS():
         self.stock = []
         self.last_iter = []
     def push(self, x, grad):
-        if len(self.last_iter) == 0:
-            self.last_iter = [x, grad]
-        else:
+        if len(self.last_iter) != 0:
             x_old = self.last_iter[0]
             grad_old = self.last_iter[1]
             sigma = x - x_old
             y = grad - grad_old
-            rho = 1/np.dot(sigma,y)
+            rho = np.dot(sigma,y)
             if rho > 0:
-                self.stock.append((sigma,y,rho))
+                self.stock.append((np.copy(sigma), np.copy(y), 1/rho))
                 if len(self.stock) > self.nb_stock_max:
                     self.stock.pop(0)
             else:
                 self.stock = []
-        self.last_iter = [x, grad]
-    def get(self, grad):
-        if len(self.stock) == 0:
-            return -grad
+        self.last_iter = [np.copy(x), np.copy(grad)]
+    def get(self,grad):
+        if len(self.stock)==0:
+            q=-grad
         else:
-            r = -grad
-            for i in range(len(self.stock)-1,-1,-1):
-                sigma = self.stock[i][0]
-                y = self.stock[i][1]
-                rho = self.stock[i][2]
-                alpha = rho*np.dot(sigma,r)
-                r = r - alpha*y
-            return r
+            q=-grad
+            alpha_list=[]
+            for (sigma, y, rho) in reversed(self.stock):
+                alpha = rho*np.dot(sigma, q)
+                q = q - alpha*y
+                alpha_list = [alpha] + alpha_list
+            (sigma, y, rho) = self.stock[0] 
+            q = (np.dot(sigma, y)/np.dot(y, y))*q
+            for (alpha, (sigma, y, rho)) in zip(alpha_list,self.stock) :
+                beta = rho*np.dot(y, q)
+                q = q + (alpha-beta)*sigma
+        return q
     def dc(self,x,function,df):
         self.push(x,df)
         descent = self.get(df)
         ls_info=None
         return descent,ls_info
-
