@@ -16,7 +16,30 @@
     \textbf{Optimisation stochastique}\\
 \end{center}
 
-\section*{Problème 1}
+\tableofcontents
+
+
+$$
+E(h) = \int{l(h(x), y) dP(x, y)}
+$$
+$$
+h = \underset{h : \mathcal{X} \rightarrow \mathcal{Y}}{\text{argmin }} E(h)
+$$
+$$
+E_N(h) = \frac{1}{N} \sum_{n=1}^N l(h(x_n), y_n)
+$$
+$$
+\mathcal{H} : \text{famille de prédicteurs (Dimension D)}
+$$
+$$
+h_{\mathcal{H}}^* = \underset{h \in \mathcal{H}}{\text{argmin }} E(h)
+$$
+$$
+h_{N}^* = \underset{h \in \mathcal{H}}{\text{argmin }} E_N(h)
+$$
+
+
+\section{Problème 1}
 On veut résoudre :
 \begin{equation}
     \underset{A \in \mathbb{R}^{MxN}}{inf F(A)}
@@ -50,7 +73,12 @@ $$
 $$
 
 
-\section*{Chapitre 2}
+\section{Chapitre 2}
+
+\subsection{..}
+\subsection{..}
+\subsubsection{..}
+\subsubsection{..}
 
 \begin{equation}
     h^* = \underset{h : \mathcal{X} \rightarrow \mathcal{Y}}{\text{argmin }} E(h) \qquad \text{idéal}
@@ -154,7 +182,70 @@ $$
 $$
 
 
-Les sous-espaces optimaux $\mathcal{H}_D$ sont :
+Les sous-espaces optimaux $\mathcal{H}_D$ sont : \\
+blabla
+
+
+
+\underline{Théorème :}
+$$
+\delta_d(\mathcal{B}_{p}^{r}, ||.||_{2}) = \mathcal{O} (d^{-{r/p}})
+$$
+
+Fléau de la dimension !\\
+
+$p = 10 000$, $r = 100$ (très régulier).
+Erreur d'approximation $\mathcal{O}(10^{-1/100})$\\
+Pour faire une erreur d'approximation de $\frac{1}{100}$, il faut :
+$D = 10^{200}$\\
+
+Il faut donc un S.E.V de dimension $10^{200}$ pourobtenir une erreur d'approximation de $\frac{1}{100}$ !\\
+
+
+
+\subsubsection{Expressivité des réseaux de neurones}
+
+\underline{Théorème d'approximation universelle :}\\
+Soit $f : \mathbb{R}^p \rightarrow \mathbb{R}^q$ une fonction continue.\\
+Soit $K \subset \mathbb{R}^p$ un compact et $\varepsilon > 0$ une précision arbitraire.\\
+
+Alors il existe $f_{\varepsilon}$ de la forme :\\
+$f_{\varepsilon} = W_2 \circ \sigma \circ W_1$, avec :
+\begin{itemize}
+    \item $W_1$, $W_2$ des fonctions affines
+    \item $\sigma$ une fonction arbitraire qui n'est pas un polynome
+\end{itemize}
+
+telle que :
+$$
+\underset{x \in K}{\text{sup }} |f_{\varepsilon}(x) - f(x)| = ||f_{\varepsilon} - f||_{L^{\infty}(K)} \leq \varepsilon
+$$\\
+
+\underline{Exemple :}
+$\sigma = \text{ReLU} \implies \sigma(x) = \max(0, x)$\\
+
+$p = q = 1$,
+$W_1(x) = \langle c, x \rangle + b$,
+$W_2(x) = \langle c', x \rangle + b'$\\
+
+$W_2 \circ \sigma \circ W_1 = \sum_{d=1}^D c_d' \sigma (\langle c_d, x \rangle + b_d) + b'$\\
+
+Donc la fonction $f_{\varepsilon}$ est une fonction linéaire par morceaux qui contient $D$ morceaux.\\
+
+
+\subsection{Erreurs d'estimation}
+
+\underline{Théorème :}\\
+Supposons que $\mathcal{H} = \{h = \sum_{d=1}^D \omega_d \psi_d\}$
+où $(\psi_d)$ est une famille arbitraire.\\
+Dans ce cas, on a :
+$$
+\underset{h \in \mathcal{H}}{\text{sup }} |E(h) - E_N(h)| \leq c\sqrt{\frac{D}{N}}
+$$
+où $c$ est une constante.\\
+
+Il faut beaucoup d'échantillons $N$ pour avoir une erreur d'estimation faible !\\
+
 
 
 
