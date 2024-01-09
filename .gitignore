@@ -7,4 +7,5 @@ __pycache__/
 *.fdb_latexmk
 *.fls
 *.toc
+*.lof
 .Rhistory

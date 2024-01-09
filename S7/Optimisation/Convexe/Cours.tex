@@ -1,0 +1,473 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}		       
+\usepackage{lmodern}			       
+\usepackage{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumerate}
+\usepackage[text={18cm,27cm},centering]{geometry}
+
+\begin{document}
+
+\begin{center}
+    \textbf{Optimisation stochastique}\\
+\end{center}
+
+\tableofcontents
+\listoffigures
+\newpage
+
+\section{Motivation et quelques rappels}
+
+\subsection{Un problème d'optimisation "fréquent"}
+
+\begin{equation}
+    \underset{x \in \mathbb{R}^n}{\text{min }} h(x) = \underset{x \in \mathbb{R}^n}{\text{min }} f(x) + g(x)
+\end{equation}
+avec :
+\begin{itemize}
+    \item $f : \mathbb{R}^n \rightarrow \mathbb{R}$ lisse, à savoir à gradient lipschitzien :\\
+    $\exists L > 0$ tel que $\forall x, y \in \mathbb{R}^n, ||\nabla f(x) - \nabla f(y)|| \leq L ||x - y||$
+    \item $g : \mathbb{R}^n \rightarrow \mathbb{R} \cup \{+\infty\}$ convexe, potentiellement non-lisse.
+\end{itemize}
+
+\underline{Exemple :}
+\begin{enumerate}[i)]
+    \item $g = 0$ : problème d'optimisation lisse non-convexe.
+    \item $g(x) = \lambda ||x||_1$ avec $\lambda > 0$ régularisation parcimonieuse.
+    \item Reformulation d'un problème d'optimisation avec contraintes :\\
+    $\underset{x \in \mathcal{C}}{\text{min }} f(x)$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe non-vide.\\
+\end{enumerate}
+
+
+\subsection{Exemples d'applications}
+
+\underline{Exemple 1 :} Moindres carrés régularisés\\
+
+On dispose d'un modèle linéaire :\\
+$$
+\forall x \in \mathbb{R}^n, f(x, \beta) = x^T \beta \quad \quad \beta \in \mathbb{R}^n \text{ paramètre du modèle}
+$$
+
+On dispose d'observations $(x_i, y_i) \in (\mathbb{R}^n \times \mathbb{R})^p$ permettant d'estimer $\beta$\\
+
+D'où le problème d'optimisation suivant :\\
+\begin{equation}
+    \underset{\beta \in \mathbb{R}^n}{\text{min }} \frac{1}{2} \sum_{i=1}^p (f(x_i, \beta) - y_i)^2 \quad \Leftrightarrow \quad \underset{\beta \in \mathbb{R}^n}{\text{min }} \frac{1}{2} ||X\beta - y||_2^2 \quad \text{ avec } X = 
+    \begin{pmatrix}
+        x_1^T\\
+        \vdots\\
+        x_p^T
+    \end{pmatrix}
+    \in \mathbb{M}_{p,n}(\mathbb{R})
+\end{equation}
+
+
+\textit{Texte manquant}\\
+
+\begin{enumerate}[i)]
+    \item $g(\beta) = \frac{\lambda}{2}||\beta||_2^2$ : régularisation de Tikhonov.
+    \item $g(\beta) = \lambda ||\beta||_1$ : régularisation parcimonieuse (LASSO).
+    \item $g(\beta) = \frac{\lambda}{2}||\beta||_\beta^2 = $\\
+\end{enumerate}
+
+\textit{Texte manquant}\\
+
+
+\underline{Exemple 2 :} SVM (Séparateurs à Vaste Marge)\\
+
+On dispose de données $(x_i)_{i \in \{1, \dots, p\}} \in \mathbb{R}^p$ labelisés $(y_i)_{i \in \{1, \dots, p\}} \in \{-1, 1\}^p$\\
+On cherche à construire un hyperplan séparant les données $(x_i)$ selons leurs labels $(y_i)$\\
+
+Dans un premier temps, on suppose qu'il existe un tel hyperplan de vecteurs normal $\beta \in \mathbb{R}^n$, passant par l'origine.\\
+
+\begin{figure}
+    \centering
+    
+    \caption{SVM}
+    \label{fig:SVM}
+\end{figure}
+
+\textbf{Question :} Quel hyperplan choisir ?\\
+$\Rightarrow$ Incertitude : nombre de données, répartition dans $\mathbb{R}^n$, etc...\\
+$\Rightarrow$ Maximiser la distance maximale entre les données et l'hyperplan.\\
+
+Condition de séparabilité :\\
+$$
+\forall i \in \{1, \dots, p\}, y_i (x_i^T \beta) \geq 0
+$$
+
+D'où le problème d'optimisation suivant :\\
+\begin{equation}
+    \underset{(\beta, M) \in (\mathbb{R}^n \times \mathbb{R}^+)}{\text{max }} M \quad \text{s.c } \quad \forall i \in \{1, \dots, p\}, \quad y_i \frac{(x_i^T \beta)}{||\beta||_2} \geq M
+\end{equation}\\
+
+
+\underline{Remarque :} $d(z, \{\beta^Tx=0\}) = \frac{|\beta^Tz|}{||\beta||_2}$\\
+
+En pratique, la condition de séparabilité n'est pas vérifiée pour tout $i \in \{1, \dots, p\}$\\
+$\Rightarrow$ Pénalisation des contraintes non satisfaites.\\
+On pose $\forall t \in \mathbb{R}, t^+ = \max(t, 0)$\\
+
+Ceci conduit à formuler un autre problème d'optimisation :\\
+\begin{equation}
+    \underset{(\beta, M) \in (\mathbb{R}^n \times \mathbb{R}^+)}{\text{max }} M - \lambda \sum_{i=1}^p (1 - y_i \frac{(x_i^T \beta)}{||\beta||_2 M})^+
+\end{equation}
+avec : $||\beta||_2 = \frac{1}{M}$ et en reformulant pour obtenir un problème de minimisation :\\
+
+\begin{equation}
+    \underset{\beta \in \mathbb{R}^n}{\text{min }} ||\beta||_2^2 + \lambda  \sum_{i=1}^p (1 - y_i (x_i^T \beta))^+
+\end{equation}
+
+avec : $\sum_{i=1}^p (1 - y_i (x_i^T \beta))^+$ non-lisse (non différentiable)\\
+
+\subsection{Rappels de convexité}
+
+\underline{Définition :} \\
+Soit $\mathcal{C} \subset \mathbb{R}^n$. On dit que $\mathcal{C}$ est convexe si $\forall x, y \in \mathcal{C}$, $\forall \lambda \in [0, 1]$, $\lambda x + (1 - \lambda) y \in \mathcal{C}$\\
+
+\underline{Exemples :}\\
+
+\begin{enumerate}[i)]
+    \item partie affine : $\{x_0 + s \text{ avec } s \in S\}$ avec $S$ un sous-espace vectoriel de $\mathbb{R}^n$ et $x_0 \in \mathbb{R}^n$.
+    \item hyperplan : $\{x \in \mathbb{R}^n \text{ tel que } \alpha^T x = \beta\}$
+    \item demi-espace : $\{x \in \mathbb{R}^n \text{ tel que } \alpha^T x \leq \beta\}$
+    \item polyèdre : $\{x \in \mathbb{R}^n \text{ tel que } Ax \leq b\}$ avec $A \in \mathbb{M}_{m,n}(\mathbb{R})$ et $b \in \mathbb{R}^m$.
+    \item ellipoïde : $\{x \in \mathbb{R}^n \text{ tel que } x^TCx \leq 1\}$ avec $C \in \mathbb{S}_n(\mathbb{R})$ (matrice symétrique semi-définie positive).
+\end{enumerate}
+
+
+\underline{Propriétés :} Opérations préservant la convexité\\
+\begin{enumerate}[i)]
+    \item intersection
+    \item somme
+    \item multiplication par un scalaire
+    \item produit cartésien
+    \item image réciproque par une application linéaire
+    \item image directe par une application linéaire
+    \item projection : $\{x_1 \text{ tel que } (x_1, x_2) \in \mathcal{C}\}$ avec $\mathcal{C}$ convexe.
+\end{enumerate}
+
+\par
+
+
+\underline{Définition :} Fonction convexe sur $\mathcal{C}$ convexe\\
+
+$f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
+\begin{itemize}
+    \item $f$ est convexe sur $\mathcal{C}$ si $\forall x, y \in \mathcal{C}$, $\forall \lambda \in [0, 1]$, $f(\lambda x + (1 - \lambda) y) \leq \lambda f(x) + (1 - \lambda) f(y)$
+    \item $f$ est strictement convexe sur $\mathcal{C}$ si $\forall x, y \in \mathcal{C}$, $\forall \lambda \in ]0, 1[$, $f(\lambda x + (1 - \lambda) y) < \lambda f(x) + (1 - \lambda) f(y)$
+\end{itemize}
+
+\underline{Propriétés :} CNS (Condition Nécessaire et Suffisante) de convexité dans le cas dérivable.\\
+
+Soit $f : \Omega \rightarrow \mathbb{R}$ avec $\Omega$ ouvert de $\mathbb{R}^n$ et $\mathcal{C} \subset \Omega$ convexe.\\
+\begin{enumerate}
+    \item Si $f$ est dérivable sur $\Omega$, alors $f$ est convexe sur $\mathcal{C}$ convexe si et seulement si \\
+    $\forall x, y \in \mathcal{C}$, $f(y) \geq f'(x)(y - x) + f(x)\\
+    \Leftrightarrow \forall x, y \in \mathcal{C}$, $f(y) \geq f(x) + \nabla f(x)^T(y - x)$
+    \item Si $f$ est deux fois dérivable sur $\Omega$, alors $f$ est convexe sur $\mathcal{C}$ convexe si et seulement si \\
+    $\forall x \in \mathcal{C}$, $f''(x)(y - x, y - x) \geq 0\\
+    \Leftrightarrow \forall x \in \mathcal{C}, (y - x)^T \nabla^2 f(x) (y - x) \geq 0$
+\end{enumerate}
+
+\underline{Propriété :}
+
+\begin{enumerate}[i)]
+    \item $f$ convexe sur $\mathcal{C}$ convexe $\Rightarrow$ $\alpha f$ convexe sur $\mathcal{C}$ convexe pour $\alpha > 0$
+    \item combinaisons linéaires à coefficients positifs de fonctions convexes sont convexes
+    \item $f$ convexe sur $\mathcal{C}$ convexe :\\
+    Soit $A \in \mathbb{M}_{m,n}(\mathbb{R})$ et $b \in \mathbb{R}^m$.\\
+    alors $\mathcal{C}' = \{x \in \mathbb{R}^n \text{ tel que } Ax + B \in \mathcal{C}\}$ est convexe et $x \mapsto f(Ax + b)$ est convexe sur $\mathcal{C}'$.
+    \item $(f_i)_{i \in \{1, \dots, m\}}$ convexes sur $(\mathcal{C}_i)_{\{i \in \{1, \dots, m\}\}}$, alors $\underset{i \in \{1, \dots, m\}}{\text{max }} f_i$ convexe sur $\bigcap_{i=1}^{n} \mathcal{C}_i$.
+    \item $g : \mathbb{R}^n \rightarrow \mathbb{R}$ convexe sur $\mathcal{C} \subset \mathbb{R}^n$\\
+    $h : \mathbb{R} \rightarrow \mathbb{R}$ croissante et convexe sur $\mathcal{C}'$ tel que $g(\mathcal{C}) \subset \mathcal{C}'$\\
+    alors $h \circ g$ est convexe sur $\mathcal{C}$.
+    \item $g : \mathbb{R}^n \rightarrow \mathbb{R}^p$ avec $\forall i \in \{1, \dots, p\}$, $g_i$ convexe sur $\mathbb{R}^n$\\
+    $h : \mathbb{R}^p \rightarrow \mathbb{R}$ croissante et convexe vis-à-vis de chacun de ses arguments.\\
+    alors $f : \underset{x \mapsto h \circ g(x) = h(g_1(x), \dots, g_p(x))}{\mathbb{R}^n \Rightarrow \mathbb{R}}$ est convexe sur $\mathbb{R}^n$.
+\end{enumerate}
+
+
+\subsection{Régularité des fonctions convexes}
+
+\underline{Définition :} Epigraphe de $f$\\
+Soit $f : \mathcal{C} \rightarrow \mathbb{R}$\\
+On appelle \textit{épigraphe} de $f$, noté $\varepsilon(f)$, l'ensemble suivant :\\
+$$
+\varepsilon(f) = \{(x, w) \in \mathcal{C} \times \mathbb{R} \text{ tel que } f(x) \leq w\}
+$$
+
+\underline{Propriété :}\\
+$f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
+$f$ est convexe sur $\mathcal{C}$ si et seulement si $\varepsilon(f)$ est convexe.\\
+
+\color{blue}
+\underline{Preuve :}
+
+\begin{enumerate}[i)]
+    \item Supposons $f$ convexe sur $\mathcal{C}$ convexe\\
+    $\forall x, y \in \mathcal{C}$, $\forall \lambda \in [0, 1]$, $f(\lambda x + (1 - \lambda) y) \leq \lambda f(x) + (1 - \lambda) f(y)$\\
+    Soient $(x_1, w_1) \in \varepsilon(f)$ et $(x_2, w_2) \in \varepsilon(f)$ et $\lambda \in [0, 1]$\\
+    $f(\lambda x_1 + (1 - \lambda) x_2) \leq \lambda f(x_1) + (1 - \lambda) f(x_2) \leq \lambda w_1 + (1 - \lambda) w_2$\\
+    $\Rightarrow \lambda (x_1, w_1) + (1 - \lambda) (x_2, w_2) \in \varepsilon(f)$
+    
+    \item Supposons $\varepsilon(f)$ convexe\\
+    Soit $x, y \in \mathcal{C}$ et $\lambda \in [0, 1]$\\
+    $(x, f(x)), (y, f(y)) \in \varepsilon(f)$\\
+    $\Rightarrow \lambda (x, f(x)) + (1 - \lambda) (y, f(y)) \in \varepsilon(f)$\\
+    $\Rightarrow (\lambda x + (1 - \lambda) y, \lambda f(x) + (1 - \lambda) f(y)) \in \varepsilon(f)$\\
+    $\Rightarrow f(\lambda x + (1 - \lambda) y) \leq \lambda f(x) + (1 - \lambda) f(y)$  
+\end{enumerate}
+
+\color{black}
+
+\underline{Propriété :} Inégalité de Jensen\\
+Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
+Soit $x_1, \dots, x_p \in \mathcal{C}$ et $\lambda_1, \dots, \lambda_p \in \mathbb{R}^+$ tel que $\sum_{i=1}^p \lambda_i = 1$.\\
+Alors $f(\sum_{i=1}^p \lambda_i x_i) \leq \sum_{i=1}^p \lambda_i f(x_i)$\\
+
+\underline{Propriété :}\\
+Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
+Soit $x_0 \in \overset{\circ}{\mathcal{C}}$\\
+alors $f$ est continue en $x_0$.\\
+
+\color{blue}
+\underline{Preuve :}\\
+Soit $x_0 \in \overset{\circ}{\mathcal{C}}$\\
+Soit $\Delta$ un simplexe inclus dans $\overset{\circ}{\mathcal{C}}$ et contenant $x_0$.\\
+Notons $(s_i)_{i \in \{1, \dots, n + 1\}}$ les sommets de $\Delta$.\\
+$\forall x \in \Delta$, $\exists! (\lambda_i)_{i \in \{1, \dots, n + 1\}} \in \mathbb{R}^{n + 1}$ tel que $\lambda_i \geq 0$ et $\sum_{i=1}^{n + 1} \lambda_i = 1$ et $x = \sum_{i=1}^{n + 1} \lambda_i s_i$\\
+(coordonnées barycentriques de $x$ vis-à-vis de $\Delta$).\\
+
+d'où
+\begin{flalign*}
+    f(x) &\leq \sum_{i=1}^{n + 1} \lambda_i f(s_i) \text{ par convexité de } f \text{ et inégalité de Jensen.}\\
+    & \leq \underset{i \in \{1, \dots, n + 1\}}{\text{max }} f(s_i) \text{ car } \sum_{i=1}^{n + 1} \lambda_i = 1\\
+\end{flalign*}
+
+Donc $f$ est majorée sur $\Delta$.\\
+En particulier, $\forall \delta > 0$ tel que $B(x_0, \delta) \subset \Delta$, $f$ est majorée sur $B(x_0, \delta)$.\\
+Fixons un tel $\delta$ et notons $M$ un majorant de $f$ sur $B(x_0, \delta)$.\\
+
+\textit{Texte manquant}\\
+
+
+$\Rightarrow f(\delta) \leq 2f(x_0) - M$\\
+
+Bilan : $2f(x_0) - M \leq f(z) \leq M$, $\forall z \in B(x_0, \delta)$\\
+$\Rightarrow$ $f$ est bornée sur $B(x_0, \delta)$\\
+
+Soit $K > 0$ tel que $\forall z \in B(x_0, \delta)$, $|f(z)| \leq K$\\
+
+On montre que $f$ est lipschitzienne sur $B(x_0, \frac{\delta}{2})$\\
+Soit $x, y \in B(x_0, \frac{\delta}{2})$, $x \neq y$\\
+
+On pose :
+$\begin{cases}
+    x' = x - \frac{\delta}{2} \frac{y - x}{||y - x||}\\
+    y' = y + \frac{\delta}{2} \frac{y - x}{||y - x||}\\
+\end{cases}$\\
+
+Alors $x' \in B(x_0, \delta)$ : $||x' - x_0|| = ||x - \frac{\delta}{2} \frac{y - x}{||y - x||} - x_0|| \leq ||x - x_0|| + \frac{\delta}{2} < \delta$\\
+De même, $y' \in B(x_0, \delta)$\\
+
+D'où $|f(x')| \leq K$ et $|f(y')| \leq K$\\
+
+De plus, $x = \frac{2 ||y - x||}{2 ||y - x|| + \delta} x' + \frac{\delta}{2 ||y - x|| + \delta} y = \lambda x' + (1 - \lambda) y'$ avec $\lambda = \frac{2 ||y - x||}{2 ||y - x|| + \delta} \in ]0, 1[$\\
+
+Par convexité de $f$ sur $\mathcal{C}$ : $f(x) \leq \lambda f(x') + (1 - \lambda) f(y)$\\
+$\Rightarrow f(x) - f(y) \leq \lambda (f(x') - f(y)) \leq 2K\lambda \leq \frac{4K}{2 ||y - x|| + \delta} ||y - x||$\\
+$\Rightarrow |f(x) - f(y)| \leq \frac{4K}{\delta} ||y - x||$\\
+
+De même, $y = \lambda y' + (1 - \lambda) x$ et de la même manière, on montre que $|f(y) - f(x)| \leq \frac{4K}{\delta} ||y - x||$\\
+$\Rightarrow |f(x) - f(y)| \leq \frac{4K}{\delta} ||y - x||$\\
+
+Bilan : $f$ est lipschitzienne sur $B(x_0, \frac{\delta}{2})$\\
+En particulier, $f$ est continue en $x_0$\\
+
+\color{black}
+
+\section{Sous-différentiell d'une fonction}
+
+\subsection{Sous-gradient et sous différentiel}
+
+\underline{Définition :}\\
+Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
+Soient $x \in \mathcal{C}$ et $g \in \mathbb{R}^n$\\
+$g$ est appelé \textit{sous-gradient} de $f$ en $x$ si :\\
+$$
+\forall y \in \mathcal{C}, f(y) \geq g^T (y - x) + f(x)
+$$
+
+On appelle \textit{sous-différentiel} de $f$ en $x$, noté $\partial f(x)$, l'ensemble des sous-gradients de $f$ en $x$ :\\
+
+
+\underline{Exemple :}\\
+$f : \mathbb{R} \rightarrow \mathbb{R}$, $f(x) = |x|$\\
+Soit $x \in \mathbb{R}$\\
+
+\begin{itemize}
+    \item si $x < 0$, alors $f(x) = -x$\\
+    Soit $g \in \mathbb{R}$ tel que $\forall y \in \mathbb{R}$, $f(y) \geq g(y - x) + f(x)$
+    \begin{itemize}
+        \item Soit $y \leq 0$, $f(y) = -y = -y + x - x = -(y-x) + f(x) \geq g(y - x) + f(x)$ avec $g = -1$
+        \item Soit $y > 0$, $f(y) = y \geq -y + x - x \geq -(y - x) + f(x) \geq g(y - x) + f(x)$ avec $g = -1$
+    \end{itemize}
+    Donc $\partial f(x) = \{-1\}$
+    \item si $x > 0$, $\partial f(x) = \{1\}$ (même raisonnement)
+    \item si $x = 0$, $\partial f(x) = [-1, 1]$
+\end{itemize}
+
+
+\underline{Propriété :}\\
+Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
+Soit $x \in \mathcal{C}$\\
+Alors $\partial f(x)$ est un convexe non-vide.\\
+
+\color{blue}
+
+\underline{Preuve :}\\
+Supposons $\partial f(x) = \emptyset$\\
+alors $\partial f(x) = \bigcap_{y \in \mathcal{C}} \{g \in \mathbb{R}^n \text{ tel que } f(y) \geq g^T(y - x) + f(x)\}$\\
+
+or, $\forall y \in \mathcal{C}$, $\{g \in \mathbb{R}^n \text{ tel que } f(y) \geq g^T(y - x) + f(x)\}$ est convexe (demi-espace) et fermé (comme image réciproque d'un fermé par une application continue $\psi$)\\
+\begin{flalign*}
+    \psi : \mathbb{R}^n &\rightarrow \mathbb{R}\\
+    g &\mapsto f(y) - f(x) - g^T(y - x)\\
+\end{flalign*}
+
+$\Rightarrow \partial f(x)$ est convexe et fermé comme intersections de parties convexes et fermées.\\
+
+\color{black}
+
+\underline{Propriété :}\\
+Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
+Soit $x \in \overset{\circ}{\mathcal{C}}$ tel que $f$ est continue en $x$.
+alors $\partial f(x)$ est borné.\\
+
+\color{blue}
+
+\underline{Preuve :}\\
+Soit $x \in \overset{\circ}{\mathcal{C}}$ tel que $f$ est continue en $x$.\\
+$x \in \overset{\circ}{\mathcal{C}}$ : $\exists y_1 > 0$ tel que $B(x, y_1) \subset \mathcal{C}$\\
+$f$ continue en $x$ : $\forall \varepsilon > 0$, $\exists y_2 > 0$ tel que $\forall y \in B(x, y_2)$, $|f(y) - f(x)| < \varepsilon$\\
+
+Posons $\eta = min(y_1, y_2)$\\
+
+Montrons que $\partial f(x)$ est borné.\\
+Supposons le contraire.\\
+$\forall M > 0$, $\exists g \in \partial f(x)$ tel que $||g||_2 > M$\\
+Soit $M > 0$. Fixons un tel $g$ tel que $||g||_2 > M \Rightarrow g \neq 0$\\
+
+Soit $y = x + \frac{\eta}{2} \frac{g}{||g||_2}$\\
+d'où $||y - x||_2 = \frac{\eta}{2} < \eta \Rightarrow y \in B(x, \eta) \subset \mathcal{C}$\\
+
+Par définition de $g$ : $f(y) \geq g^T(y - x) + f(x)$\\
+$\Rightarrow f(y) - f(x) \geq \frac{\eta}{2} ||g||_2 > \frac{\eta}{2} M$ avec $M = \frac{2}{\eta}$\\
+$\Rightarrow |f(y) - f(x)| > \varepsilon$\\
+
+Or, $y \in B(x, \eta) \Rightarrow y \in B(x, y_2) \Rightarrow |f(y) - f(x)| < \varepsilon$\\
+
+D'où $\varepsilon < |f(y) - f(x)| < \varepsilon$ : contradiction.\\
+
+Donc $\partial f(x)$ est borné.\\
+
+\color{black}
+
+\underline{Propriété :}\\
+Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
+\begin{enumerate}[i)]
+    \item $\forall x \in \overset{\circ}{\mathcal{C}}$, $\partial f(x) \neq \emptyset$ (Et $\partial f(x)$ compact convexe non-vide)
+    \item Si $f$ dérivable en $x \in \overset{\circ}{\mathcal{C}}$, alors $\partial f(x) = \{\nabla f(x)\}$
+\end{enumerate}
+
+\color{blue}
+
+\underline{Preuve :}
+\begin{enumerate}[i)]
+    \item Soit $\mathcal{C} \subset \mathbb{R}^n$ convexe non-vide.\\
+    Soit $x_0 \in \mathcal{C}^c \cup (\overset{\_}{\mathcal{C}} \text{\textbackslash } \overset{\circ}{\mathcal{C}})$\\
+    alors $\exists \alpha \in \mathbb{R}^n \text{\textbackslash} \{0\}$ tel que $\underset{z \in \mathcal{C}}{\text{sup }} \alpha^T z \leq \alpha^T x_0$\\
+
+    \textit{Texte manquant}\\
+
+
+    Soit $x \in \overset{\circ}{\mathcal{C}}$\\
+
+    \textit{Texte manquant}\\
+
+
+    \item On suppose de plus $f$ dérivable en $x \in \overset{\circ}{\mathcal{C}}$
+    \begin{itemize}
+        \item $f$ convexe sur $\mathcal{C}$ convexe et dérivable en $x \in \overset{\circ}{\mathcal{C}}$\\
+        $\Rightarrow \forall y \in \mathcal{C}$, $f(y) \geq \nabla f(x)^T(y - x) + f(x)$\\
+        $\Rightarrow \nabla f(x) \in \partial f(x)$\\
+        $\Rightarrow \{\nabla f(x) \} \subset \partial f(x)$\\
+
+        \item Soit $g \in \partial f(x)$\\
+        $\forall y \in \mathcal{C}$, $f(y) \geq g^T(y - x) + f(x)$\\
+        Or, $x \in \overset{\circ}{\mathcal{C}}$ : $\exists N \in \mathbb{N} \text{ tel que } y_N = x + \frac{u}{N} \in \mathcal{C}$ avec $u \in \mathbb{R}^n$\\
+
+        Fixons un tel $N$.\\
+        $\forall n \geq N$, $f(y_n) \geq \frac{1}{n} g^T u + f(x)$\\
+
+        Or, $f$ dérivable en $x$ :\\
+        $f(y_n) = f(x) + \frac{1}{n} \nabla f(x)^T u + \frac{1}{n} ||u||_2 \varepsilon(\frac{1}{n}u)$ avec $\varepsilon(h) \xrightarrow[h \rightarrow 0]{} 0$\\
+        $\Rightarrow f(x) + \frac{1}{n} \nabla f(x)^T u + \frac{1}{n} ||u||_2 \varepsilon(\frac{1}{n}u) \geq \frac{1}{n} g^T u + f(x)$\\
+        $\Rightarrow (\nabla f(x) - g)^T u + ||u||_2 \varepsilon(\frac{1}{n}u) \geq 0$\\
+        
+        A la limite : $(\nabla f(x) - g)^T u \geq 0, \forall u \in \mathbb{R}^n$\\
+        $\Rightarrow g = \nabla f(x)$\\
+
+        Donc $\partial f(x) \subset \{\nabla f(x)\}$\\
+
+        Bilan : $\partial f(x) = \{\nabla f(x)\}$\\
+    \end{itemize}
+\end{enumerate}
+
+\color{black}
+
+\underline{Propriété :}\\
+Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
+Soit $x^* \in \mathcal{C}$\\
+Alors $x^*$ est un minimum global de $f$ sur $\mathcal{C}$ si et seulement si $0 \in \partial f(x^*)$\\
+
+\color{blue}
+
+\underline{Preuve :}\\
+$0 \in \partial f(x^*) \Leftrightarrow \forall y \in \mathcal{C}$, $f(y) \geq 0^T(y - x^*) + f(x^*) = f(x^*) \Leftrightarrow x^*$ est un minimum global de $f$ sur $\mathcal{C}$\\
+
+\color{black}
+
+\subsection{Calculs de sous-gradients}
+
+Pour simplifier, on suppose avoir $(f_i)$ convexes sur $\mathbb{R}^n$\\
+
+\underline{Propriété :}
+\begin{enumerate}[i)]
+    \item Soit $(\alpha_1, \alpha_2) \in (\mathbb{R}_+^*)^2$\\
+    On pose $f = \alpha_1 f_1 + \alpha_2 f_2$\\
+    alors $\partial f(x) = \alpha_1 \partial f_1(x) + \alpha_2 \partial f_2(x)$
+
+    \item Soit $h : x \mapsto f(Ax + b)$ avec $A \in \mathbb{M}_{m,n}(\mathbb{R})$ et $b \in \mathbb{R}^m$\\
+    alors $\partial h(x) = A^T \partial f(Ax + b)$
+
+    \item Soit $f : x \mapsto \underset{i \in \{1, \dots, m\}}{\text{max }} f_i(x)$\\
+    Soit $I_0 = \{i \in \{1, \dots, m\} \text{ tel que } f_i(x) = f(x)\}$\\
+    alors $\forall g in \partial f_{I_0}(x)$, $g \in \partial f(x)$\\
+
+    \item Soit $f : x \mapsto \underset{a \in A}{\text{sup }} f_a(x)$\\
+    Soit 
+\end{enumerate}
+
+
+
+
+
+
+\end{document}
