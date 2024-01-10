@@ -9,26 +9,57 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{mathtools}
-\usepackage[text={18cm,25cm},centering]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage[text={15cm,24.5cm},centering]{geometry}
+
+
+% Définir le texte affiché en fin de page
+\pagestyle{fancy}
+\fancyhf{}  % Clear the default headers and footers
+\rfoot{\hrule
+    \vspace{0.3cm}
+    \noindent\textsf{Félix de Brandois}
+    \hfill \thepage
+}
+\renewcommand{\headrulewidth}{0pt}
+
+
+% Style de l'entete
+\newcommand{\entete}{
+    \noindent\textbf{INSA - ModIA, 4$^e$ année.}
+    \hfill \textbf{Années 2023-2024}
+    
+    \begin{center}
+        \textbf{\LARGE Régression linéaire et gradient \\
+        stochastique}
+    \end{center}
+}
+
 
 \begin{document}
 
-\title{\vspace{4cm} \textbf{Régression linéaire et gradient stochastique}}
+\entete
 
-\author{par Felix Foucher de Brandois}
-     
-\date{\vspace{10cm} Formation Modélisation et Intelligence Artificielle - 4° année \\
-2023-2024 }
+Ce TD-TP a pour objectif de plonger de manière un peu plus individualisée dans le cours d’optimisation stochastique.
+Il n’est pas noté, mais j’encourage très vivement les étudiants à rédiger consciencieusement leurs réponses et leurs idées.
+La rédaction force à mieux présenter les choses et surtout à mieux les cerner.
+Ca me permettra aussi plus facilement de corriger d’éventuelles incompréhensions.
 
-\maketitle
-
-\newpage
-\tableofcontents
-\listoffigures
-
-\newpage
 
 \section{Introduction}
+
+L’objectif de ce TP est d’illustrer la première partie du cours d’optimisation stochastique sur les erreurs en apprentissage et d’implémenter les premières versions du gradient stochastique.
+Il a aussi pour objectif de vous entraîner à effectuer des calculs avec des variables aléatoires pour les rendre plus accessibles et mieux comprendre les cours à venir.\\
+Nous allons nous placer dans le cadre de travail le plus simple : la régression linéaire. \\
+Ce cadre présente plusieurs avantages :
+
+\begin{itemize}[label=---]
+    \item C’est probablement le plus simple d’un point de vue théorique 
+    et il permet d’appréhender de nombreux phénomènes avec des mathématiques relativement élémentaires.
+    \item C’est probablement encore le plus utilisé dans les applications, et il me semble nécessaire de le comprendre profondément.
+\end{itemize}
+
 
 
 \section{Le cadre}
@@ -134,7 +165,6 @@ On notera $\omega_n^*$ n’importe quel minimiseur (sous réserve d’existence)
         \text{avec : } &h^* = \underset{h \in \mathbb{R}^d}{\text{argmin }} E(h) \hspace{14.5cm}\\
         &h^*_\mathcal{H} = \underset{h \in \mathcal{H}}{\text{argmin }} E_n(h)
     \end{align*}
-
     \begin{align*}
         E(h) &= \mathbb{E} \left[l(h(X), Y)\right] \hspace{14.5cm}\\
         &= \frac{1}{2} \mathbb{E} \left[(h(X) - Y)^2\right] \\
@@ -152,7 +182,7 @@ On notera $\omega_n^*$ n’importe quel minimiseur (sous réserve d’existence)
     On a : $E_n(\omega) = \frac{1}{2n} \sum_{i = 1}^{n} (\langle \omega, x_i \rangle - y_i)^2$.\\
     avec : $\omega \mapsto \langle \omega, x_i \rangle - y_i \quad$ et $\quad t \mapsto t^2$ convexes.\\
     
-    Donc $E_n$ est convexe car  est une somme de fonctions convexes.\\
+    Donc $E_n$ est convexe par somme et composition de fonctions convexes.\\
 
     \color{black}
     \item Calculer $\nabla E_n(\omega)$.
