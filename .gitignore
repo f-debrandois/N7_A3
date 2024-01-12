@@ -9,3 +9,5 @@ __pycache__/
 *.toc
 *.lof
 .Rhistory
+
+*.toml
