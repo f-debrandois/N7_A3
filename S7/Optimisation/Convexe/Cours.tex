@@ -8,18 +8,66 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage{enumerate}
-\usepackage[text={18cm,27cm},centering]{geometry}
+\usepackage{mathtools}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{algorithm2e}
+\usepackage[text={15cm,24.5cm},centering]{geometry}
+
+% Définir le texte affiché en fin de page
+\pagestyle{fancy}
+\fancyhf{}  % Clear the default headers and footers
+\rfoot{\hrule
+    \vspace{0.3cm}
+    \noindent\textsf{Félix de Brandois}
+    \hfill \thepage
+}
+\renewcommand{\headrulewidth}{0pt}
+
+% Style de l'entete
+\newcommand{\entete}{
+    \noindent\textbf{INSA - ModIA, 4$^e$ année.}
+    \hfill \textbf{Années 2023-2024}
+    
+    \begin{center}
+        \textbf{\LARGE Optimisation stochastique}
+    \end{center}
+}
+
+
+% Définir la fonction pour créer une boîte de propriété
+\newcommand{\propriete}[2]{%
+    \begin{tcolorbox}[colback=white,colframe=green!25!white,title=\textbf{Propriété #1}, coltitle=black]
+        #2
+    \end{tcolorbox}
+}
+
+% Définir la fonction pour créer une boîte de définition
+\newcommand{\definition}[2]{%
+    \begin{tcolorbox}[colback=white,colframe=blue!25!white,title=\textbf{Définition #1}, coltitle=black]
+        #2
+    \end{tcolorbox}
+}
+
+% Définir la fonction pour créer une boîte de théorème
+\newcommand{\theoreme}[2]{%
+    \begin{tcolorbox}[colback=white,colframe=red!25!white,title=\textbf{Théorème #1}, coltitle=black]
+        #2
+    \end{tcolorbox}
+}
+
+
+
 
 \begin{document}
 
-\begin{center}
-    \textbf{Optimisation stochastique}\\
-\end{center}
+\entete
 
-\tableofcontents
-\listoffigures
-\newpage
+\vspace{0.5cm}
+
+
+
 
 \section{Motivation et quelques rappels}
 
@@ -32,11 +80,11 @@ avec :
 \begin{itemize}
     \item $f : \mathbb{R}^n \rightarrow \mathbb{R}$ lisse, à savoir à gradient lipschitzien :\\
     $\exists L > 0$ tel que $\forall x, y \in \mathbb{R}^n, ||\nabla f(x) - \nabla f(y)|| \leq L ||x - y||$
-    \item $g : \mathbb{R}^n \rightarrow \mathbb{R} \cup \{+\infty\}$ convexe, potentiellement non-lisse.
+    \item $g : \mathbb{R}^n \rightarrow \mathbb{R} \cup \{+\infty\}$ convexe, potentiellement non-lisse.\\
 \end{itemize}
 
-\underline{Exemple :}
-\begin{enumerate}[i)]
+\textbf{Exemple :}
+\begin{enumerate}[label=\roman*)]
     \item $g = 0$ : problème d'optimisation lisse non-convexe.
     \item $g(x) = \lambda ||x||_1$ avec $\lambda > 0$ régularisation parcimonieuse.
     \item Reformulation d'un problème d'optimisation avec contraintes :\\
@@ -46,9 +94,8 @@ avec :
 
 \subsection{Exemples d'applications}
 
-\underline{Exemple 1 :} Moindres carrés régularisés\\
-
-On dispose d'un modèle linéaire :\\
+\textbf{Exemple 1 :} Moindres carrés régularisés\\
+On dispose d'un modèle linéaire :
 $$
 \forall x \in \mathbb{R}^n, f(x, \beta) = x^T \beta \quad \quad \beta \in \mathbb{R}^n \text{ paramètre du modèle}
 $$
@@ -69,7 +116,7 @@ D'où le problème d'optimisation suivant :\\
 
 \textit{Texte manquant}\\
 
-\begin{enumerate}[i)]
+\begin{enumerate}[label=\roman*)]
     \item $g(\beta) = \frac{\lambda}{2}||\beta||_2^2$ : régularisation de Tikhonov.
     \item $g(\beta) = \lambda ||\beta||_1$ : régularisation parcimonieuse (LASSO).
     \item $g(\beta) = \frac{\lambda}{2}||\beta||_\beta^2 = $\\
@@ -78,8 +125,7 @@ D'où le problème d'optimisation suivant :\\
 \textit{Texte manquant}\\
 
 
-\underline{Exemple 2 :} SVM (Séparateurs à Vaste Marge)\\
-
+\noindent\textbf{Exemple 1 :} SVM (Séparateurs à Vaste Marge)\\
 On dispose de données $(x_i)_{i \in \{1, \dots, p\}} \in \mathbb{R}^p$ labelisés $(y_i)_{i \in \{1, \dots, p\}} \in \{-1, 1\}^p$\\
 On cherche à construire un hyperplan séparant les données $(x_i)$ selons leurs labels $(y_i)$\\
 
@@ -92,14 +138,12 @@ Dans un premier temps, on suppose qu'il existe un tel hyperplan de vecteurs norm
     \label{fig:SVM}
 \end{figure}
 
-\textbf{Question :} Quel hyperplan choisir ?\\
+\noindent\underline{Quel hyperplan choisir ?}\\
 $\Rightarrow$ Incertitude : nombre de données, répartition dans $\mathbb{R}^n$, etc...\\
 $\Rightarrow$ Maximiser la distance maximale entre les données et l'hyperplan.\\
 
-Condition de séparabilité :\\
-$$
-\forall i \in \{1, \dots, p\}, y_i (x_i^T \beta) \geq 0
-$$
+Condition de séparabilité :
+$\quad \forall i \in \{1, \dots, p\}, y_i (x_i^T \beta) \geq 0$\\
 
 D'où le problème d'optimisation suivant :\\
 \begin{equation}
@@ -107,8 +151,7 @@ D'où le problème d'optimisation suivant :\\
 \end{equation}\\
 
 
-\underline{Remarque :} $d(z, \{\beta^Tx=0\}) = \frac{|\beta^Tz|}{||\beta||_2}$\\
-
+\noindent\underline{\textbf{Remarque :}} $\qquad d(z, \{\beta^Tx=0\}) = \frac{|\beta^Tz|}{||\beta||_2}$\\
 En pratique, la condition de séparabilité n'est pas vérifiée pour tout $i \in \{1, \dots, p\}$\\
 $\Rightarrow$ Pénalisation des contraintes non satisfaites.\\
 On pose $\forall t \in \mathbb{R}, t^+ = \max(t, 0)$\\
@@ -125,91 +168,108 @@ avec : $||\beta||_2 = \frac{1}{M}$ et en reformulant pour obtenir un problème d
 
 avec : $\sum_{i=1}^p (1 - y_i (x_i^T \beta))^+$ non-lisse (non différentiable)\\
 
+
+
 \subsection{Rappels de convexité}
 
-\underline{Définition :} \\
-Soit $\mathcal{C} \subset \mathbb{R}^n$. On dit que $\mathcal{C}$ est convexe si $\forall x, y \in \mathcal{C}$, $\forall \lambda \in [0, 1]$, $\lambda x + (1 - \lambda) y \in \mathcal{C}$\\
+\definition{}{Soit $\mathcal{C} \subset \mathbb{R}^n$. On dit que $\mathcal{C}$ est convexe si :
+\begin{center}
+    $\forall x, y \in \mathcal{C}$, $\forall \lambda \in [0, 1]$, $\lambda x + (1 - \lambda) y \in \mathcal{C}$
+\end{center}
+}
 
-\underline{Exemples :}\\
 
-\begin{enumerate}[i)]
+\noindent\textbf{Exemples :}
+\begin{enumerate}[label=\roman*.]
     \item partie affine : $\{x_0 + s \text{ avec } s \in S\}$ avec $S$ un sous-espace vectoriel de $\mathbb{R}^n$ et $x_0 \in \mathbb{R}^n$.
     \item hyperplan : $\{x \in \mathbb{R}^n \text{ tel que } \alpha^T x = \beta\}$
     \item demi-espace : $\{x \in \mathbb{R}^n \text{ tel que } \alpha^T x \leq \beta\}$
     \item polyèdre : $\{x \in \mathbb{R}^n \text{ tel que } Ax \leq b\}$ avec $A \in \mathbb{M}_{m,n}(\mathbb{R})$ et $b \in \mathbb{R}^m$.
-    \item ellipoïde : $\{x \in \mathbb{R}^n \text{ tel que } x^TCx \leq 1\}$ avec $C \in \mathbb{S}_n(\mathbb{R})$ (matrice symétrique semi-définie positive).
+    \item ellipoïde : $\{x \in \mathbb{R}^n \text{ tel que } x^TCx \leq 1\}$ avec $C \in \mathbb{S}_n(\mathbb{R})$ (matrice symétrique semi-définie positive).\\
 \end{enumerate}
 
 
-\underline{Propriétés :} Opérations préservant la convexité\\
-\begin{enumerate}[i)]
-    \item intersection
-    \item somme
-    \item multiplication par un scalaire
-    \item produit cartésien
-    \item image réciproque par une application linéaire
-    \item image directe par une application linéaire
-    \item projection : $\{x_1 \text{ tel que } (x_1, x_2) \in \mathcal{C}\}$ avec $\mathcal{C}$ convexe.
-\end{enumerate}
+\propriete{}{Opérations préservant la convexité :
+    \begin{itemize}
+        \item intersection
+        \item somme
+        \item multiplication par un scalaire
+        \item produit cartésien
+        \item image réciproque par une application linéaire
+        \item image directe par une application linéaire
+        \item projection : $\{x_1 \text{ tel que } (x_1, x_2) \in \mathcal{C}\}$ avec $\mathcal{C}$ convexe.
+    \end{itemize}
+}
 
-\par
+\definition{- Fonctions convexes}{
+    Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
+    \begin{itemize}
+        \item $f$ est convexe sur $\mathcal{C}$ si : 
+        \begin{center}
+            $\forall x, y \in \mathcal{C}$, $\forall \lambda \in [0, 1]$, $f(\lambda x + (1 - \lambda) y) \leq \lambda f(x) + (1 - \lambda) f(y)$
+        \end{center}
+        \item $f$ est strictement convexe sur $\mathcal{C}$ si :
+        \begin{center}
+            $\forall x, y \in \mathcal{C}$, $\forall \lambda \in ]0, 1[$, $f(\lambda x + (1 - \lambda) y) < \lambda f(x) + (1 - \lambda) f(y)$
+        \end{center}
+    \end{itemize}
+}
 
 
-\underline{Définition :} Fonction convexe sur $\mathcal{C}$ convexe\\
-
-$f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
+\propriete{- CNS}{Condition Nécessaire de convexité dans le cas dérivable.\\
+Soit $f : \Omega \rightarrow \mathbb{R}$ avec $\Omega$ ouvert de $\mathbb{R}^n$ et $\mathcal{C} \subset \Omega$ convexe.
 \begin{itemize}
-    \item $f$ est convexe sur $\mathcal{C}$ si $\forall x, y \in \mathcal{C}$, $\forall \lambda \in [0, 1]$, $f(\lambda x + (1 - \lambda) y) \leq \lambda f(x) + (1 - \lambda) f(y)$
-    \item $f$ est strictement convexe sur $\mathcal{C}$ si $\forall x, y \in \mathcal{C}$, $\forall \lambda \in ]0, 1[$, $f(\lambda x + (1 - \lambda) y) < \lambda f(x) + (1 - \lambda) f(y)$
+    \item Si $f$ est dérivable sur $\Omega$, alors $f$ est convexe sur $\mathcal{C}$ convexe si et seulement si
+    \begin{align*}
+        &\forall x, y \in \mathcal{C}, f(y) \geq f(x) + f'(x)(y - x)\\
+        \Leftrightarrow &\forall x, y \in \mathcal{C}, f(y) \geq f(x) + \nabla f(x)^T(y - x)
+    \end{align*}
+    \item Si $f$ est deux fois dérivable sur $\Omega$, alors $f$ est convexe sur $\mathcal{C}$ convexe si et seulement si
+    \begin{align*}
+        &\forall x \in \mathcal{C}, f''(x)(y - x, y - x) \geq 0\\
+        \Leftrightarrow &\forall x \in \mathcal{C}, (y - x)^T \nabla^2 f(x) (y - x) \geq 0
+    \end{align*}
 \end{itemize}
+}
 
-\underline{Propriétés :} CNS (Condition Nécessaire et Suffisante) de convexité dans le cas dérivable.\\
-
-Soit $f : \Omega \rightarrow \mathbb{R}$ avec $\Omega$ ouvert de $\mathbb{R}^n$ et $\mathcal{C} \subset \Omega$ convexe.\\
-\begin{enumerate}
-    \item Si $f$ est dérivable sur $\Omega$, alors $f$ est convexe sur $\mathcal{C}$ convexe si et seulement si \\
-    $\forall x, y \in \mathcal{C}$, $f(y) \geq f'(x)(y - x) + f(x)\\
-    \Leftrightarrow \forall x, y \in \mathcal{C}$, $f(y) \geq f(x) + \nabla f(x)^T(y - x)$
-    \item Si $f$ est deux fois dérivable sur $\Omega$, alors $f$ est convexe sur $\mathcal{C}$ convexe si et seulement si \\
-    $\forall x \in \mathcal{C}$, $f''(x)(y - x, y - x) \geq 0\\
-    \Leftrightarrow \forall x \in \mathcal{C}, (y - x)^T \nabla^2 f(x) (y - x) \geq 0$
-\end{enumerate}
-
-\underline{Propriété :}
-
-\begin{enumerate}[i)]
-    \item $f$ convexe sur $\mathcal{C}$ convexe $\Rightarrow$ $\alpha f$ convexe sur $\mathcal{C}$ convexe pour $\alpha > 0$
-    \item combinaisons linéaires à coefficients positifs de fonctions convexes sont convexes
-    \item $f$ convexe sur $\mathcal{C}$ convexe :\\
-    Soit $A \in \mathbb{M}_{m,n}(\mathbb{R})$ et $b \in \mathbb{R}^m$.\\
-    alors $\mathcal{C}' = \{x \in \mathbb{R}^n \text{ tel que } Ax + B \in \mathcal{C}\}$ est convexe et $x \mapsto f(Ax + b)$ est convexe sur $\mathcal{C}'$.
-    \item $(f_i)_{i \in \{1, \dots, m\}}$ convexes sur $(\mathcal{C}_i)_{\{i \in \{1, \dots, m\}\}}$, alors $\underset{i \in \{1, \dots, m\}}{\text{max }} f_i$ convexe sur $\bigcap_{i=1}^{n} \mathcal{C}_i$.
-    \item $g : \mathbb{R}^n \rightarrow \mathbb{R}$ convexe sur $\mathcal{C} \subset \mathbb{R}^n$\\
-    $h : \mathbb{R} \rightarrow \mathbb{R}$ croissante et convexe sur $\mathcal{C}'$ tel que $g(\mathcal{C}) \subset \mathcal{C}'$\\
-    alors $h \circ g$ est convexe sur $\mathcal{C}$.
-    \item $g : \mathbb{R}^n \rightarrow \mathbb{R}^p$ avec $\forall i \in \{1, \dots, p\}$, $g_i$ convexe sur $\mathbb{R}^n$\\
-    $h : \mathbb{R}^p \rightarrow \mathbb{R}$ croissante et convexe vis-à-vis de chacun de ses arguments.\\
-    alors $f : \underset{x \mapsto h \circ g(x) = h(g_1(x), \dots, g_p(x))}{\mathbb{R}^n \Rightarrow \mathbb{R}}$ est convexe sur $\mathbb{R}^n$.
-\end{enumerate}
+\propriete{}{
+    \begin{itemize}
+        \item $f$ convexe sur $\mathcal{C}$ convexe $\Rightarrow$ $\alpha f$ convexe sur $\mathcal{C}$ convexe pour $\alpha > 0$
+        \item Combinaisons linéaires à coefficients positifs de fonctions convexes sont convexes
+        \item Soit $f$ convexe sur $\mathcal{C}$ convexe. Soit $A \in \mathbb{M}_{m,n}(\mathbb{R})$ et $b \in \mathbb{R}^m$.\\
+        Alors $\mathcal{C}' = \{x \in \mathbb{R}^n \text{ tel que } Ax + b \in \mathcal{C}\}$ est convexe et $x \mapsto f(Ax + b)$ est convexe sur $\mathcal{C}'$.
+        \item Soit $(f_i)_{i \in \{1, \dots, m\}}$ convexes sur $(\mathcal{C}_i)_{\{i \in \{1, \dots, m\}\}}$\\
+        Alors $\underset{i \in \{1, \dots, m\}}{\text{max }} f_i$ convexe sur $\bigcap_{i=1}^{m} \mathcal{C}_i$.
+        \item Soit $g : \mathbb{R}^n \rightarrow \mathbb{R}$ convexe sur $\mathcal{C} \subset \mathbb{R}^n$\\
+        Soit $h : \mathbb{R} \rightarrow \mathbb{R}$ croissante et convexe sur $\mathcal{C}'$ tel que $g(\mathcal{C}) \subset \mathcal{C}'$\\
+        Alors $h \circ g$ est convexe sur $\mathcal{C}$.
+        \item Soit $g : \mathbb{R}^n \rightarrow \mathbb{R}^p$ avec $\forall i \in \{1, \dots, p\}$, $g_i$ convexe sur $\mathbb{R}^n$\\
+        Soit $h : \mathbb{R}^p \rightarrow \mathbb{R}$ croissante et convexe vis-à-vis de chacun de ses arguments.
+        \vspace{-\baselineskip}\begin{align*}
+            \text{Alors } \qquad f : \mathbb{R}^n &\rightarrow \mathbb{R} \qquad \qquad \qquad  \text{ est convexe sur } \mathbb{R}^n \hspace{14.5cm}\\
+            x &\mapsto h \circ g(x) = h(g_1(x), \dots, g_p(x))
+        \end{align*}
+    \end{itemize}
+}
 
 
 \subsection{Régularité des fonctions convexes}
 
-\underline{Définition :} Epigraphe de $f$\\
-Soit $f : \mathcal{C} \rightarrow \mathbb{R}$\\
-On appelle \textit{épigraphe} de $f$, noté $\varepsilon(f)$, l'ensemble suivant :\\
-$$
-\varepsilon(f) = \{(x, w) \in \mathcal{C} \times \mathbb{R} \text{ tel que } f(x) \leq w\}
-$$
+\definition{- Epigraphe}{
+    Soit $f : \mathcal{C} \rightarrow \mathbb{R}$\\
+    On appelle \textit{épigraphe} de $f$, noté $\varepsilon(f)$, l'ensemble suivant :\\
+    $$
+    \varepsilon(f) = \{(x, w) \in \mathcal{C} \times \mathbb{R} \text{ tel que } f(x) \leq w\}
+    $$
+}
 
-\underline{Propriété :}\\
-$f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
-$f$ est convexe sur $\mathcal{C}$ si et seulement si $\varepsilon(f)$ est convexe.\\
+\propriete{}{
+    Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
+    $f$ est convexe sur $\mathcal{C}$ si et seulement si $\varepsilon(f)$ est convexe.
+}
 
-\color{blue}
-\underline{Preuve :}
-
-\begin{enumerate}[i)]
+\noindent\underline{Preuve :}
+\begin{enumerate}[label=\roman*)]
     \item Supposons $f$ convexe sur $\mathcal{C}$ convexe\\
     $\forall x, y \in \mathcal{C}$, $\forall \lambda \in [0, 1]$, $f(\lambda x + (1 - \lambda) y) \leq \lambda f(x) + (1 - \lambda) f(y)$\\
     Soient $(x_1, w_1) \in \varepsilon(f)$ et $(x_2, w_2) \in \varepsilon(f)$ et $\lambda \in [0, 1]$\\
@@ -224,31 +284,33 @@ $f$ est convexe sur $\mathcal{C}$ si et seulement si $\varepsilon(f)$ est convex
     $\Rightarrow f(\lambda x + (1 - \lambda) y) \leq \lambda f(x) + (1 - \lambda) f(y)$  
 \end{enumerate}
 
-\color{black}
 
-\underline{Propriété :} Inégalité de Jensen\\
-Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
-Soit $x_1, \dots, x_p \in \mathcal{C}$ et $\lambda_1, \dots, \lambda_p \in \mathbb{R}^+$ tel que $\sum_{i=1}^p \lambda_i = 1$.\\
-Alors $f(\sum_{i=1}^p \lambda_i x_i) \leq \sum_{i=1}^p \lambda_i f(x_i)$\\
+\propriete{- Inégalité de Jensen}{
+    Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
+    Soit $x_1, \dots, x_p \in \mathcal{C}$ et $\lambda_1, \dots, \lambda_p \in \mathbb{R}^+$ tel que $\sum_{i=1}^p \lambda_i = 1$.\\
 
-\underline{Propriété :}\\
-Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
-Soit $x_0 \in \overset{\circ}{\mathcal{C}}$\\
-alors $f$ est continue en $x_0$.\\
+    Alors $\quad f(\sum_{i=1}^p \lambda_i x_i) \leq \sum_{i=1}^p \lambda_i f(x_i)$
+}
 
-\color{blue}
-\underline{Preuve :}\\
-Soit $x_0 \in \overset{\circ}{\mathcal{C}}$\\
+\propriete{}{
+    Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
+    Soit $x_0 \in \overset{\circ}{\mathcal{C}}$\\
+    $f$ est continue en $x_0$.
+}
+
+
+\noindent\underline{Preuve :}\\
+Soit $x_0 \in \overset{\circ}{\mathcal{C}}$.
 Soit $\Delta$ un simplexe inclus dans $\overset{\circ}{\mathcal{C}}$ et contenant $x_0$.\\
 Notons $(s_i)_{i \in \{1, \dots, n + 1\}}$ les sommets de $\Delta$.\\
 $\forall x \in \Delta$, $\exists! (\lambda_i)_{i \in \{1, \dots, n + 1\}} \in \mathbb{R}^{n + 1}$ tel que $\lambda_i \geq 0$ et $\sum_{i=1}^{n + 1} \lambda_i = 1$ et $x = \sum_{i=1}^{n + 1} \lambda_i s_i$\\
 (coordonnées barycentriques de $x$ vis-à-vis de $\Delta$).\\
 
-d'où
-\begin{flalign*}
-    f(x) &\leq \sum_{i=1}^{n + 1} \lambda_i f(s_i) \text{ par convexité de } f \text{ et inégalité de Jensen.}\\
-    & \leq \underset{i \in \{1, \dots, n + 1\}}{\text{max }} f(s_i) \text{ car } \sum_{i=1}^{n + 1} \lambda_i = 1\\
-\end{flalign*}
+\noindent d'où
+\begin{align*}
+    f(x) &\leq \sum_{i=1}^{n + 1} \lambda_i f(s_i) \text{ par convexité de } f \text{ et inégalité de Jensen.}\hspace{14.5cm}\\
+    & \leq \underset{i \in \{1, \dots, n + 1\}}{\text{max }} f(s_i) \text{ car } \sum_{i=1}^{n + 1} \lambda_i = 1
+\end{align*}
 
 Donc $f$ est majorée sur $\Delta$.\\
 En particulier, $\forall \delta > 0$ tel que $B(x_0, \delta) \subset \Delta$, $f$ est majorée sur $B(x_0, \delta)$.\\
@@ -290,27 +352,28 @@ $\Rightarrow |f(x) - f(y)| \leq \frac{4K}{\delta} ||y - x||$\\
 Bilan : $f$ est lipschitzienne sur $B(x_0, \frac{\delta}{2})$\\
 En particulier, $f$ est continue en $x_0$\\
 
-\color{black}
+
 
 \section{Sous-différentiell d'une fonction}
 
 \subsection{Sous-gradient et sous différentiel}
 
-\underline{Définition :}\\
-Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
-Soient $x \in \mathcal{C}$ et $g \in \mathbb{R}^n$\\
-$g$ est appelé \textit{sous-gradient} de $f$ en $x$ si :\\
-$$
-\forall y \in \mathcal{C}, f(y) \geq g^T (y - x) + f(x)
-$$
+\definition{- Sous-differentiel et sous-gradient}{
+    Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
+    Soit $x \in \mathcal{C}$ et $g \in \mathbb{R}^n$\\
+    $g$ est appelé \textit{sous-gradient} de $f$ en $x$ si :
+    \begin{center}
+        $\forall y \in \mathcal{C}, f(y) \geq g^T (y - x) + f(x)$
+    \end{center}
+    On appelle \textit{sous-différentiel} de $f$ en $x$, noté $\partial f(x)$, l'ensemble des sous-gradients de $f$ en $x$ :
+    $$
+    \partial f(x) = \{g \in \mathbb{R}^n \text{ tel que } \forall y \in \mathcal{C}, f(y) \geq g^T (y - x) + f(x)\}
+    $$
+}
 
-On appelle \textit{sous-différentiel} de $f$ en $x$, noté $\partial f(x)$, l'ensemble des sous-gradients de $f$ en $x$ :\\
-
-
-\underline{Exemple :}\\
+\noindent\textbf{Exemple :}
 $f : \mathbb{R} \rightarrow \mathbb{R}$, $f(x) = |x|$\\
-Soit $x \in \mathbb{R}$\\
-
+Soit $x \in \mathbb{R}$
 \begin{itemize}
     \item si $x < 0$, alors $f(x) = -x$\\
     Soit $g \in \mathbb{R}$ tel que $\forall y \in \mathbb{R}$, $f(y) \geq g(y - x) + f(x)$
@@ -323,15 +386,14 @@ Soit $x \in \mathbb{R}$\\
     \item si $x = 0$, $\partial f(x) = [-1, 1]$
 \end{itemize}
 
+\propriete{}{
+    Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
+    Soit $x \in \mathcal{C}$\\
+    Alors $\partial f(x)$ est un convexe non-vide.
+}
 
-\underline{Propriété :}\\
-Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
-Soit $x \in \mathcal{C}$\\
-Alors $\partial f(x)$ est un convexe non-vide.\\
 
-\color{blue}
-
-\underline{Preuve :}\\
+\noindent\underline{Preuve :}\\
 Supposons $\partial f(x) = \emptyset$\\
 alors $\partial f(x) = \bigcap_{y \in \mathcal{C}} \{g \in \mathbb{R}^n \text{ tel que } f(y) \geq g^T(y - x) + f(x)\}$\\
 
@@ -343,16 +405,14 @@ or, $\forall y \in \mathcal{C}$, $\{g \in \mathbb{R}^n \text{ tel que } f(y) \ge
 
 $\Rightarrow \partial f(x)$ est convexe et fermé comme intersections de parties convexes et fermées.\\
 
-\color{black}
 
-\underline{Propriété :}\\
-Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.\\
-Soit $x \in \overset{\circ}{\mathcal{C}}$ tel que $f$ est continue en $x$.
-alors $\partial f(x)$ est borné.\\
+\propriete{}{
+    Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
+    Soit $x \in \overset{\circ}{\mathcal{C}}$ tel que $f$ est continue en $x$.\\
+    Alors $\partial f(x)$ est borné.
+}
 
-\color{blue}
-
-\underline{Preuve :}\\
+\noindent\underline{Preuve :}\\
 Soit $x \in \overset{\circ}{\mathcal{C}}$ tel que $f$ est continue en $x$.\\
 $x \in \overset{\circ}{\mathcal{C}}$ : $\exists y_1 > 0$ tel que $B(x, y_1) \subset \mathcal{C}$\\
 $f$ continue en $x$ : $\forall \varepsilon > 0$, $\exists y_2 > 0$ tel que $\forall y \in B(x, y_2)$, $|f(y) - f(x)| < \varepsilon$\\
@@ -377,19 +437,17 @@ D'où $\varepsilon < |f(y) - f(x)| < \varepsilon$ : contradiction.\\
 
 Donc $\partial f(x)$ est borné.\\
 
-\color{black}
 
-\underline{Propriété :}\\
-Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
-\begin{enumerate}[i)]
-    \item $\forall x \in \overset{\circ}{\mathcal{C}}$, $\partial f(x) \neq \emptyset$ (Et $\partial f(x)$ compact convexe non-vide)
-    \item Si $f$ dérivable en $x \in \overset{\circ}{\mathcal{C}}$, alors $\partial f(x) = \{\nabla f(x)\}$
-\end{enumerate}
+\propriete{}{
+    Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
+    \begin{itemize}
+        \item $\forall x \in \overset{\circ}{\mathcal{C}}$, $\partial f(x) \neq \emptyset \quad$ (Et $\partial f(x)$ compact convexe non-vide)
+        \item Si $f$ dérivable en $x \in \overset{\circ}{\mathcal{C}}$, alors $\partial f(x) = \{\nabla f(x)\}$
+    \end{itemize}
+}
 
-\color{blue}
-
-\underline{Preuve :}
-\begin{enumerate}[i)]
+\noindent\underline{Preuve :}
+\begin{enumerate}[label=\roman*)]
     \item Soit $\mathcal{C} \subset \mathbb{R}^n$ convexe non-vide.\\
     Soit $x_0 \in \mathcal{C}^c \cup (\overset{\_}{\mathcal{C}} \text{\textbackslash } \overset{\circ}{\mathcal{C}})$\\
     alors $\exists \alpha \in \mathbb{R}^n \text{\textbackslash} \{0\}$ tel que $\underset{z \in \mathcal{C}}{\text{sup }} \alpha^T z \leq \alpha^T x_0$\\
@@ -430,16 +488,14 @@ Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{
     \end{itemize}
 \end{enumerate}
 
-\color{black}
 
-\underline{Propriété :}\\
-Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
-Soit $x^* \in \mathcal{C}$\\
-Alors $x^*$ est un minimum global de $f$ sur $\mathcal{C}$ si et seulement si $0 \in \partial f(x^*)$\\
+\propriete{}{
+    Soit $f : \mathcal{C} \rightarrow \mathbb{R}$ avec $\mathcal{C} \subset \mathbb{R}^n$ convexe.
+    Soit $x^* \in \mathcal{C}$\\
+    Alors $x^*$ est un minimum global de $f$ sur $\mathcal{C}$ si et seulement si $0 \in \partial f(x^*)$
+}
 
-\color{blue}
-
-\underline{Preuve :}\\
+\noindent\underline{Preuve :}\\
 $0 \in \partial f(x^*) \Leftrightarrow \forall y \in \mathcal{C}$, $f(y) \geq 0^T(y - x^*) + f(x^*) = f(x^*) \Leftrightarrow x^*$ est un minimum global de $f$ sur $\mathcal{C}$\\
 
 \color{black}
@@ -448,26 +504,441 @@ $0 \in \partial f(x^*) \Leftrightarrow \forall y \in \mathcal{C}$, $f(y) \geq 0^
 
 Pour simplifier, on suppose avoir $(f_i)$ convexes sur $\mathbb{R}^n$\\
 
-\underline{Propriété :}
-\begin{enumerate}[i)]
-    \item Soit $(\alpha_1, \alpha_2) \in (\mathbb{R}_+^*)^2$\\
-    On pose $f = \alpha_1 f_1 + \alpha_2 f_2$\\
-    alors $\partial f(x) = \alpha_1 \partial f_1(x) + \alpha_2 \partial f_2(x)$
+\propriete{}{
+    \begin{itemize}
+        \item Soit $(\alpha_1, \alpha_2) \in (\mathbb{R}_+^*)^2$.
+        On pose $f = \alpha_1 f_1 + \alpha_2 f_2$.\\
+        Alors $\partial f(x) = \alpha_1 \partial f_1(x) + \alpha_2 \partial f_2(x)$
+        \item Soit $h : x \mapsto f(Ax + b)$ avec $A \in \mathbb{M}_{m,n}(\mathbb{R})$ et $b \in \mathbb{R}^m$\\
+        Alors $\partial h(x) = A^T \partial f(Ax + b)$
+        \item Soit $f : x \mapsto \underset{i \in \{1, \dots, m\}}{\text{max }} f_i(x)$\\
+        Soit $I_0 = \{i \in \{1, \dots, m\} \text{ tel que } f_i(x) = f(x)\}$\\
+        Alors $\forall g \in \partial f_{I_0}(x)$, $g \in \partial f(x)$
+        \item Soit $f : x \mapsto \underset{a \in A}{\text{sup }} f_a(x)$\\
+        Soit $I_0 = \{a \in A \text{ tel que } f_a(x) = f(x)\}$\\
+        Alors $\forall g \in \partial f_{I_0}(x)$, $g \in \partial f(x)$
 
-    \item Soit $h : x \mapsto f(Ax + b)$ avec $A \in \mathbb{M}_{m,n}(\mathbb{R})$ et $b \in \mathbb{R}^m$\\
-    alors $\partial h(x) = A^T \partial f(Ax + b)$
+        \textit{Texte manquant}\\
+    \end{itemize}
+}
 
-    \item Soit $f : x \mapsto \underset{i \in \{1, \dots, m\}}{\text{max }} f_i(x)$\\
-    Soit $I_0 = \{i \in \{1, \dots, m\} \text{ tel que } f_i(x) = f(x)\}$\\
-    alors $\forall g in \partial f_{I_0}(x)$, $g \in \partial f(x)$\\
 
-    \item Soit $f : x \mapsto \underset{a \in A}{\text{sup }} f_a(x)$\\
-    Soit 
+
+\section{Algorithmes de sous-gradient}
+
+\subsection{Algorithme du sous-gradient}
+
+On considèle le problème suivant :\\
+\begin{equation}
+    \underset{x \in \mathbb{R}^n}{\text{min }} f(x) \quad \text{avec } f \text{ convexe sur } \mathbb{R}^n.
+\end{equation}
+
+On suppose que $f$ admet au moins un minimum $x^* \in \mathbb{R}^n$\\
+
+On a l'Algorithme suivant :\\
+\begin{algorithm}
+    \SetAlgoLined
+    \textbf{Entrées :} $x_0 \in \mathbb{R}^n$\\
+    \textbf{Tant que}\\
+    \textit{Texte manquant}\\
+\end{algorithm}
+
+
+\noindent\underline{\textbf{Remarque :}}
+$f$ est convexe sur $\mathbb{R}^n$\\
+$\Rightarrow \forall x \in \mathbb{R}^n$, $\partial f(x) \neq \emptyset$\\
+et $\partial f(x)$ est un compact convexe de $\mathbb{R}^n$\\
+
+\noindent Soit $k \in \mathbb{N}$
+\begin{align*}
+    ||x_{k+1} - x^*||_2^2 &= ||x_k - \alpha_k g_k - x^*||_2^2 \hspace{14.5cm}\\
+    &= ||x_k - x^*||_2^2 - 2 \alpha_k g_k^T (x_k - x^*) + \alpha_k^2 ||g_k||_2^2\\
+    &\textit{Texte manquant}\\
+\end{align*}
+
+
+On pose : $f^k_{best} = \underset{j \in \{1, \dots, k\}}{\text{min }} f(x_j)$\\
+On a :\\
+$2 \underset{l = 1}{\overset{k}{\sum}} \alpha_l (f(x_l) - f^*) \leq ||x_1 - x^*||_2^2 + \underset{l = 1}{\overset{k}{\sum}} ||gl||_2^2$\\
+$\Rightarrow 0 \leq f^k_{best} - f(x^*) \leq \frac{||x_1 - x^*||_2^2 + \underset{l = 1}{\overset{k}{\sum}} ||gl||_2^2}{2 \underset{l = 1}{\overset{k}{\sum}} \alpha_l}$\\
+
+Soit $R > 0$ tel que $||x_1 - x^*|| \leq R$\\
+
+On a donc : $0 \leq f^k_{best} - f(x^*) \leq \frac{R^2 + \underset{l = 1}{\overset{k}{\sum}} ||gl||_2^2}{2 \underset{l = 1}{\overset{k}{\sum}} \alpha_l}$\\
+
+
+On suppose de plus : $\exists a > 0$ tel que $\forall l \in \mathbb{N}^*$, $||gl|| \leq a$\\
+$\Rightarrow 0 \leq f^k_{best} - f(x^*) \leq \frac{R^2 + a^2 \underset{l = 1}{\overset{k}{\sum}} \alpha_l^2}{2 \underset{l = 1}{\overset{k}{\sum}} \alpha_l}$\\
+
+
+
+\noindent \underline{Quelle stratégie de pas $\alpha_l$ choisir ?}
+\begin{itemize}
+    \item Pas constant : $\forall l \in \{1, \dots, k\}$, $\alpha_l = \alpha > 0$\\
+    
+    On a donc : $0 \leq f^k_{best} - f(x^*) \leq \frac{R^2 + ka^2 \alpha^2}{2 k \alpha} \xrightarrow[k \rightarrow \infty]{} \frac{a^2 \alpha}{2}$\\
+    $\Rightarrow f^k_{best} \in B_f(f(x^*), \frac{a^2 \alpha}{2})$\\
+
+    \item $\forall l \in \{1, \dots, k\}, \alpha_l > 0$\\
+    
+    \item \begin{align*}
+        \forall l \in \mathbb{N}, \alpha_l = \frac{\gamma_l}{gl} \qquad \text{ avec } \qquad &\gamma_l > 0 \hspace{14.5cm}\\
+        &\underset{l \rightarrow \infty}{\lim} \gamma_l = 0\\
+        &\underset{l = 1}{\overset{\infty}{\sum}} \gamma_l = \infty\\
+    \end{align*}
+\end{itemize}
+
+\textit{Texte manquant}\\
+
+
+
+
+\begin{align*}
+    \forall k \geq N_1 + 1, \qquad 0 \leq f^k_{best} - f(x^*) &\leq \frac{R^2 + a^2 \underset{l = 1}{\overset{N_1}{\sum}} \alpha_l^2}{2 \underset{l = 1}{\overset{k}{\sum}} \alpha_l} + \frac{a^2 \underset{l = N_1 + 1}{\overset{k}{\sum}} \alpha_l^2}{2 \underset{l = 1}{\overset{k}{\sum}} \alpha_l}  \hspace{14.5cm}\\
+    &= \frac{R^2 + a^2 \underset{l = 1}{\overset{N_1}{\sum}} \alpha_l^2}{2 \underset{l = 1}{\overset{k}{\sum}} \alpha_l} + \frac{\varepsilon}{2} \frac{\underset{l = N_1 + 1}{\overset{k}{\sum}} \alpha_l^2}{\underset{l = 1}{\overset{k}{\sum}} \alpha_l}
+\end{align*}
+
+De plus, $\underset{l = 1}{\overset{k}{\sum}} \alpha_l \xrightarrow[]{} \infty$\\
+
+$\exists N_2 \in \mathbb{N}$ tel que $\forall k \geq N_2, \underset{l = 1}{\overset{k}{\sum}} \alpha_l^2 \geq \frac{R^2 + a^2 \underset{l = 1}{\overset{N_1}{\sum}} \alpha_l^2}{\varepsilon}$\\
+
+D'où $\forall k \geq max(N_1 + 1, N_2)$, $0 \leq f^k_{best} - f(x^*) \leq \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon$\\
+
+Donc $f^k_{best} \xrightarrow[k \rightarrow \infty]{} f(x^*)$\\
+
+
+
+
+\noindent\underline{\textbf{Remarque :}}
+On s'intéresse à la stratégie de pas qui minimise $\psi(\alpha) = \frac{R^2 + a^2 ||\alpha ||_2^2}{2 ||\alpha||_1}$ avec $\alpha \in (\mathbb{R}_+^*)^k$\\
+Avec une telle stratégie de pas, il pourra être nécessaire de faire $\mathcal{O}(\frac{1}{\varepsilon})$ itérations pour atteindre $|f^k_{best} - f(x^*)| \leq \varepsilon$\\
+Pour $\varepsilon = 10^{-3}$, on a $10^6$ itérations : l'algorithme est très long dans le pire des cas.\\
+
+
+\subsection{Algorithme du sous-gradient projeté}
+
+Soit $f : \mathbb{R}^n \rightarrow \mathbb{R}$ convexe. On considère le problème suivant :\\
+\begin{equation}
+    \underset{x \in \mathcal{C}}{\text{min }} f(x) \quad \text{avec } \mathcal{C} \text{ partie convexe, fermée =, non-vide de } \mathbb{R}^n.
+    \label{eq:pb}
+\end{equation}
+
+On suppose que (\ref{eq:pb}) admette au moins une solution $x^* \in \mathcal{C}$\\
+
+
+\noindent \underline{\textbf{Remarque :}}
+$\mathcal{C}$ partie convexe fermée non-vide de $\mathbb{R}^n$ :\\
+La projection orthogonale sur $\mathcal{C}$, notée $\Pi_{\mathcal{C}}$, est $1$-lipschitzienne :
+$$
+\forall (x, y) \in (\mathbb{R}^n)^2, ||\Pi_{\mathcal{C}}(x) - \Pi_{\mathcal{C}}(y)||_2 \leq ||x - y||_2
+$$
+
+\noindent \underline{Idée}
+Projection orthogonale sur $\mathcal{C}$ des itérations de l'algorithme du sous-gradient.\\
+
+
+\noindent On a l'algorithme suivant :\\
+\begin{algorithm}
+    \SetAlgoLined
+    \textbf{Entrées :} $x_0 \in \mathbb{R}^n$\\
+    \textbf{Tant que}\\
+    \begin{itemize}
+        \item Calculer $g_k \in \partial f(x_k)$
+        \item $x_{k+1} = \Pi_{\mathcal{C}}(x_k - \alpha_k g_k)$
+    \end{itemize}
+    \textbf{Fin Tant que}\\
+\end{algorithm}
+
+
+
+\noindent\underline{Y'a-t-il convergence ?}\\
+Soit $z_{k+1} = x_k - \alpha_k g_k \in \mathbb{R}^n \quad$ avec $\quad g_k \in \partial f(x_k)$ et $\alpha_k > 0$
+
+\begin{align*}
+    ||z_{k+1} - x^*||_2^2 &= ||x_k - \alpha_k g_k - x^*||_2^2 \hspace{14.5cm}\\
+    &\leq ||x_k - x^*||_2^2 - 2 \alpha_k (f(x_k) - f(x^*)) + \alpha_k^2 ||g_k||_2^2
+\end{align*}
+\begin{align*}
+    \text{Or, } \quad ||x_k - x^*||_2^2 &= ||\Pi_{\mathcal{C}}(z_{k+1}) - \Pi_{\mathcal{C}}(x^*)||_2^2 \qquad \text{ car } x^* \in \mathcal{C} \Rightarrow \Pi_{\mathcal{C}}(x^*) = x^* \hspace{14.5cm}\\
+    &\leq ||z_{k+1} - x^*||_2^2 \qquad \text{ car } \Pi_{\mathcal{C}} \text{ est } 1\text{-lipschitzienne}\\
+    &\leq ||x_k - x^*||_2^2 - 2 \alpha_k (f(x_k) - f(x^*)) + \alpha_k^2 ||g_k||_2^2
+\end{align*}
+
+
+On retrouve les mêmes contraintes de convergence que pour l'algorithme du sous-gradient.\\
+Notamment, on a besoin de $\mathcal{O}(\frac{1}{\varepsilon})$ itérations pour atteindre $|f^k_{best} - f(x^*)| \leq \varepsilon$\\
+
+
+\noindent\underline{\textbf{Remarque :}}
+$\Pi_{\mathcal{C}}$ peut être difficile à calculer en pratique selon ce qu'est $\mathcal{C}$\\
+
+
+
+\subsection{Cas particulier : contraintes convexes d'inégalité}
+
+On considère le problème suivant :\\
+\begin{equation}
+    \begin{cases}
+        \underset{x \in \mathbb{R}^n}{\text{min }} f(x) \quad \text{avec } f \text{ et } (f_i)_{i \in \{1, \dots, p\}} \text{ convexe sur } \mathbb{R}^n\\
+        \forall i \in \{1, \dots, p\}, f_i(x) \leq 0\\
+    \end{cases}
+    \label{eq:pb2}
+\end{equation}
+
+En posant $\mathcal{C} = \left\{ x \in \mathbb{R}^n \text{ tel que } \forall i \in \{1, \dots, p\}, f_i(x) \leq 0 \right\}$\\
+
+Le problème (\ref{eq:pb2}) devient :\\
+\begin{equation}
+    \underset{x \in \mathcal{C}}{\text{min }} f(x) \qquad \text{ avec } \mathcal{C} \text{ convexe}
+    \label{eq:pb3}
+\end{equation}
+
+Il est possible d'utiliser l'algorithme du sous-gradient projeté, mais $\Pi_{\mathcal{C}}$ peut être difficile à calculer.\\
+
+\noindent \underline{Quelles autres stratégies ?}\\
+On cherche un algorithme qui respecte les contraintes à chaque itérations.\\
+
+\begin{algorithm}
+    \SetAlgoLined
+    \textbf{Entrées :} $x_0 \in \mathbb{R}^n$\\
+    \textbf{Tant que}\\
+    \begin{itemize}
+        \item Calculer $g_k \in \mathbb{R}^n$ tel que : \begin{itemize}
+            \item $g_k \in \partial f(x_k)$ si $x_k \in \mathcal{C}$
+            \item $g_k \in \partial f_i(x_k)$ tel que $f_i(x_k) > 0$.\\
+            \end{itemize}
+        \item $x_{k+1} = x_k - \alpha_k g_k$
+        \end{itemize}
+    \textbf{Fin Tant que}\\
+\end{algorithm}
+
+
+On pose $f^k_{best} = \underset{j \in \{1, \dots, k\}}{\text{min }} f(x_j)$ avec $x_j \in \mathcal{C}$\\
+
+On suppose de plus que : $\exists x_l \in \mathbb{R}^n$ tel que $\forall i \in \{1, \dots, p\}$, $f_i(x_l) < 0$ et $f(x_l) \neq f(x^*)$ (avec $x^*$ solution de (\ref{eq:pb3}))\\
+
+Avec $(\alpha_l)$ tel que :
+$
+\begin{cases}
+    \forall l \in \mathbb{N}^*, \alpha_l > 0\\
+    \sum \alpha_l = \infty\\
+    \sum \alpha_l^2 < \infty\\
+\end{cases}
+$\\
+
+Alors $f^k_{best} \xrightarrow[k \rightarrow \infty]{} f(x^*)$\\
+
+\noindent\underline{Preuve :}\\
+Supposons le contraire : $\exists \varepsilon > 0$ tel que $\forall N \in \mathbb{N}$, $\exists k \geq N$ tel que $f^k_{best} \geq f(x^*) + \varepsilon$\\
+En particulier, $f^N_{best} \geq f^k_{best} \geq f(x^*) + \varepsilon, \forall N \in \mathbb{N}$\\
+
+Soit $\lambda \in [0, 1]$. On pose $\tilde{x} = (1 - \lambda) x^* + \lambda x_l \in \mathcal{C}$ (par convexité de $\mathcal{C}$)
+\begin{align*}
+    \text{Par convexité de } f, \qquad f(\tilde{x}) &\leq (1 - \lambda) f(x^*) + \lambda f(x_l) \hspace{14.5cm}\\
+    &\leq f(x^*) + \lambda (f(x_l) - f(x^*))\\
+\end{align*}
+
+\textit{Texte manquant}\\
+
+
+$\forall i \in \{1, \dots, p\}$, $f_i(\tilde{x}) \leq (1 - \lambda) f_i(x^*) + \lambda f_i(x_e) \quad \text{ par convexité de } f_i$\\
+Or, $f_i(x^*) \leq 0$ car $x^* \in \mathcal{C}$ et $f_i(x_l) < 0$ par définition de $x_l$\\
+
+\begin{align*}
+    f_i(\tilde{x}) &\leq \lambda f_i(x_l) \hspace{14.5cm}\\
+    &\leq \lambda \underset{i \in \{1, \dots, p\}}{\text{max }} f_i(x_l)\\
+    &\leq - \mu \qquad \text{ avec } \mu = \lambda \underset{i \in \{1, \dots, p\}}{\text{max }} f_i(x_l) > 0\\
+\end{align*}
+
+D'où $\exists (\tilde{x}, \mu) \in \mathcal{C} \times \mathbb{R}_+^*$ tel que
+$
+\begin{cases}
+    f(\tilde{x}) \leq f(x^*) + \frac{\varepsilon}{2}\\
+    \forall i \in \{1, \dots, p\}, f_i(\tilde{x}) \leq - \mu\\
+\end{cases}
+$\\
+
+\begin{align*}
+    \forall k \in \mathbb{N}, \qquad ||x_{k+1} - \tilde{x}||_2^2 &= ||x_k - \alpha_k g_k - \tilde{x}||_2^2 \hspace{14.5cm}\\
+    &= ||x_k - \tilde{x}||_2^2 - 2 \alpha_k g_k^T (x_k - \tilde{x}) + \alpha_k^2 ||g_k||_2^2\\
+\end{align*}
+
+\begin{itemize}
+    \item 1er cas : $x_k \in \mathcal{C}$\\
+    Alors $g_k \in \partial f(x_k)$ et $||x_{k+1} - \tilde{x}||_2^2 \leq ||x_k - \tilde{x}||_2^2 - 2 \alpha_k (f(x_k) - f(\tilde{x})) + \alpha_k^2 ||g_k||_2^2$\\
+    Or, $x_k \in \mathcal{C}$ 
+\end{itemize}
+
+\textit{Texte manquant}\\
+
+
+
+
+\section{Méthodes proximales}
+
+\subsection{Fonction proximale}
+
+Soit $h : \mathbb{R}^n \rightarrow \mathbb{R}$ convexe. On définit la fonction proximale de $h$, noté \textit{prox}$_h$, par :\\
+\begin{equation}
+    \forall x \in \mathbb{R}^n, \quad \text{prox}_h(x) = \underset{u \in \mathbb{R}^n}{\text{argmin }} \left\{ h(u) + \frac{1}{2} ||u - x||_2^2 \right\}
+    \label{eq:prox}
+\end{equation}
+
+\noindent\underline{Exemple :}
+\begin{enumerate}[label=\roman*)]
+    \item $h = 0$ alors $\forall x \in \mathbb{R}^n$, $\text{prox}_h(x) = x$\\
+    
+    \item \textit{Texte manquant}\\
+
+    \item $\forall x \in \mathbb{R}^n, h(x) = \lambda ||x||_1$ avec $\lambda > 0$\\
+    Alors prox$_h$ est appelé \textit{Seuillage doux}, et est défini par :\\
+    \begin{equation}
+        \forall i \in \{1, \dots, n\}, \quad \left[ \text{prox}_h(x) \right]_i = \begin{cases}
+            x_i - \lambda &\text{ si } x_i > \lambda\\
+            0 &\text{ si } |x_i| \leq \lambda\\
+            x_i + \lambda &\text{ si } x_i < -\lambda\\
+        \end{cases}
+    \end{equation}
 \end{enumerate}
 
 
+\subsection{Méthode du gradient proximal}
+On s'intéresse au problème d'optimisation suivant :\\
+\begin{equation}
+    \underset{x \in \mathbb{R}^n}{\text{min }} f(x) = g(x) + h(x) 
+    \label{eq:pb4}
+\end{equation}
+Avec : \begin{itemize}
+    \item $g$ convexe et dérivable sur $\mathbb{R}^n$
+    \item $h$ convexe, potentiellement non-lisse (mais telle que prox$_h$ soit facile à calculer)
+\end{itemize}
+
+\begin{algorithm}
+    \SetAlgoLined
+    \textbf{Entrées :} $x_0 \in \mathbb{R}^n$\\
+    \textbf{Tant que}\\
+    \begin{itemize}
+        \item $x_{k+1} = \text{prox}_{\alpha_k} h (x_k - \alpha_k \nabla g(x_k))$       
+    \end{itemize}
+\end{algorithm}
+
+et $\alpha_k$ obtenue depuis :
+\begin{enumerate}[label=\roman*)]
+    \item $\forall k \in \mathbb{N}, \alpha_k = \alpha > 0$ (pas constant)
+    \item Recherche linéaire
+\end{enumerate}
+
+\noindent\underline{Exemple :}
+\begin{enumerate}[label=\roman*)]
+    \item $h = 0 : x_{k+1} = x_k - \alpha_k \nabla g(x_k)$ (méthode de descente de gradient)
+    \item $h(x) = \begin{cases}
+        1 \text{ si } x \in \mathcal{C} \qquad \text{ avec } \mathcal{C} \text{ convexe fermée non-vide de } \mathbb{R}^n\\
+        + \infty \text{ sinon}\\
+    \end{cases}$
+    $x_{k+1} = \Pi_{\mathcal{C}}(x_k - \alpha_k \nabla g(x_k))$ (méthode du gradient projeté)
+    \item $h(x) = \lambda ||x||_1$ avec $\lambda > 0$\\
+    Seuillage doux pour minimiser $f(x) = g(x) + \lambda ||x||_1$\\
+\end{enumerate}
 
 
+\noindent\underline{\textbf{Remarque :}}
+\begin{enumerate}[label=\roman*)]
+    \item \begin{align*}
+        x_{k+1} &= \underset{u \in \mathbb{R}^n}{\text{argmin }} \left\{\alpha_k h(u) + \frac{1}{2} ||u - x_k + \alpha_k \nabla g(x_k)||_2^2 \right\}\\
+        &= \underset{u \in \mathbb{R}^n}{\text{argmin }} \left\{h(u) + \frac{1}{2 \alpha_k} ||u - x_k||_2^2 + 2 \alpha_k \nabla g(x_k)^T (u - x_k) + \alpha^2 ||\nabla g(x_k)||_2^2 \right\}\\
+        &= \underset{u \in \mathbb{R}^n}{\text{argmin }} \left\{h(u) + g(x_k) + \nabla g(x_k)^T (u - x_k) + \frac{1}{2 \alpha_k} ||u - x_k||_2^2 + \frac{\alpha_k}{2} ||\nabla g(x_k)||_2^2 \right\}\\
+        &= \underset{u \in \mathbb{R}^n}{\text{argmin }} \left\{h(u) + g(x_k) + \nabla g(x_k)^T (u - x_k) + \frac{1}{2 \alpha_k} ||u - x_k ||_2^2 \right\}\\
+    \end{align*}
+    Avec : $g(x_k) + \nabla g(x_k)^T (u - x_k) + \frac{1}{2 \alpha_k} ||u - x_k||_2^2$ LE modèle quadratique \textit{dégénéré} de $g$ en $x_k$\\
+    \item $u = \text{prox } h(x) \Leftrightarrow 0 \in \partial \rho (u)$ avec $\rho (u) = h(u) + \frac{1}{2} ||u - x||_2^2$\\
+    $\Leftrightarrow 0 \in \partial h(u) + \left\{u - x \right\}$\\
+    $\Leftrightarrow x - u \in \partial h(u)$\\
+    \item La méthode du gradient proximal peut se réécrire :\\
+    $x_{k+1} = x_k + \alpha_k G_{\alpha_k} (x_k)$ avec $G_{\alpha_k}(x) = \frac{1}{\alpha} (x - \text{prox } \alpha h(x - \alpha \nabla g(x)))$\\
+    
+    \begin{align*}
+        \text{En effet, } \qquad &x_k - \alpha_k G_{\alpha_k}(x_k) = \text{prox } \alpha_k h(x_k - \alpha_k \nabla g(x_k))\\
+        &\Leftrightarrow x_k \alpha_k \nabla g(x_k) - x_k + \alpha_k G_{\alpha_k}(x_k) \in \partial \alpha_k h(x_k - \alpha_k G_{\alpha_k}(x_k)) \qquad \text{ par ii)} \hspace{14.5cm}\\
+        &\Leftrightarrow \alpha_k \left[ G_{\alpha_k}(x_k) - \nabla g(x_k) \right] \in \partial \alpha_k h(x_k - \alpha_k G_{\alpha_k}(x_k))\\
+        &\Leftrightarrow G_{\alpha_k}(x_k) - \nabla g(x_k) \in \partial h(x_k - \alpha_k G_{\alpha_k}(x_k))\\
+        &\Leftrightarrow G_{\alpha_k}(x_k) \in \partial h(x_k - \alpha_k G_{\alpha_k}(x_k)) + \left\{ \nabla g(x_k) \right\}
+    \end{align*}
+    De plus, $G_{\alpha_k}(x_k) = 0 \Leftrightarrow 0 \in \partial h(x_k) + \left\{ \nabla g(x_k) \right\} \Leftrightarrow x_k$ est un minimum de $f$\\
+
+    D'où : tout point fixe de la suite des itérés du gradient proximal est un minimum de $f$\\    
+\end{enumerate}
+
+
+\subsection{Recherche linéaire (choix des pas) et convergence de l'algorithme}
+
+
+\begin{algorithm}
+    Recherche linéaire : backtracking et condition d'arrêt modifiée\\
+    \SetAlgoLined
+    \textbf{Entrées :} $\alpha_0 > 0$, $\beta \in ]0, 1[$, $x_k \in \mathbb{R}^n$, $\nabla g(x_k) \in \mathbb{R}^n$\\
+    \textbf{Tant que}\\
+    \begin{itemize}
+        \item $\alpha_{l+1} = \beta \alpha_l$
+        \item Critère d'arrêt : $g(x_k - \alpha_l G_{\alpha_l}(x_k)) \leq g(x_k) - \alpha_l G_{\alpha_l}(x_k)^T \nabla g(x_k) + \frac{\alpha_l}{2} ||G_{\alpha_l}(x_k)||_2^2$\\
+    \end{itemize}
+    \textbf{Fin Tant que}\\
+\end{algorithm}
+
+
+\propriete{}{
+    On suppose que $\nabla g$ est $L$-lipschitzienne avec $L > 0$ :\\
+    $\forall (x, y) \in (\mathbb{R}^n)^2, ||\nabla g(x) - \nabla g(y)||_2 \leq L ||x - y||_2$\\
+    Alors l'algorithme de recherche linéaire s'arrête sur $\alpha_l \geq \text{min } (\alpha_0, \frac{\beta}{L}) := \alpha_{min}$
+}
+
+\noindent\underline{Preuve :}\\
+$\nabla g$ est $L$-lipschitzienne $\Rightarrow \forall (x, y) \in (\mathbb{R}^n)^2, g(y) \leq g(x) + \nabla g(x)^T (y - x) + \frac{L}{2} ||y - x||_2^2$\\
+$\Rightarrow g(x_k - \alpha_l G_{\alpha_l}(x_k)) \leq g(x_k) - \alpha_l G_{\alpha_l}(x_k)^T \nabla g(x_k) + \frac{L}{2} \alpha_l^2 ||G_{\alpha_l}(x_k)||_2^2$\\
+
+\noindent La condition est valide pour tout $\alpha_l \in ]0, \frac{1}{L}[$\\
+Donc à l'arrêt de la recherche linéaire, $\alpha_l \geq \text{min } (\alpha_0, \frac{\beta}{L})$\\
+
+
+\propriete{}{
+    On suppose que $\nabla g$ est $L$-lipschitzienne. A l'arrêt de la recherche linéaire ($\alpha_k, G_{\alpha_k}(x_k)$), on a :\\
+    $\forall z \in \mathbb{R}^n, \quad f(x_k - \alpha_k G_{\alpha_k}(x_k)) \leq f(z) + G_{\alpha_k}(x_k)^T (x_k - z) - \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2$
+}
+
+\noindent\underline{Preuve :}
+Par définition du critère d'arrêt de la recherche linéaire :
+\begin{align*}
+    g(x_k - \alpha_k G_{\alpha_k}(x_k)) &\leq g(x_k) - \alpha_k G_{\alpha_k}(x_k)^T \nabla g(x_k) + \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2 \hspace{14.5cm}\\
+    &\leq g(x_k) + \alpha_k G_{\alpha_k}(x_k)^T (G_{\alpha_k}(x_k) - \nabla g(x_k)) - \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2
+\end{align*}
+
+On a : $G_{\alpha_k}(x_k) - \nabla g(x_k) \in \partial h(x_k - \alpha_k G_{\alpha_k}(x_k))$\\
+Donc : $\forall z \in \mathbb{R}^n, h(z) \geq [G_{\alpha_k}(x_k) - \nabla g(x_k)]^T (z - x_k + \alpha_k G_{\alpha_k}(x_k)) + h(x_k - \alpha_k G_{\alpha_k}(x_k))$\\
+
+De plus,
+\begin{align*}
+    g(x_k - \alpha_k G_{\alpha_k}(x_k)) + h(x_k - \alpha_k G_{\alpha_k}(x_k)) \leq g(x_k) &+ h(x_k - \alpha_k G_{\alpha_k}(x_k))\\
+    &+ \alpha_k G_{\alpha_k}(x_k)^T (G_{\alpha_k}(x_k) - \nabla g(x_k))\\
+    &- \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2 \hspace{14.5cm}\\
+    \Leftrightarrow f(x_k - \alpha_k G_{\alpha_k}(x_k)) \leq g(x_k) &+ h(x_k - \alpha_k G_{\alpha_k}(x_k))\\
+    &+ \alpha_k G_{\alpha_k}(x_k)^T (G_{\alpha_k}(x_k) - \nabla g(x_k))\\
+    &- \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2
+\end{align*}
+
+Or, $h(x_k - \alpha_k G_{\alpha_k}(x_k)) \leq h(z) + [G_{\alpha_k}(x_k) - \nabla g(x_k)]^T (x_k - z - \alpha_k G_{\alpha_k}(x_k))$\\
+\begin{align*}
+    \Rightarrow f(x_k - \alpha_k G_{\alpha_k}(x_k)) \leq g(x_k) &+ h(z) + \alpha_k G_{\alpha_k}(x_k)^T (G_{\alpha_k}(x_k) - \nabla g(x_k))\\
+    &+ [G_{\alpha_k}(x_k) - \nabla g(x_k)]^T (x_k - z - \alpha_k G_{\alpha_k}(x_k))\\
+    &- \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2 \hspace{14.5cm}\\
+\end{align*}
+
+$f(x_k - \alpha_k G_{\alpha_k}(x_k)) \leq g(x_k) + h(z) + [G_{\alpha_k}(x_k) - \nabla g(x_k)]^T (x_k - z) - \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2$\\
+
+Or, $g$ est convexe et dérivable sur $\mathbb{R}^n$ d'où :
+$\forall z \in \mathbb{R}^n, g(z) \geq \nabla g(x_k)^T (z - x_k) + g(x_k)$\\
+$\Rightarrow g(x_k) \leq g(z) + \nabla g(x_k)^T (x_k - z)$\\
+
+
+\textit{Texte manquant}\\
 
 
 \end{document}
