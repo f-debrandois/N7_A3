@@ -11,6 +11,7 @@
 \usepackage{mathtools}
 \usepackage{fancyhdr}
 \usepackage{enumitem}
+\usepackage{tcolorbox}
 \usepackage[text={15cm,24.5cm},centering]{geometry}
 
 
@@ -118,15 +119,15 @@ On notera $\omega_n^*$ n’importe quel minimiseur (sous réserve d’existence)
     \begin{align*}
         E(\omega) &= \mathbb{E}_{(X, Y)} \left[l(X, Y)\right] \hspace{14.5cm}\\
         &= \mathbb{E}_{(X, Y)} \left[\frac{1}{2} (\langle \omega, X \rangle - Y)^2\right] \\
-        &= \frac{1}{2} \mathbb{E}_{(X, Y)} \left[(\langle \omega, X \rangle - \langle \theta, X \rangle - B)^2\right] \\
-        &= \frac{1}{2} \mathbb{E}_{(X, Y)} \left[(\langle \omega - \theta, X \rangle - B)^2\right] \\
-        &= \frac{1}{2} \mathbb{E}_{(X, Y)} \left[\langle \omega - \theta, X \rangle ^2 \right]
-        - \mathbb{E}_{(X, Y)} \left[\langle \omega - \theta, X \rangle B\right] 
-        + \frac{1}{2} \mathbb{E}_{(X, Y)} \left[B^2\right] \\
-        &= \frac{1}{2} \mathbb{E}_{(X, Y)} \left[\langle \omega - \theta, X \rangle ^2 \right]
-        - \mathbb{E}_{(X, Y)} \left[\langle \omega - \theta, X \rangle \right] \mathbb{E}_{(X, Y)} \left[B\right]
+        &= \frac{1}{2} \mathbb{E} \left[(\langle \omega, X \rangle - \langle \theta, X \rangle - B)^2\right] \\
+        &= \frac{1}{2} \mathbb{E} \left[(\langle \omega - \theta, X \rangle - B)^2\right] \\
+        &= \frac{1}{2} \mathbb{E} \left[\langle \omega - \theta, X \rangle ^2 \right]
+        - \mathbb{E} \left[\langle \omega - \theta, X \rangle B\right] 
+        + \frac{1}{2} \mathbb{E} \left[B^2\right] \\
+        &= \frac{1}{2} \mathbb{E} \left[\langle \omega - \theta, X \rangle ^2 \right]
+        - \mathbb{E} \left[\langle \omega - \theta, X \rangle \right] \mathbb{E} \left[B\right]
         + \frac{1}{2} Var(B) \\
-        &= \frac{1}{2} \mathbb{E}_{(X, Y)} \left[\langle \omega - \theta, X \rangle ^2 \right]
+        &= \frac{1}{2} \mathbb{E} \left[\langle \omega - \theta, X \rangle ^2 \right]
         + \frac{\sigma^2 }{2} \\
     \end{align*}
     
@@ -315,6 +316,22 @@ $$
     \end{align*}
 
     \color{blue}
+    \begin{align*}
+        \text{On a : } \qquad E(\omega) &= \frac{1}{2} (\omega - \theta)^T \mathbb{E} \left[X X^T \right] (\omega - \theta) + \frac{\sigma^2 }{2} \hspace{14.5cm}\\
+        &= \frac{1}{2} (\omega^T \mathbb{E} \left[X X^T \right] - \theta^T \mathbb{E} \left[X X^T \right]) (\omega - \theta) + \frac{\sigma^2 }{2} \\
+        &= \frac{1}{2} ( \langle \omega, \mathbb{E} \left[X X^T \right] \omega \rangle - \langle \theta, \mathbb{E} \left[X X^T \right] \omega \rangle \\
+        &\qquad - \langle \omega, \mathbb{E} \left[X X^T \right] \theta \rangle + \langle \theta, \mathbb{E} \left[X X^T \right] \theta \rangle ) + \frac{\sigma^2 }{2} \\
+        \text{et } \qquad E_n(\omega) &= \frac{1}{2n} \sum_{i = 1}^{n} (\langle \omega, x_i \rangle - y_i)^2 \\
+        &= \frac{1}{2n} \sum_{i = 1}^{n} (\langle \omega, x_i \rangle^2 + y_i^2 - 2 \langle \omega, x_i \rangle y_i) \\
+        &= \frac{1}{2n} \sum_{i = 1}^{n} (\langle \omega, x_i x_i^T \omega \rangle + y_i^2 - 2 \langle \omega, y_i x_i \rangle) \\
+    \end{align*}
+
+    Donc :
+    \begin{align*}
+        |E_n(\omega) - E(\omega)| &= \frac{1}{2n} 
+        &\textit{Texte Manquant}
+    \end{align*}
+
 
     \color{black}
     \item Borner la valeur absolue des erreurs ci-dessus en espérance.
@@ -322,12 +339,77 @@ $$
     Que conclure sur le taux de convergence de $\mathcal{E}_{est}$ vers $0$ ?
 
     \color{blue}
+    On pose :
+    \begin{align*}
+        |\mathbb{E}_c| &= \text{sup } |\mathbb{E}(\langle \omega, \left(\frac{1}{n} \sum_{i = 1}^{n} x_i x_i^T - \mathbb{E}\left[ XX^T \right]\right) \omega \rangle)| \hspace{14.5cm}\\
+        &= \text{sup } |\mathbb{E}(\langle \omega, \left(\frac{1}{n} \sum_{i = 1}^{n} Z_i \omega \right) \rangle)| \text{ avec } Z_i = x_i x_i^T - \mathbb{E}(XX^T)
+    \end{align*}
 
-    \color{black}    
+
+\textit{Texte Manquant}
+
+\color{black}    
 \end{enumerate}
 
 
+\section{Questions d’optimisation stochastique}
 
+Dans cette partie, on suppose que $i_k$ est un indice aléatoire tiré uniformément dans l’ensemble $\{1, \dots , n\}$.
+
+\begin{enumerate}
+    \color{black}
+    \item Est-ce que $E_n$ est fortement convexe ?
+    
+    \color{blue}
+    On a : $E_n(\omega) = \frac{1}{2n} \sum_{i = 1}^{n} (\langle \omega, x_i \rangle - y_i)^2$.\\
+    Son gradient est : $\nabla E_n(\omega) = \frac{1}{n} X(X^T \omega - Y)$.\\
+    Sa hessienne est : $\text{H}_{E_n}(\omega) = \frac{1}{n} X X^T$.\\
+    Si $\lambda_{min}(X X^T) > 0$, alors $E_n$ est strictement convexe.\\
+
+    \color{black}
+    \item Soit $f_i(\omega) = \frac{1}{2}||\langle \omega, x_i \rangle - y_i||_2^2$.
+    Calculer $\nabla f_i(\omega)$.
+
+    \color{blue}
+    On a : $f_i(\omega) = \frac{1}{2}||\langle \omega, x_i \rangle - y_i||_2^2$.\\
+    Donc : $\nabla f_i(\omega) = x_i(x_i^T \omega - y_i)$.\\
+
+    \color{black}
+    \item Calculer $\mathbb{E}_{i_k} (\nabla f_{i_k} (\omega))$.
+    
+    \color{blue}
+    On a : $\mathbb{E}_{i_k} \left[\nabla f_{i_k} (\omega)\right] = \mathbb{E} \left[x_{i_k}(x_{i_k}^T \omega - y_{i_k})\right]
+    = \mathbb{E} \left[x_{i_k}x_{i_k}^T \right] \omega - \mathbb{E} \left[x_{i_k}y_{i_k}\right]$.\\
+
+    \color{black}
+    \item Calculer la constante de Lipschitz $L$ de $\nabla E_n(\omega)$.
+    
+    \color{blue}
+    Soit $f$ une fonction L-lipschitzienne.\\
+    $\forall x, y \in \mathbb{R}^d, \quad ||f(x) - f(y)||_2 \leq L ||x - y||_2$.\\
+
+    \begin{align*}
+        \text{On a : } ||\nabla E_n(\omega) - \nabla E_n(\omega')||_2 &= ||\frac{1}{n} XX^T (\omega - \omega')||_2 \hspace{14.5cm}\\
+        &\leq ||\frac{1}{n} XX^T||_2 ||\omega - \omega'||_2
+    \end{align*}
+
+    Donc : $L = ||\frac{1}{n} XX^T||_2$ (c'est la norme spectrale de la matrice $\frac{1}{n} XX^T$, qui est égale à sa plus grande valeur propre).\\
+
+    \color{black}
+    \item Calculer $\mathbb{E}_{i_k} (||\nabla f_{i_k} (\omega)||_2^2)$ en fonction de $||\nabla E_n(\omega)||_2^2$.
+    
+    \color{blue}
+    \begin{align*}
+        \mathbb{E}_{i_k} \left[||\nabla f_{i_k} (\omega)||_2^2\right] &= \mathbb{E}_{i_k} \left[||x_{i_k}(x_{i_k}^T \omega - y_{i_k})||_2^2\right] \hspace{14.5cm}\\
+        &= \mathbb{E}_{i_k} \left[ \langle x_{i_k}(x_{i_k}^T \omega - y_{i_k}), x_{i_k}(x_{i_k}^T \omega - y_{i_k}) \rangle \right] \\
+        &= \mathbb{E}_{i_k} \left[ \langle x_{i_k}x_{i_k}^T \omega, x_{i_k}x_{i_k}^T \omega \rangle - 2 \langle x_{i_k}x_{i_k}^T \omega, x_{i_k}y_{i_k} \rangle + \langle x_{i_k}y_{i_k}, x_{i_k}y_{i_k} \rangle \right] \\
+        &= \langle \mathbb{E}_{i_k} \left[ x_{i_k}x_{i_k}^T \right] \omega, \mathbb{E}_{i_k} \left[ x_{i_k}x_{i_k}^T \right] \omega \rangle \\
+        &\qquad - 2 \langle \mathbb{E}_{i_k} \left[ x_{i_k}x_{i_k}^T \right] \omega, \mathbb{E}_{i_k} \left[ x_{i_k}y_{i_k} \right] \rangle \\
+        &\qquad + \langle \mathbb{E}_{i_k} \left[ x_{i_k}y_{i_k} \right], \mathbb{E}_{i_k} \left[ x_{i_k}y_{i_k} \right] \rangle \\
+    \end{align*}
+
+    \color{black}
+\end{enumerate}
 
 
 \end{document}
