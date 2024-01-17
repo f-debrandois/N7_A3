@@ -941,5 +941,82 @@ $\Rightarrow g(x_k) \leq g(z) + \nabla g(x_k)^T (x_k - z)$\\
 \textit{Texte manquant}\\
 
 
+\noindent \underline{Convergence :}\\
+On suppose que $\nabla g$ est $L$-lipschitzienne.\\
+On suppose également que $\forall k \in \mathbb{N}, \alpha_k = \frac{1}{L}$ ou $\alpha_k$ est obtenu à partir de l'algorithme de recherche linéaire.\\
+
+\noindent $\forall z \in \mathbb{R}^n, \quad f(x_{k+1}) \leq f(z) + G_{\alpha_k}(x_k)^T (x_k - z) - \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2$\\
+\begin{itemize}
+    \item Avec $z = x_k$ : $f(x_{k+1}) \leq f(x_k) - \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2$\\
+    Si $x_k$ n'est pas un minimum de $f$, alors $||G_{\alpha_k}(x_k)||_2^2 \neq 0$ (méthode de descente)\\
+
+    \item Avec $z = x^*$ : $f(x_{k+1}) \leq f(x^*) + G_{\alpha_k}(x_k)^T (x_k - x^*) - \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2$\\
+    $\Rightarrow 0 \leq f(x_{k+1}) - f(x^*) \leq G_{\alpha_k}(x_k)^T (x_k - x^*) - \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2$
+\end{itemize}
+
+\begin{align*}
+    \text{Or, } \qquad ||x_k - x^*||_2^2 - ||x_{k+1} - x^*||_2^2 &= ||x_k - x^*||_2^2 - ||x_k - \alpha_k G_{\alpha_k}(x_k) - x^*||_2^2 \hspace{14.5cm}\\
+    &= 2 \alpha_k G_{\alpha_k}(x_k)^T (x_k - x^*) - \alpha_k^2 ||G_{\alpha_k}(x_k)||_2^2\\
+    &= 2 \alpha_k \left[ G_{\alpha_k}(x_k)^T (x_k - x^*) - \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2 \right]
+\end{align*}
+$\Rightarrow G_{\alpha_k}(x_k)^T (x_k - x^*) - \frac{\alpha_k}{2} ||G_{\alpha_k}(x_k)||_2^2 = \frac{1}{2 \alpha_k} \left[ ||x_k - x^*||_2^2 - ||x_{k+1} - x^*||_2^2 \right]$\\
+
+Et donc : $0 \leq f(x_{k+1}) - f(x^*) \leq \frac{1}{2 \alpha_k} \left[ ||x_k - x^*||_2^2 - ||x_{k+1} - x^*||_2^2 \right]$\\
+
+D'où : $0 \leq \underset{l = 0}{\overset{k-1}{\sum}}\left[ f(x_{l+1}) - f(x^*) \right] \leq \frac{1}{2} \underset{l = 0}{\overset{k-1}{\sum}} \frac{1}{\alpha_l} \left[ ||x_l - x^*||_2^2 - ||x_{l+1} - x^*||_2^2 \right]$\\
+$x^*$ est un minimum de $f$ sur $\mathbb{R}^n \Leftrightarrow \forall z \in \mathbb{R}^n, f(z) \geq f(x^*)$\\
+
+
+En posant $f_{best}^k = \underset{l \in \{0, \dots, k\}}{\text{min }} f(x_l)$, on a :\\
+$0 \leq k(f_{best}^k - f(x^*)) \leq \frac{1}{2} \underset{l = 0}{\overset{k-1}{\sum}} \frac{1}{\alpha_l} \left[ ||x_l - x^*||_2^2 - ||x_{l+1} - x^*||_2^2 \right]$\\
+
+En posant $\alpha^* = \begin{cases}
+    \frac{1}{L} \text{ si stratégie de pas constant}\\
+    \alpha_{min} \text{ si recherche linéaire}\\
+\end{cases}$, on a :\\
+
+$0 \leq k(f_{best}^k - f(x^*)) \leq \frac{1}{2 \alpha^*} ||x_0 - x^*||_2^2$\\
+
+Soit $R \geq ||x_0 - x^*||_2^2$ :\\
+Alors $0 \leq f_{best}^k - f(x^*) \leq \frac{R^2}{2 \alpha^*} \frac{1}{k}$\\
+
+Donc $f_{best}^k \xrightarrow[k \rightarrow \infty]{} f(x^*)$\\
+
+
+On atteint $0 \leq f_{best}^k - f(x^*) \leq \varepsilon$ (avec $\varepsilon > 0$) au plus tard si $k \geq \frac{2 \alpha^*}{R^2} \frac{1}{\varepsilon}$\\
+Donc $\mathcal{O}(\frac{1}{\varepsilon})$ itérations pour atteindre la précision $\varepsilon$ sur la valeur de $f(x^*)$\\
+
+
+\subsection{Méthode accélérée du gradient proximal}
+Sous les mêmes hypothèses que la méthode du gradient proximal, on pose l'algorithme suivant : (algorithme FISTA : Fast Iterative Shrinkage-Thresholding Algorithm)\\
+
+\begin{algorithm}
+    \SetAlgoLined
+    \textbf{Entrées :} $x_0 \in \mathbb{R}^n$\\
+    $y_0 = x_0$\\
+    \textbf{Tant que}\\
+    \begin{itemize}
+        \item $x_k = \text{prox } \alpha_k h (y_{k-1} - \alpha_k \nabla g(y_{k-1}))$
+        \item $y_k = x_k + \frac{k-1}{k+2} (x_k - x_{k-1})$
+    \end{itemize}
+    \textbf{Fin Tant que}\\
+\end{algorithm}
+
+Algorithme de recherche linéaire :\\
+
+\begin{algorithm}
+    \SetAlgoLined
+    \textbf{Entrées :} $t_0 = \alpha_{k-1}$, $\beta \in ]0, 1[ $\\
+    \textbf{Tant que}\\
+    \begin{itemize}
+        \item $t_l = \beta t_{l-1}$
+        \item Critère d'arrêt : $g(y_{k-1} - t_l \nabla g(y_{k-1})) \leq g(y_{k-1}) - t_l G_{t_l}(y_{k-1})^T \nabla g(y_{k-1}) + \frac{t_l}{2} ||G_{t_l}(y_{k-1})||_2^2$\\
+    \end{itemize}
+    \textbf{Fin Tant que}\\
+\end{algorithm}
+
+
+
+
 
 \end{document}
