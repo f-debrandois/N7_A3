@@ -1,0 +1,126 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}		       
+\usepackage{lmodern}			       
+\usepackage{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{algorithm2e}
+\usepackage[text={15cm,24.5cm},centering]{geometry}
+
+% Définir le texte affiché en fin de page
+\pagestyle{fancy}
+\fancyhf{}  % Clear the default headers and footers
+\rfoot{\hrule
+    \vspace{0.3cm}
+    \noindent\textsf{Félix de Brandois}
+    \hfill \thepage
+}
+\renewcommand{\headrulewidth}{0pt}
+
+% Style de l'entete
+\newcommand{\entete}{
+    \noindent\textbf{INSA - ModIA, 4$^e$ année.}
+    \hfill \textbf{Années 2023-2024}
+    
+    \begin{center}
+        \textbf{\LARGE Projet d'EDP}
+    \end{center}
+}
+
+
+
+\begin{document}
+
+\entete
+
+\vspace{0.5cm}
+
+
+\section*{Approximation spatiale du Laplacien}
+
+\begin{enumerate}
+    \item \dots
+    \item \dots
+    
+
+    \item \begin{itemize}
+        \item Intérieur : $\mu \frac{-u_{i+1, j} + 2u_{i,j} - u_{i-1,j}}{h_x^2} + \mu \frac{-u_{i, j+1} + 2u_{i,j} - u_{i,j-1}}{h_y^2} = f(x_i, y_j)$
+        \item Côté gauche : $x = 0 :(i = 0, j \in [0, N_{y+1}]) \quad u_{0, j} = 0$
+        \item Côté droit : $x = a :(i = N_{x+1}, j \in [0, N_{y+1}]) \quad u_{N_{x+1}, j} = 0$
+        \item Côté haut : $y = b :(i \in [0, N_{x+1}], j = N_{y+1}) \quad u_{i, N_{y+1}} = 0$
+        \item Côté bas : $y = 0 :(i \in [0, N_{x+1}], j = 0) \quad u_{i, 0} = 0$
+    \end{itemize}
+
+    On pose sous forme matricielle : $AU = F$ avec $u_{i,j}$ l'approximation par le schéma de $u(x_i, y_j)$ et :\\
+
+    $U = \begin{pmatrix}
+        u_{0,0} \\
+        u_{1,0} \\
+        \vdots \\
+        u_{N_x+1,0} \\
+        u_{0,1} \\
+        \vdots \\
+        u_{N_x+1,N_y+1}
+    \end{pmatrix} = \begin{pmatrix}
+        U_0 \\
+        U_1 \\
+        \vdots \\
+        U_{N_y+1}
+        \end{pmatrix} \in \mathbb{R}^{(N_x+2)(N_y+2)}$ (vecteur colonne)\\
+
+    $F = \begin{pmatrix}
+        f(x_0, y_0) \\
+        f(x_1, y_0) \\
+        \vdots \\
+        f(x_{N_x+1}, 0) \\
+        f(x_0, y_1) \\
+        \vdots \\
+        f(x_{N_x+1}, y_{N_y+1})
+    \end{pmatrix} \in \mathbb{R}^{(N_x+2)(N_y+2)}$ (vecteur colonne)\\
+
+    On a donc :
+    \begin{itemize}
+        \item $A = \begin{pmatrix}
+            I_d & 0 & 0 & \dots & 0 \\
+            C & B & C & \ddots & \vdots \\
+            0 & \ddots & \ddots & \ddots & 0 \\
+            \vdots & \ddots & C & B & C \\
+            0 & \dots & 0 & 0 & I_d
+        \end{pmatrix} \in \mathbb{R}^{(N_x+2)(N_y+2) \times (N_x+2)(N_y+2)}$ (matrice creuse)
+
+        \item $B = \begin{pmatrix}
+            1 & 0 & \dots & 0 \\
+            -\frac{\mu}{h_x^2} & \frac{2\mu}{h_x^2} + \frac{2\mu}{h_y^2} & -\frac{\mu}{h_x^2} & \ddots & \vdots \\
+            0 & \ddots & \ddots & \ddots & 0 \\
+            \vdots & \ddots & -\frac{\mu}{h_x^2} & \frac{2\mu}{h_x^2} + \frac{2\mu}{h_y^2} & -\frac{\mu}{h_x^2} \\
+            0 & \dots & 0 & 0 & 1
+        \end{pmatrix} \in \mathbb{R}^{(N_x+2) \times (N_y+2)}$
+
+        \item $C = \begin{pmatrix}
+            0 & 0 & \dots & 0 \\
+            0 & -\frac{\mu}{h_y^2} & 0 & \ddots & \vdots \\
+            0 & \ddots & \ddots & \ddots & 0 \\
+            \vdots & \ddots & 0 & -\frac{\mu}{h_y^2} & 0 \\
+            0 & \dots & 0 & 0 & 0
+        \end{pmatrix} \in \mathbb{R}^{(N_x+2) \times (N_y+2)}$
+
+    \end{itemize}
+
+
+
+
+
+\end{enumerate}
+
+
+
+
+\end{document}
