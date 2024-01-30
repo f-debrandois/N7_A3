@@ -31,5 +31,5 @@ _But_ : Construire et entraîner un RNN, étape par étape.
 **TP 8** - [Auto-encodeurs](TP8/TP8_Autoencodeurs.ipynb) <br>
 _But_ : Manipuler des auto-encodeurs sur un exemple simple, la base de données MNIST, et ainsi pouvoir visualiser les concepts vus en cours, et notamment illustrer la notion d'espace latent. <br>
 
-**TP 8** - [Auto-encodeurs](TP9/TP9_VAE_GAN.ipynb) <br>
+**TP 9** - [Modèles génératifs : Auto-encodeurs varationnels & Réseaux antagonistes](TP9/TP9_VAE_GAN.ipynb) <br>
 _But_ : Manipuler des auto-encodeurs varationnels sur un exemple simple, la base de données MNIST, et appliquer celui-ci à la génération de nombres et à la détection d'anomalies. Manipuler des réseaux antagonistes, d'abord un simple réseau unidimensionnel sur des données jouets, puis pour la génération de nouveaux visages.
