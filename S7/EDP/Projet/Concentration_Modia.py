@@ -46,9 +46,9 @@ C = np.zeros(((nx+2), (ny+2)))
 B[0,0] = 1
 B[nx+1,ny+1] = 1
 for i in range(1,nx+1):
-  B[i-1,i] = -mu/hx**2
+  B[i,i-1] = -mu/hx**2
   B[i,i] = 2*mu/hx**2 + 2*mu/hy**2
-  B[i+1,i] = -mu/hx**2
+  B[i,i+1] = -mu/hx**2
 
 for i in range(1,nx+1):
   C[i, i] = -mu/hy**2
@@ -62,6 +62,7 @@ for i in range(1,ny+1):
 
 
 #### Matrice de Convection  (Centré)
+V2Dx = np.zeros(((nx+2)*(ny+2),(nx+2)*(ny+2)))
 
 
 

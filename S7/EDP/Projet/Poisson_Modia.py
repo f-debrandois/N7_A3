@@ -27,22 +27,6 @@ yyint = yy[1:ny+1]
 mu = 1 # Diffusion parameter
 
 #  Matrix system
-"""
-# On Ox
-# Local matrix of size Nx+2 relative to Ox discretization
-Kx = np.zeros((nx+2,nx+2))
-Kx[0,0] = 1
-Kx[nx+1,nx+1] = 1
-for i in range(1,nx+1):
-    Kx[i,i-1] = -mu/hx**2
-    Kx[i,i] = 2*mu/hx**2 + 2*mu/hy**2
-    Kx[i,i+1] = -mu/hx**2
-# Global Matrix of (Ny+2)**2 matrices of size (Nx+2)**2
-K2Dx = 
-"""
-
-
-
 K2D = np.zeros(((nx+2)*(ny+2),(nx+2)*(ny+2)))
 B = np.zeros(((nx+2), (ny+2)))
 C = np.zeros(((nx+2), (ny+2)))
