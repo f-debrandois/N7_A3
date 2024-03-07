@@ -1,0 +1,177 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}		       
+\usepackage{lmodern}			       
+\usepackage{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{stmaryrd}
+\usepackage{dsfont}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage[text={15cm,24.5cm},centering]{geometry}
+
+% Définir le texte affiché en fin de page
+\pagestyle{fancy}
+\fancyhf{}  % Clear the default headers and footers
+\rfoot{\hrule
+    \vspace{0.3cm}
+    \noindent\textsf{Félix de Brandois}
+    \hfill \thepage
+}
+\renewcommand{\headrulewidth}{0pt}
+
+% Style de l'entete
+\newcommand{\entete}{
+    \noindent\textbf{INSA - ModIA, 4$^e$ année.}
+    \hfill \textbf{Années 2023-2024}
+    
+    \begin{center}
+        \textbf{\LARGE Machine Learning}
+    \end{center}
+}
+
+
+% Définir la fonction pour créer une boîte de propriété
+\newcommand{\propriete}[2]{%
+    \begin{tcolorbox}[colback=white,colframe=green!25!white,title=\textbf{Propriété #1}, coltitle=black]
+        #2
+    \end{tcolorbox}
+}
+
+% Définir la fonction pour créer une boîte de définition
+\newcommand{\definition}[2]{%
+    \begin{tcolorbox}[colback=white,colframe=blue!25!white,title=\textbf{Définition #1}, coltitle=black]
+        #2
+    \end{tcolorbox}
+}
+
+% Définir la fonction pour créer une boîte de théorème
+\newcommand{\theoreme}[2]{%
+    \begin{tcolorbox}[colback=white,colframe=red!25!white,title=\textbf{Théorème #1}, coltitle=black]
+        #2
+    \end{tcolorbox}
+}
+
+% Définir la fonction pour créer une boîte de remarque
+\definecolor{customRed}{RGB}{150, 30, 30}
+\newcommand{\remarque}[1]{%
+    \leftline{\noindent
+    \textcolor{customRed}{\vrule width 3pt}\hspace{10pt}%
+    \parbox{0.9\textwidth}{%
+        \textbf{Remarque :}
+        #1
+    }}
+    \vspace{10pt}
+}
+
+% Définir la fonction pour créer une boîte de preuve
+\newcommand{\preuve}[1]{%
+    \begin{quote}
+        $\blacktriangleright$~#1
+    \end{quote}
+}
+
+
+
+\begin{document}
+
+\entete
+
+\vspace{0.5cm}
+
+\section{Introduction}
+
+\subsection{Binary Classification problem}
+
+\begin{tcolorbox}[colback=red!10!white,colframe=red!30!black]
+    \vspace{-\baselineskip}\begin{align*}
+        \text{Find a binary classifier : } \quad h : \mathbb{R}^n &\to \{-1, 1\} \hspace{14.5cm} \\
+        x &\mapsto h(x)\vspace{-\baselineskip}
+    \end{align*}
+    So that $R_D(h) = \mathbb{P}_{(x, y) \sim D} [h(x) \neq y]$ is small.\\
+    With :
+    \begin{itemize}
+        \item $X$ : space of input data (image, text, sound, etc.)
+        \item $Y$ : space of label (e.g. $Y = \{-1, 1\}$)
+        \item $D$ : joint probability distribution of $(x, y) \in X \times Y$
+    \end{itemize}
+\end{tcolorbox}
+
+\fbox{\textbf{$\rightarrow$ Objectif of ML : } Risk Minimization for $h \in H$}\\
+
+\definition{- Test error of $h$}{
+    Let $h \in H$, the test error of $h$ is defined as :
+    \begin{align*}
+        R_D(h) &= \mathbb{E}_{(x, y) \sim D} [\mathds{1}_{h(x) \neq y}] \\
+        &= \int_{X \times Y} \mathds{1}_{h(x) \neq y} \, D(dx, y)
+    \end{align*}
+}
+
+\remarque{
+    Minimal $R_D(h)$ : Bayes Classifier $\% D$\\
+    $h_{\text{Bayes}} = \underset{y \in \{-1, 1\}}{\text{argmax }} \mathbb{P}_{(x, y) \sim D} [y|x]$
+}
+
+\noindent\underline{What is $P_{(x, y) \sim D} [y|x]$ ?}\\
+
+\textbf{Example :} 
+Gaussians mixitures \\
+Let $\mathbb{P}(y = -1) = \pi_0, \qquad 
+\mathbb{P}(y = 1) = 1 - \pi_0$ \\
+$\mathbb{P}(x|y = -1) = \mathcal{N}(\mu_1, \Sigma_1), \qquad 
+\mathbb{P}(x|y = 1) = \mathcal{N}(\mu_2, \Sigma_2)$\\
+
+What are $\mathbb{P}(y = -1|x)$ and $\mathbb{P}(y = 1|x)$ ?\\
+
+Using Bayes' theorem :
+
+\textit{Texte manquant}
+
+
+\theoreme{}{
+    Let $H$ be all measurable functions from $X$ to $\{-1, 1\}$. \\
+    Then, $R_D(h) \geq R_D(h_{\text{Bayes}})$ for all $h \in H$.
+}
+
+\preuve{
+    Assume $D(dx, y) = \mathbb{P}(x | y)dx \cdot \mathbb{P}(y) = \mathbb{P}(y | x)\mathbb{P}(x)dx$
+    \begin{align*}
+        \text{Then : } \quad R_D(h) &= \mathbb{E}_{(x, y) \sim D} [\mathds{1}_{h(x) \neq y}] \\
+        &= \sum_{y \in \{-1, 1\}} \int_X \mathds{1}_{h(x) \neq y} D(dx, y) \\
+        &= \sum_{y \in \{-1, 1\}} \int_X \mathds{1}_{h(x) \neq y} \mathbb{P}(y | x)\mathbb{P}(x)dx \\
+        &= \int_X \mathbb{P}(y = 1 | x) \mathds{1}_{h(x) \neq 1} \mathbb{P}(x)dx + \int_X \mathbb{P}(y = -1 | x) \mathds{1}_{h(x) \neq -1} \mathbb{P}(x)dx \\
+    \end{align*}
+}
+
+\noindent\underline{Why $h_{\text{Bayes}}$ is optimal ?} \\
+
+\textit{Texte manquant}
+
+
+
+\subsection{Linear Classification problem}
+
+In general, $D$ is unknown and $\mathbb{P}(x|y)$ is hard to model, $\mathbb{P}(y)$ prior to choose.\\
+Start from "simple" $H$ : linear classifiers on $x \in \mathbb{R}^n$.
+
+\definition{- Linear classifier}{
+    A linear classifier is a function $h : \mathbb{R}^n \to \{-1, 1\}$ of the form :
+    \begin{align*}
+        h(x) &= \text{sign}(\langle w, x \rangle + b) \\
+        &= \text{sign}(\sum_{i = 1}^n w_i x_i + b)
+    \end{align*}
+    with $w \in \mathbb{R}^n$ and $b \in \mathbb{R}$.
+}
+
+
+
+
+
+\end{document}
