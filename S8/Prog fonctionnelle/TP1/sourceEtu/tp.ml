@@ -127,7 +127,20 @@ Précondition : n >= 0
 Résultat : l'information de si n est premier ou pas
 *)
 
-let estPremier n = failwith "TO DO"
+let estPremier n =
+   let rec aux i =
+      if i = 1 then
+         true
+      else
+         if n mod i = 0 then
+            false
+         else
+            aux (i-1)
+   in
+   if n < 2 then
+      false
+   else
+      aux (int_of_float (sqrt (float_of_int n)))
 
 let%test _ = estPremier 2
 let%test _ = estPremier 3 
@@ -160,7 +173,24 @@ let%test _ = not (estPremier 1)
    Précondition : n positif ou nul
 *)
 
-let dragon (xa,ya) (xb,yb) n = failwith "TO DO"
+let dragon (xa,ya) (xb,yb) n =
+   let rec aux (x1,y1) (x2,y2) n =
+      if n = 0 then
+         moveto x1 y1
+         lineto x2 y2
+      else
+         let xm = (x1+x2)/2 + (y2-y1)/2 in
+         let ym = (y1+y2)/2 + (x1-x2)/2 in
+         aux (x1,y1) (xm,ym) (n-1);
+         aux (xm,ym) (x2,y2) (n-1)
+   in
+   aux (xa,ya) (xb,yb) n
+
+(*  Affichage de la courbe du dragon *)
+let () =
+   dragon (200,350) (600,350) 20
+   
+   (*  Test de la fonction dragon *)
 
 (* let%test_unit _ = dragon (200,350) (600,350) 20; *)
 
