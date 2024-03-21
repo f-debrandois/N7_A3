@@ -1,5 +1,5 @@
-(* open Graphics *)
-(* open Affichage *)
+open Graphics
+open Affichage
 
 (* Exercice 2 *)
 (*  
@@ -160,7 +160,7 @@ let%test _ = not (estPremier 1)
 
 
 (*  Création de l'écran d'affichage *)
-(* let _ = open_graph " 800x600" *)
+let _ = open_graph " 800x600"
 
 (* Exercice 8 *)
 (*  
@@ -176,8 +176,7 @@ let%test _ = not (estPremier 1)
 let dragon (xa,ya) (xb,yb) n =
    let rec aux (x1,y1) (x2,y2) n =
       if n = 0 then
-         moveto x1 y1
-         lineto x2 y2
+         dessine_segment (x1,y1) (x2,y2)
       else
          let xm = (x1+x2)/2 + (y2-y1)/2 in
          let ym = (y1+y2)/2 + (x1-x2)/2 in
@@ -186,13 +185,16 @@ let dragon (xa,ya) (xb,yb) n =
    in
    aux (xa,ya) (xb,yb) n
 
+(*
 (*  Affichage de la courbe du dragon *)
 let () =
-   dragon (200,350) (600,350) 20
+   dragon (200,350) (600,350) 10;
    
    (*  Test de la fonction dragon *)
+*)
 
-(* let%test_unit _ = dragon (200,350) (600,350) 20; *)
+let%test_unit _ = dragon (200,350) (600,350) 10;
 
 (*  Fermeture de l'écran d'affichage *)
-(* close_graph() *)
+close_graph()
+
