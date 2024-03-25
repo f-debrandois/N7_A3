@@ -78,6 +78,13 @@
     \end{quote}
 }
 
+% Définir la fonction pour créer un encadrement de texte
+\newcommand{\important}[1]{%
+    \begin{tcolorbox}[colback=red!10!white,colframe=red!30!black]
+        #1
+    \end{tcolorbox}
+}
+
 
 
 \begin{document}
@@ -90,19 +97,19 @@
 
 \subsection{Binary Classification problem}
 
-\begin{tcolorbox}[colback=red!10!white,colframe=red!30!black]
+\important{
     \vspace{-\baselineskip}\begin{align*}
         \text{Find a binary classifier : } \quad h : \mathbb{R}^n &\to \{-1, 1\} \hspace{14.5cm} \\
         x &\mapsto h(x)\vspace{-\baselineskip}
     \end{align*}
-    So that $R_D(h) = \mathbb{P}_{(x, y) \sim D} [h(x) \neq y]$ is small.\\
+    So that $\mathbb{P}_{(x, y) \sim D} [h(x) \neq y]$ is small.\\
     With :
     \begin{itemize}
         \item $X$ : space of input data (image, text, sound, etc.)
         \item $Y$ : space of label (e.g. $Y = \{-1, 1\}$)
         \item $D$ : joint probability distribution of $(x, y) \in X \times Y$
     \end{itemize}
-\end{tcolorbox}
+}
 
 \fbox{\textbf{$\rightarrow$ Objectif of ML : } Risk Minimization for $h \in H$}\\
 
@@ -114,25 +121,38 @@
     \end{align*}
 }
 
-\remarque{
-    Minimal $R_D(h)$ : Bayes Classifier $\% D$\\
-    $h_{\text{Bayes}} = \underset{y \in \{-1, 1\}}{\text{argmax }} \mathbb{P}_{(x, y) \sim D} [y|x]$
+\propriete{- Bayes Classifier}{
+    The minimal risk is given by the Bayes Classifier :
+    $$
+        h_{\text{Bayes}} = \underset{y \in \{-1, 1\}}{\text{argmax }} \mathbb{P}_{(x, y) \sim D} [y|x] \in \{-1, 1\}
+    $$
 }
 
-\noindent\underline{What is $P_{(x, y) \sim D} [y|x]$ ?}\\
+\noindent\textbf{Example :} 
+$\mathbb{P}(y | x)$ with gaussians mixitures \\
 
-\textbf{Example :} 
-Gaussians mixitures \\
 Let $\mathbb{P}(y = -1) = \pi_0, \qquad 
-\mathbb{P}(y = 1) = 1 - \pi_0$ \\
+\mathbb{P}(y = 1) = 1 - \pi_0 \qquad \text{with } \pi_0 \in [0, 1]$\\
 $\mathbb{P}(x|y = -1) = \mathcal{N}(\mu_1, \Sigma_1), \qquad 
 \mathbb{P}(x|y = 1) = \mathcal{N}(\mu_2, \Sigma_2)$\\
 
-What are $\mathbb{P}(y = -1|x)$ and $\mathbb{P}(y = 1|x)$ ?\\
+\begin{align*}
+    \mathbb{P}(y = -1 | x) &= \frac{\mathbb{P}(x | y = -1)\mathbb{P}(y = -1)}{\mathbb{P}(x)} \qquad \text{(Bayes' rule)} \\
+    &= \frac{\mathbb{P}(x | y = -1)\mathbb{P}(y = -1)}{\mathbb{P}(x | y = -1)\mathbb{P}(y = -1) + \mathbb{P}(x | y = 1)\mathbb{P}(y = 1)} \\
+    & \\
+    \mathbb{P}(y = 1 | x) &= 1 - \mathbb{P}(y = -1 | x)
+\end{align*}
 
-Using Bayes' theorem :
+Therefore,
+\begin{align*}
+    & h_{\text{Bayes}} (x) = \begin{cases}
+        1 & \text{if } \mathbb{P}(y = 1 | x) > \mathbb{P}(y = -1 | x) \\
+        -1 & \text{if } \mathbb{P}(y = 1 | x) < \mathbb{P}(y = -1 | x) \\
+        \pm 1 & \text{if } \mathbb{P}(y = 1 | x) = \mathbb{P}(y = -1 | x)
+    \end{cases}\\
+    \Leftrightarrow \quad & h_{\text{Bayes}} (x) = \text{sign}(\mathbb{P}(x | y = -1) \pi_0 - \mathbb{P}(x | y = 1)(1 - \pi_0))
+\end{align*}
 
-\textit{Texte manquant}
 
 
 \theoreme{}{
@@ -149,8 +169,6 @@ Using Bayes' theorem :
         &= \int_X \mathbb{P}(y = 1 | x) \mathds{1}_{h(x) \neq 1} \mathbb{P}(x)dx + \int_X \mathbb{P}(y = -1 | x) \mathds{1}_{h(x) \neq -1} \mathbb{P}(x)dx \\
     \end{align*}
 }
-
-\noindent\underline{Why $h_{\text{Bayes}}$ is optimal ?} \\
 
 \textit{Texte manquant}
 
@@ -170,8 +188,138 @@ Start from "simple" $H$ : linear classifiers on $x \in \mathbb{R}^n$.
     with $w \in \mathbb{R}^n$ and $b \in \mathbb{R}$.
 }
 
+\remarque{ Labels : \\
+    $+1$ if $w^Tx + b > 0$\\
+    $-1$ if $w^Tx + b < 0$\\
+    $\pm 1$ if $w^Tx + b = 0$
+}
 
+\vspace{0.5cm}
 
+\begin{tcolorbox}[colback=red!10!white,colframe=red!30!black]
+    Given a set of training samples iid from $D$ : \\
+    $S = \{(x_1, y_1), \dots, (x_m, y_m)\} \in (X \times Y)^m$\\
+    Find a classifier $h_S \in H$ such that the generalization error $R_D(h_S)$ is small.
+\end{tcolorbox}
+
+\begin{algorithm}
+    \caption{Perceptron}
+    \vspace{0.2cm}
+    Initialize $k = 0$ and $w_0 \in \mathbb{R}^n$\\
+    \Repeat{}{
+        \For{$i = 1, \dots, m$}{
+            \If{sign($w_k^T x_i) = y_i$}{
+                exit if $k$ big
+            }
+            \Else{
+                \If{$y_i = 1$}{
+                    $w_{k + 1} = w_k + x_i$\\
+                }
+                \Else{
+                    $w_{k + 1} = w_k - x_i$\\
+                }
+            }
+        }
+        $k = k + 1$
+    }
+\end{algorithm}
+
+\remarque{
+    $k$ is the number of iterations or the number of errors made by the algorithm.
+}
+
+\remarque{
+    $S$ can be separated by some $h \in H$.\\
+    i.e. $\exists w^* \in \mathbb{R}^n$ so that $||w^*|| = 1$ and $\forall i \in \{1, \dots, m\}, y_i(w^{*T}x_i) > 0$.
+}
+
+\theoreme{}{
+    On linear separable data $S$ and $w_0 = 0$, the Perceptron algorithm generates $(w_k)_{k \geq 0}$ which converges in finite number of error corrections.
+}
+
+\preuve{
+    Let $\forall i \leq m, y_i = \text{sign}(\langle w^*, x_i \rangle)$\\
+    Let $R = \underset{i \leq m}{\text{max }} ||x_i|| < \infty$ and $M = \underset{i \leq m}{\text{min }} y_i \langle w^*, x_i \rangle > 0$\\
+
+    We have to show that $\langle w_{k + 1}, w^* \rangle \geq \langle w_k, w^* \rangle + M$\\
+    Indeed, if $y_i = 1$ and $\text{sign}(\langle w_k, x_i \rangle) = -1$ then :
+    \begin{align*}
+        &w_{k + 1} = w_k + x_i \text{ and } \langle w^*, x_i \rangle \geq M \\
+        \Rightarrow &\langle w_{k + 1}, w^* \rangle = \langle w_k, w^* \rangle + \langle x_i, w^* \rangle \geq \langle w_k, w^* \rangle + M
+    \end{align*}
+    Similarly, if $y_i = -1$.
+
+    Therefore, $\langle w_k, w^* \rangle \geq kM$ and $||w_k|| \sim \mathcal{O}(\sqrt{k})$.
+
+    Then, $\frac{\langle w_k, w^* \rangle}{||w_k||} \geq \frac{kM}{\sqrt{k}R} \geq \frac{M}{R} \sqrt{k}$ and $\langle w_k, w^* \rangle \leq ||w_k|| \cdot ||w^*|| \leq ||w_k||$.\\
+    So, $k \leq \left(\frac{R}{M}\right)^2$.
+}
+
+\remarque{
+    $M$ is the margin of the data.\\
+    $M = \underset{i \leq m}{\text{min }} y_i \langle w^*, x_i \rangle$
+    $\qquad M \nearrow \Rightarrow k_{\text{max}} \searrow$\\
+}
+
+\remarque{
+    Unclear if the the Perceptron algorithm finds $h_{\text{Bayes}}$ which minimize the test error.\\
+    Unclear if $S$ non linear separable $(M \leq 0)$.\\
+
+    Extend algo to $H = \{\bar{x} \mapsto \text{sign}(\bar{w}^T \bar{x}) + \bar{b} | \bar{w} \in \mathbb{R}^n, \bar{b} \in \mathbb{R}\}$.\\
+    Consider $\bar{x} = (x, 1) \in \mathbb{R}^{n + 1}$ and $\bar{w} = (w, b) \in \mathbb{R}^{n + 1}$.
+}
+
+\section{Support Vector Machine}
+
+\important{
+    Find a linear classification which has a maximal margin.\\
+    $\Rightarrow$ Smallest test error.
+}
+
+\definition{- Margin}{
+    Let $w \in \mathbb{R}^n$ and $b \in \mathbb{R}$, the margin of $(w, b)$ is :
+    $$
+        \phi_h = \underset{i \leq m}{\text{min }} \frac{||w^T x_i + b||}{||w||}
+    $$
+}
+
+\subsection{Problem formulation}
+
+\subsubsection{Linearly separable case}
+
+$$
+\underset{w \in \mathbb{R}^n, b \in \mathbb{R}}{\text{max }} \phi_h \quad \text{ so that } \quad \forall i \leq m, y_i(w^T x_i + b) > 0
+$$
+Feasible solution exists : $\exists w \in \mathbb{R}^n, b \in \mathbb{R}$ so that $\forall i \leq m, y_i(w^{T}x_i + b) > 0$.\\
+
+\important{
+    Reformulation of SVM :\\
+    $$
+    \underset{w \in \mathbb{R}^n, b \in \mathbb{R}}{\text{max }} \underset{i \leq m}{\text{min }} \frac{y_i(w^T x_i + b)}{||w||}
+    $$
+}
+
+\remarque{
+    Invariance by scaling : $\forall \lambda > 0, (w, b)$ solution $\Rightarrow (\lambda w, \lambda b)$ solution. \\
+    $\Rightarrow$ Set $\underset{i \leq m}{\text{min }} y_i(w^T x_i + b) = 1$.
+}
+
+\important{
+    Formulation of SVM :
+    \begin{equation}
+        (P) \qquad \underset{w \in \mathbb{R}^n, b \in \mathbb{R}}{\text{max }} \frac{1}{||w||} \quad \text{ so that } \quad \underset{i \leq m}{\text{min }} y_i(w^T x_i + b) = 1
+    \end{equation}
+
+    \begin{equation}
+        (P') \qquad \underset{w \in \mathbb{R}^n, b \in \mathbb{R}}{\text{max }} \frac{1}{||w||} \quad \text{ so that } \quad \forall i \leq m, y_i(w^T x_i + b) \geq 1
+    \end{equation}
+}
+
+\propriete{}{
+    $(P)$ and $(P')$ are equivalent.
+}
+
+\preuve{}
 
 
 \end{document}
