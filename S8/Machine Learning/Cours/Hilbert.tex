@@ -97,70 +97,62 @@
 
 \section{Motivations}
 
-\subsection{Régularisation de Tikhonov}
+On considère un problème d'estimation : \\
+$\forall i \in \llbracket 1, n \rrbracket, \quad y_i = f(x_i, \beta) \quad$ avec $\beta \in \mathbb{R}^p, \quad x_i \in \mathbb{R}^p, \quad y_i \in \mathbb{R}$. \\
 
-On considère un problème d'estimation : $f(\beta, x) = y$. \\
-
-Estimation linéaire : $(x_i, y_i)_{i=1}^n \in \mathbb{R}^p \times \mathbb{R}$, avec $p$ la dimension des données. \\
-
-$X \in \mathbb{R}^{n \times p} = \begin{pmatrix}
+On pose : $X = \begin{pmatrix}
     x_1^T \\
     \vdots \\
     x_n^T
-\end{pmatrix}$, $Y \in \mathbb{R}^n = \begin{pmatrix}
+\end{pmatrix} \in \mathbb{R}^{n \times p}$ et $Y = \begin{pmatrix}
     y_1 \\
     \vdots \\
     y_n
-\end{pmatrix}$. \\
+\end{pmatrix} \in \mathbb{R}^n$. \\
 
+\begin{itemize}
+    \item Estimation linéaire : $f(x, \beta) = x^T \beta$.\\
+    On utilise la régularisation de Tikhonov : $\underset{\beta \in \mathbb{R}^p}{\text{min }} \frac{1}{2} \lVert X\beta - Y \rVert^2_2 + \frac{\lambda}{2} \lVert \beta \rVert^2_2$.
+    \begin{align*}
+        \text{On a la CN1 (condition nécessaire d'ordre 1) : } &\nabla f(\beta) = 0. \\
+        \Leftrightarrow &X^T(X\beta - Y) + \lambda \beta = 0. \\
+        \Leftrightarrow &X^TX\beta + \lambda \beta = X^TY. \\
+        \Leftrightarrow &(X^TX + \lambda I_p)\beta = X^TY. \\
+        \Leftrightarrow &\hat{\beta} = (X^TX + \lambda I_p)^{-1}X^TY.
+    \end{align*}
 
+    Donc la prédiction sera : $\hat{Y} = X\hat{\beta} = X(X^TX + \lambda I_p)^{-1}X^TY$. \\
+    $\rightarrow$ Complexité en $\mathcal{O}(p^2n)$ ou $\mathcal{O}(n^2p)$ (selon $X^TX$ ou $XX^T$).\\
 
+    \item Estimation quadratique : $f(x, \beta, \theta) = x^T \theta x + x \beta = \sum_{k=0}^p x_k \beta_k + \sum_{k, l} x_k x_l \theta_{kl}$. \\
+    $2$ inconnues : $\beta \in \mathbb{R}^p$ et $\theta \in \mathbb{R}^{p \times p}$. \\
 
-Thikonov : $\underset{\beta \in \mathbb{R}^p}{\text{min }} \frac{1}{2} \lVert X\beta - Y \rVert^2_2 + \frac{\lambda}{2} \lVert \beta \rVert^2_2$.v avec $\lambda > 0$.
-
-On a la CN1 (condition nécessaire d'ordre 1) : $\nabla f(\beta) = 0$. \\
-$\Leftrightarrow X^T(X\beta - Y) + \lambda \beta = 0$. \\
-$\Leftrightarrow X^TX\beta + \lambda \beta = X^TY$. \\
-$\Leftrightarrow (X^TX + \lambda I_p)\beta = X^TY$. \\
-$\Leftrightarrow \hat{\beta} = (X^TX + \lambda I_p)^{-1}X^TY$. \\
-
-
-Donc la prédiction sera : $\hat{Y} = X\hat{\beta} = X(X^TX + \lambda I_p)^{-1}X^TY$. \\
-
-Complexité dépend de $X^TX$ ou $XX^T$ donc $\mathcal{O}(p^2n)$ ou $\mathcal{O}(n^2p)$.\\
-
-
-
-
-
-Modèle quadratique : $x^T \theta x + x \beta = \sum_{k=0}^p x_k \beta_k + \sum_{k, l} x_k x_l \theta_{kl}$. \\
-
-$2$ inconnues : $\beta \in \mathbb{R}^p$ et $\theta \in \mathbb{R}^{p \times p}$. \\
-
-
-Soit $\tilde{\beta} \in \mathbb{R}^{p + p^2} = \begin{pmatrix}
-    \beta_1 \\
-    \vdots \\
-    \beta_p \\
-    \theta_{11} \\
-    \vdots \\
-    \theta_{pp}
-    \end{pmatrix}$, $\tilde{x_i} = \begin{pmatrix}
-        x_i^1 \\
+    Soit $\tilde{\beta} = \begin{pmatrix}
+        \beta_1 \\
         \vdots \\
-        x_i^p \\
-        x_i^1 x_i^1 \\
+        \beta_p \\
+        \theta_{11} \\
         \vdots \\
-        x_i^p x_i^p
-    \end{pmatrix}$, $\tilde{X} = \begin{pmatrix}
-        \tilde{x_1}^T \\
-        \vdots \\
-        \tilde{x_n}^T
-    \end{pmatrix}$. \\
+        \theta_{pp}
+        \end{pmatrix} \in \mathbb{R}^{p + p^2} \quad$,
+        $\quad \tilde{x_i} = \begin{pmatrix}
+            x_i^1 \\
+            \vdots \\
+            x_i^p \\
+            x_i^1 x_i^1 \\
+            \vdots \\
+            x_i^p x_i^p
+        \end{pmatrix} \quad$,
+        $\quad \tilde{X} = \begin{pmatrix}
+            \tilde{x_1}^T \\
+            \vdots \\
+            \tilde{x_n}^T
+        \end{pmatrix}$. \\
 
+    $\rightarrow$ Complexité en $\mathcal{O}(np^4)$ ou $\mathcal{O}(n^2p^2)$ (selon $\tilde{X}^T\tilde{X}$ ou $\tilde{X}\tilde{X}^T$).\\
+\end{itemize}
 
-Complexité : $\tilde{X}^T\tilde{X}$ ou $\tilde{X}\tilde{X}^T$ en $\mathcal{O}(np^4)$ ou $\mathcal{O}(n^2p^2)$. \\
-
+\newpage
 
 \begin{enumerate}
     \item Est-ce qu'il existe une fonction qui permet de rester sur une résolution linéaire tout en augmentant la dimension du modèle ? \\
@@ -189,6 +181,8 @@ Si on se ramène à $\tilde{x_i}^T \tilde{x_j} = (1 + x_i^T x_j)^2$, on n'a plus
     On définit une application $k : \mathbb{R}^p \times \mathbb{R}^p \longrightarrow \mathbb{R}$ tel que $k(x_i, x_j) = (1 + x_i^T x_j)^2$.
 }
 
+\noindent\textbf{Méthode générale :}
+
 \important{
     On cherche à prédire $y \in \mathbb{R}$ avec un prédicteur $x \in \mathbb{R}^p$.
     \begin{itemize}
@@ -204,6 +198,7 @@ Si on se ramène à $\tilde{x_i}^T \tilde{x_j} = (1 + x_i^T x_j)^2$, on n'a plus
 
     \end{itemize}
 }
+
 
 
 
@@ -227,7 +222,7 @@ Soit $\mathcal{H}$ un espace de Hilbert (muni du produit scalaire $\langle \cdot
 
 
 \preuve{
-    Soit $\alpha \in \mathbb{R}^n$, $(x_i) \in X^n$. \\
+    Soit $\alpha \in \mathbb{R}^n$, $(x_i) \in X^n$.
     \begin{align*}
         \text{On a : } 
         \alpha^T K \alpha & = \sum_{i, j} \alpha_i \alpha_j k(x_i, x_j) \hspace{14.5cm} \\
@@ -252,7 +247,7 @@ Soit $\mathcal{H}$ un espace de Hilbert (muni du produit scalaire $\langle \cdot
     \end{enumerate}
 }
 
-\textbf{Exercice :}
+\noindent\textbf{Exercice :}
 \begin{enumerate}
     \item Noyeau linéaire : $X = \mathbb{R}^p$ et $\forall (x, x') \in X^2, \quad k(x, x') = x^T x'$.
     \item Noyeau polynomial : $X = \mathbb{R}^p$ et $\forall (x, x') \in X^2, \quad k(x, x') = (1 + x^T x')^d$.
@@ -263,8 +258,7 @@ Montrer que les noyeaux polynomial et exponentiel sont des noyaux. \\
 
 \color{blue}
 
-\underline{Correction :}
-
+\noindent\underline{Correction :}
 \begin{enumerate}
     \item Noyeau par définition.
     \item Par produit de noyaux.
@@ -295,6 +289,61 @@ Montrer que les noyeaux polynomial et exponentiel sont des noyaux. \\
 
 
 
+\section{Applications}
+
+\subsection{Régularisation de Tikhonov}
+
+Le problème s'écrit :
+\begin{equation}
+    \text{(P) : } \quad \underset{\beta \in \mathbb{R}^p}{\text{min }} \frac{1}{2} ||X\beta - Y||^2_2 + \frac{\lambda}{2} ||\beta||^2_2
+\end{equation}
+
+Soit le RKHS de noyau reproduisant le noyau linéaire. \\
+
+$f \in \mathcal{H}$ : $\sum_{i=1}^m \alpha_i k(\cdot, x_i) = k(\cdot, \sum_{i=1}^m \alpha_i x_i)$ (par linéarité du noyau). \\
+$f(x) = x^T\tilde{x}$ avec $\tilde{x} = \sum_{i=1}^m \alpha_i x_i$. \\
+
+$f(\tilde{x}) = \tilde{x}^T \tilde{x} = ||\tilde{x}||^2_2$. \\
+
+\begin{align*}
+    \text{et } ||f||^2_{\mathcal{H}} & = \langle f, f \rangle_{\mathcal{H}} \hspace{14.5cm} \\
+    & = \langle \sum_{i=1}^m \alpha_i k(\cdot, x_i), \sum_{j=1}^m \alpha_j k(\cdot, x_j) \rangle_{\mathcal{H}} \\
+    & = \langle k(\cdot, \tilde{x}), k(\cdot, \tilde{x}) \rangle_{\mathcal{H}} \\
+    & = k(\tilde{x}, \tilde{x}) \\
+    & = ||\tilde{x}||^2_2
+\end{align*}
+
+Donc (P) s'écrit :
+\begin{equation}
+    \text{(P) : } \quad \underset{f \in \mathcal{H}}{\text{min }} \frac{1}{2} \sum_{i=1}^m (f(x_i) - y_i)^2 + \frac{\lambda}{2} ||f||^2_{\mathcal{H}}
+\end{equation}
+
+D'après le théorème du représentant, $\hat{f} \in \text{Vect}(k(\cdot, x_i))_{i \in \llbracket 1, m \rrbracket}$. \\
+
+$\hat{f} = \sum_{i=1}^m \alpha_i k(\cdot, x_i)$. \\
+
+On pose $K = \left[k(x_i, x_j)\right]_{i, j \in \llbracket 1, m \rrbracket^2} \in \mathcal{M}_m(\mathbb{R})$. \\
+
+\begin{align*}
+    \text{On a : } ||\hat{f}||^2_{\mathcal{H}} & = \langle \sum_{i=1}^m \alpha_i k(\cdot, x_i), \sum_{j=1}^m \alpha_j k(\cdot, x_j) \rangle_{\mathcal{H}} \hspace{14.5cm} \\
+    & = \sum_{i=1}^m \sum_{j=1}^m \alpha_i \alpha_j k(x_i, x_j) \\
+    & = \alpha^T K \alpha
+\end{align*}
+
+
+et $f(x_i) = \sum_{j=1}^m \alpha_j k(x_i, x_j) = \left[K\alpha\right]_i$. \\
+
+D'où (P') $\Leftrightarrow \underset{\alpha \in \mathbb{R}^m}{\text{min }} \frac{1}{2} ||Y - K\alpha||^2_2 + \frac{\lambda}{2} \alpha^T K \alpha$. \\
+
+\begin{align*}
+    \text{On a la CN1 : } &\nabla f(\alpha) = 0 \hspace{14.5cm} \\
+    \Leftrightarrow &-K^T(Y - K\alpha) + \lambda K\alpha = 0 \\
+    \Leftrightarrow &K^TK\alpha + \lambda K\alpha = K^TY \\
+    \Leftrightarrow &(K^TK + \lambda)\alpha = K^TY \\
+    \Leftrightarrow &\hat{\alpha} = (K^TK + \lambda K)^{-1}K^TY
+\end{align*}
+
+Et la prédiction : $K\hat{\alpha} = K(K^TK + \lambda K)^{-1}K^TY$. \\
 
 
 
