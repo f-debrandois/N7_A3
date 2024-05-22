@@ -78,6 +78,13 @@
     \end{quote}
 }
 
+% Définir la fonction pour créer un encadrement de texte
+\newcommand{\important}[1]{%
+    \begin{tcolorbox}[colback=red!10!white,colframe=red!30!black]
+        #1
+    \end{tcolorbox}
+}
+
 
 
 \begin{document}
@@ -141,6 +148,7 @@
         On dit que $x$ et $y$ sont \textit{orthogonaux} si $\langle x, y \rangle = 0$.
         \item Soit $A \subset E$.\\
         L'orthogonal de $A$ est l'ensemble $A^\perp = \{x \in E \, | \, \forall y \in A, \langle x, y \rangle = 0\}$.
+        \item Une famille $(x_i)_{i = 1, \ldots, n}$ est dite \textit{orthogonale} si $\forall i \neq j, \langle x_i, x_j \rangle = 0$.
     \end{itemize}
     }
 
@@ -152,12 +160,54 @@
     \end{itemize}
 }
 
-\textit{Texte Manquant}
-
-\propriete{}{
-    Soit $H$ un espace de Hilbert, et $(u_n)$ une suite d'éléments de $H$.\\
-    Si la suite $(u_n)$ est composée d'éléments deux à deux orthogonaux et si $\sum ||u_n||^2$ converge, alors la série $\sum u_n$ converge dans $H$.
+\remarque{
+    Une famille orthogonale sans vecteur nul est libre.
 }
+
+\theoreme{- Théorème de Pythagore}{
+    Soit $(E, ||\cdot||)$ un espace préhilbertien, et $(x_i)_{i \in \llbracket 1, n \rrbracket}$ une famille orthogonale.\\
+    Alors $||\sum_{i=1}^n x_i||^2 = \sum_{i=1}^n ||x_i||^2$.
+}
+
+\important{
+    \underline{Procédé d'orthogonalisation de Gram-Schmidt :} \\
+
+    Soit $(x_1, \ldots, x_n)$ une famille libre d'un espace préhilbertien $(E, \langle \cdot, \cdot \rangle)$.\\
+    Il existe une famille orthogonale $(v_1, \ldots, v_n)$ telle que : \\
+    $\text{Vect}(x_1, \ldots, x_n) = \text{Vect}(v_1, \ldots, v_n)$. \\
+
+    \textbf{Construction :}\\
+    $v_1 = x_1$\\
+    $v_2 = x_2 - \frac{\langle x_2, v_1 \rangle}{||v_1||^2} v_1$\\
+    $v_3 = x_3 - \frac{\langle x_3, v_1 \rangle}{||v_1||^2} v_1 - \frac{\langle x_3, v_2 \rangle}{||v_2||^2} v_2$\\
+    $\ldots$\\
+    $v_n = x_n - \sum_{i=1}^{n-1} \frac{\langle x_n, v_i \rangle}{||v_i||^2} v_i$
+}
+
+
+\subsection{Espace de Hilbert}
+
+\definition{}{
+    Un espace de Hilbert (réel ou hermitien dans le cas complexe) est un espace préhilbertien complet pour la norme associée au produit scalaire : \\
+    $||\cdot|| : x \mapsto \sqrt{\langle x, x \rangle}$.
+}
+
+\remarque{
+    Cela signifie : \\
+    $\forall (x_n) \subset H$, si $\forall \varepsilon > 0, \exists N \in \mathbb{N}, \forall n \geq N, \forall p \in \mathbb{N}, ||x_n - x_p|| \leq \varepsilon$, alors $(x_n)$ converge dans $H$.
+}
+
+\noindent \textbf{Exemple :}\\
+\textit{Texte Manquant} \\
+
+
+\propriete{- Sommabilité}{
+    Soit $H$ un espace de Hilbert, et $(u_n)$ une suite d'éléments de $H$.\\
+    Si la suite $(u_n)$ est composée d'éléments deux à deux orthogonaux et si $\sum ||u_n||^2$ converge, alors la série $\sum u_n$ converge dans $H$.\\
+    De plus, si $\sum ||u_n||$ converge, alors $\sum u_n$ converge dans $H$.
+}
+
+
 
 \preuve{
     $\sum |u_n|$ converge $\Leftrightarrow (T_n) = \sum_{k=0}^n ||u_k||$ converge.\\
@@ -166,12 +216,14 @@
     Donc $(T_n)$ converge $\Rightarrow (T_n)$ de Cauchy $\Rightarrow (S_n)$ de Cauchy dans un complet $\Rightarrow (S_n)$ converge.
 }
 
-\subsection{Projection sur un convexe}
+\section{Théorème de projection sur un convexe et applications}
+
+\subsection{Théorème de projection, projection orthogonale}
 
 \theoreme{}{
     Soit $H$ un espace de Hilbert, et $C$ un convexe fermé non-vide de $H$.\\
-    Pour tout $f \in H$, il existe un unique point $p \in C$, appelé \textit{projection de $f$ sur $C$}, tel que la distance entre $f$ et $p$ soit minimale.\\
-    Ce point est caractérisé par : $\forall h \in C, \text{Re}(\langle f - p, h - p \rangle) \leq 0$.
+    Pour tout $f \in H$, il existe un unique point $g \in C$, appelé \textit{projection de $f$ sur $C$}, tel que la distance entre $f$ et $g$ soit minimale.\\
+    Ce point est caractérisé par : $\forall h \in C, \text{Re}(\langle f - g, h - g \rangle) \leq 0$.
 }
 
 \remarque{
@@ -183,6 +235,56 @@
     \textit{Texte Manquant}
 }
 
+
+\important{
+    \underline{Corollaire :} \\
+    Tout élément $f \in H$ admet une unique décomposition $f = g + h$ avec $g \in C$ et $h \in C^\perp$.\\
+
+    On a donc : $H = C \oplus C^\perp \quad ; \quad (C^\perp)^\perp = C \quad ; \quad H^\perp = \{0\}$.\\
+    Si $A \in H$ alors $(A^\perp)^\perp = \overline{\text{Vect}(A)}$ (adhérence).
+}
+
+\preuve{
+    \textit{Texte Manquant}
+}
+
+\remarque{
+    $A \subset H$ est total $\Leftrightarrow \overline{\text{Vect}(A)} = H \Leftrightarrow A^\perp = \{0\}$.
+}
+
+
+\subsection{Théorème de représentation de Riesz}
+
+\theoreme{}{
+    Pour tout $f \in H$, l'application $h \mapsto \langle f, h \rangle$ est une forme linéaire continue sur $H$.\\
+    Réciproquement, si $\tilde{f}$ est une forme linéaire continue sur $H$, alors il existe un unique $f \in H$ tel que $\forall h \in H, \tilde{f}(h) = \langle f, h \rangle$.
+}
+
+\preuve{
+    \textit{Texte Manquant}
+}
+
+
+\remarque{
+    Convolution : \\
+    Soit $T : \mathcal{L}^2(\mathbb{R}^n) \rightarrow \mathcal{C}_0^0(\mathbb{R}^n)$ un opérateur linéaire, continu, invariant par transformation. \\
+    Il existe $g \in \mathcal{L}^2(\mathbb{R}^n)$ tel que $T(f) = f * g$.
+}
+
+\begin{tcolorbox}[colback=white,colframe=blue!50!white]
+    \underline{Rappel :} \\
+
+    $\mathcal{C}_0^0(\mathbb{R}^n) = \{\text{fonctions continues, limites nulles à l'infini}\}$ \\
+    L'application $f \mapsto T(f)(0)$ est une forme linéaire continue sur $\mathcal{L}^2(\mathbb{R}^n)$ donc il existe $g_0 \in \mathcal{L}^2(\mathbb{R}^n)$ tel que $T(f)(0) = \int_{\mathbb{R}^n} f(x) \overline{g_0(x)} dx$.\\
+
+    De plus, $\tau_x(T(f)) = T(\tau_x(f))$ $(\tau_x : f \mapsto f(x))$.
+    \begin{align*}
+        T(f)(x) &= \tau_x(T(f))(0) = T(\tau_x(f))(0) \\
+        &= \int_{\mathbb{R}^n} f(x + y) \overline{g_0(y)} dy \\
+        &= \int_{\mathbb{R}^n} f(y) \overline{g_0(y - x)} dy \\
+        &= \int_{\mathbb{R}^n} f(y) g(x - y) dy
+    \end{align*}
+\end{tcolorbox}
 
 
 
