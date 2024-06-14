@@ -51,11 +51,12 @@ let encoder_mot enc mot =
   let rec aux enc mot lst =
     match mot with
     | "" -> lst
-    | s::q -> 
-      let lettre = s in
+    | s -> 
+      let lettre = s.[0] in
       let (touche, nombre) = encoder_lettre enc lettre in
       let ajout = List.init nombre (fun _ -> touche) in
-      aux enc q (lst @ ajout @ [0])
+      aux enc 
+       (lst @ ajout @ [0])
   in
   aux enc mot []
 
