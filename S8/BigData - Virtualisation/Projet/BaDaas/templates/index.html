@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BaDaaS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Big Data As-A-Service (BaDaaS)</h1>
+    <div class="container">
+        <div class="column">
+            <h2>Upload Data</h2>
+            <form action="{{ url_for('upload_data') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+                <input type="text" name="hdfs_path" placeholder="HDFS Path" required>
+                <button type="submit">Upload</button>
+            </form>
+            <h3>Uploaded Data</h3>
+            <ul id="data-list">
+                {% for data in data_files %}
+                <li onclick="toggleSelection(this, 'data')">{{ data }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="column">
+            <h2>Upload Programs</h2>
+            <form action="{{ url_for('upload_program') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+                <button type="submit">Upload</button>
+            </form>
+            <h3>Uploaded Programs</h3>
+            <ul id="program-list">
+                {% for program in program_files %}
+                <li onclick="toggleSelection(this, 'program')">{{ program }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="execute-job">
+        <h2>Execute Job</h2>
+        <form action="{{ url_for('execute_job') }}" method="post">
+            <input type="hidden" name="program" id="selected-program" required>
+            <input type="hidden" name="input_path" id="selected-data" required>
+            <input type="text" name="output_path" placeholder="HDFS Output Path" required>
+            <button type="submit">Execute</button>
+        </form>
+    </div>
+    <div class="participants">
+        <h2>Participants</h2>
+        <p>Maxime Baba, Mathilde Ferreira, Félix Foucher de Brandois, Jules Gourio</p>
+    </div>
+    <script>
+        let selectedData = null;
+        let selectedProgram = null;
+
+        function toggleSelection(element, type) {
+            if (type === 'data') {
+                if (selectedData && selectedData !== element) {
+                    selectedData.classList.remove('selected');
+                }
+                selectedData = (selectedData === element) ? null : element;
+                document.getElementById('selected-data').value = selectedData ? selectedData.textContent : '';
+            } else if (type === 'program') {
+                if (selectedProgram && selectedProgram !== element) {
+                    selectedProgram.classList.remove('selected');
+                }
+                selectedProgram = (selectedProgram === element) ? null : element;
+                document.getElementById('selected-program').value = selectedProgram ? selectedProgram.textContent : '';
+            }
+            element.classList.toggle('selected');
+        }
+    </script>
+</body>
+</html>
