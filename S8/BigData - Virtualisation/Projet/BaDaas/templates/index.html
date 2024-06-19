@@ -18,7 +18,10 @@
             <h3>Uploaded Data</h3>
             <ul id="data-list">
                 {% for data in data_files %}
-                <li onclick="toggleSelection(this, 'data')">{{ data }}</li>
+                <li onclick="toggleSelection(this, 'data')">
+                    {{ data }}
+                    <button class="delete-button" onclick="deleteFile('{{ data }}', 'data')">Delete</button>
+                </li>
                 {% endfor %}
             </ul>
         </div>
@@ -31,7 +34,10 @@
             <h3>Uploaded Programs</h3>
             <ul id="program-list">
                 {% for program in program_files %}
-                <li onclick="toggleSelection(this, 'program')">{{ program }}</li>
+                <li onclick="toggleSelection(this, 'program')">
+                    {{ program }}
+                    <button class="delete-button" onclick="deleteFile('{{ program }}', 'program')">Delete</button>
+                </li>
                 {% endfor %}
             </ul>
         </div>
@@ -68,6 +74,32 @@
                 document.getElementById('selected-program').value = selectedProgram ? selectedProgram.textContent : '';
             }
             element.classList.toggle('selected');
+        }
+
+        function deleteFile(filename, type) {
+            event.stopPropagation();  // Prevent the toggle selection when clicking delete
+            const confirmation = confirm(`Are you sure you want to delete ${filename}?`);
+            if (confirmation) {
+                if (type === 'data') {
+                    fetch(`/delete_data/${filename}`, { method: 'POST' })
+                        .then(response => {
+                            if (response.ok) {
+                                window.location.reload();
+                            } else {
+                                alert('Failed to delete data file');
+                            }
+                        });
+                } else if (type === 'program') {
+                    fetch(`/delete_program/${filename}`, { method: 'POST' })
+                        .then(response => {
+                            if (response.ok) {
+                                window.location.reload();
+                            } else {
+                                alert('Failed to delete program file');
+                            }
+                        });
+                }
+            }
         }
     </script>
 </body>
