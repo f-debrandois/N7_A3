@@ -1,5 +1,6 @@
 model = Sequential()
-model.add(Dense(100, activation='relu', input_dim=13))
+model.add(Input(shape=(13,)))
+model.add(Dense(100, activation='relu'))
 model.add(Dense(100, activation='relu'))
 model.add(Dense(100, activation='relu'))
 model.add(Dense(100, activation='relu'))

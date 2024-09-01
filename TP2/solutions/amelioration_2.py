@@ -20,9 +20,10 @@ print(" ")
 
 
 model = Sequential()
-model.add(Dense(100, activation='relu', input_dim=13))
+model.add(Input(shape=(13,)))
+model.add(Dense(10, activation='relu'))
 model.add(Dense(100, activation='relu'))
-model.add(Dense(100, activation='relu'))
+model.add(Dense(50, activation='relu'))  # kernel_regularizer=regularizers.L1(0.01)
 model.add(Dense(100, activation='relu'))
 model.add(Dense(1, activation='linear'))
 
