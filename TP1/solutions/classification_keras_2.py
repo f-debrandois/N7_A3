@@ -3,8 +3,9 @@ print(f'Feature dim: {input_dim}')
 
 # Create the model
 model = Sequential()
-model.add(Dense(units=10, input_dim=input_dim, activation='relu'))
-model.add(Dense(units=1, input_dim=10, activation='sigmoid'))
+model.add( Input(shape=(input_dim,)) )
+model.add( Dense(units=10, activation='relu') )
+model.add( Dense(units=1, activation='sigmoid') )
 
 # Configure the model and start training
 sgd = optimizers.SGD(learning_rate=0.1)

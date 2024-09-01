@@ -1,6 +1,7 @@
 # Create the model
 model = Sequential()
-model.add( Dense(units=1, input_dim=2, activation='sigmoid') )
+model.add( Input(shape=(2,)) )
+model.add( Dense(units=1, activation='sigmoid') )
 
 # Configure the model and start training
 sgd = optimizers.SGD(learning_rate=0.3)

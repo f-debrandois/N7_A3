@@ -25,7 +25,6 @@ def dense_layer_backward(dy_hat, Wxy, by, activation, cache):
         dy_dz = np.exp(-z)/np.square(1 + np.exp(-z))
     else: # Activation linéaire
         dy_dz = np.ones(dy_hat.shape)
-
         
     # calculer le gradient de la perte par rapport à x
     dx = np.matmul(np.transpose(Wxy), dy_hat*dy_dz)

@@ -1,6 +1,7 @@
 # Create the model
 model = Sequential()
-model.add( Dense(units=1, input_dim=1, activation='linear') )
+model.add( Input(shape=(1,)) )
+model.add( Dense(units=1, activation='linear') )
 
 # Configure the model and start training
 sgd = optimizers.SGD(learning_rate=0.1)
