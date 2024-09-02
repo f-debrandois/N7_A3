@@ -1,4 +1,5 @@
 \documentclass[12pt,a4paper]{article}
+
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc} % Use UTF-8 encoding for input
 \usepackage{babel} 
@@ -32,7 +33,7 @@
 
 \begin{document}
 
-\begin{figure}[ht]
+\begin{figure}[t]
     \centering
     \includegraphics[width=5cm]{src/inp_n7.png}
     \hfill
@@ -169,18 +170,25 @@ However, here are the results :\\
     \hline
     \textbf{Train acc} & \textbf{Val acc} & \textbf{Nb of epochs} & \textbf{Batch size} & \textbf{Learning rate} & \textbf{Training time} \\
     \hline
-    50\% & 50\% & 10 & 32 & 0.01 & 10 minutes \\
-    \hline    
+    53.91\% & 46.29\% & 10 & 32 & 0.01 & 1m46 \\
+    \hline
+    42.87\% & 39.79\% & 10 & 32 & 0.001 & 1m15 \\
+    \hline
+    53.77\% & 42.05\% & 50 & 32 & 0.01 & 5m23 \\
+    \hline
 \end{tabular}\\
 
 The following figure shows the evolution of the training loss and validation accuracy over the epochs :
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=10cm]{src/inp_n7.png}
-    \caption{LeNet loss and accuracy}
+    \includegraphics[width=10cm]{src/LeNet1.png}
+    \caption{LeNet train and validation loss}
 \end{figure}
 
+We can see that the model is too simple to capture the underlying patterns in the data.
+The training loss and validation loss are decreasing over the epochs, but the validation accuracy is not increasing.
+We will therefore use a more complex model, such as ResNet, to improve the accuracy.
 
 \subsubsection{ResNet}
 
@@ -191,9 +199,13 @@ Here are the results :\\
     \hline
     \textbf{Train acc} & \textbf{Val acc} & \textbf{Nb of epochs} & \textbf{Batch size} & \textbf{Learning rate} & \textbf{Training time} \\
     \hline
-    80\% & 80\% & 10 & 32 & 0.01 & 20 minutes \\
+    63.64\% & 54.86\% & 10 & 32 & 0.01 & 1m31 \\
     \hline
-    50\% & 50\% & 10 & 32 & 0.001 & 20 minutes \\
+    51.97\% & 50.89\% & 10 & 32 & 0.001 & 1m11 \\
+    \hline
+    63.34\% & 62.40\% & 10 & 64 & 0.01 & 53s \\
+    \hline
+    72.06\% & 69.13\% & 20 & 32 & 0.01 & 8m12 \\
     \hline
 \end{tabular}\\
 
@@ -201,8 +213,8 @@ The following figure shows the evolution of the training loss and validation acc
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=10cm]{src/inp_n7.png}
-    \caption{ResNet loss and accuracy}
+    \includegraphics[width=10cm]{src/Resnet1.png}
+    \caption{ResNet train and validation loss}
 \end{figure}
 
 We can see that the model is not overfitting, since the training loss and validation loss are decreasing over the epochs.
