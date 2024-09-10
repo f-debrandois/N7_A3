@@ -1,0 +1,14 @@
+.vscode/
+__pycache__/
+_build/
+
+*.aux
+*.log
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.toc
+*.lof
+.Rhistory
+
+*.toml
