@@ -461,6 +461,83 @@ Recherche d'une solution à $(P_{FV})$ sur un sous-espace de dimension finie.
 \textit{Texte manquant}
 
 
+\section{Théorème de Lax-Milgram et application}
+
+\subsection{Théorème de Lax-Milgram}
+
+\theoreme{- Théorème de Lax-Milgram}{
+    Soit $V$ un espace de Hilbert sur $\mathbb{R}$, $a : V \times V \rightarrow \mathbb{R}$ une application bilinéaire continue et coercive, $l : V \rightarrow \mathbb{R}$ une forme linéaire continue. \\
+    Alors, $\exists ! u \in V$ tel que :
+    $$
+    \forall v \in V, a(u, v) = l(v)
+    $$
+}
+
+\preuve{
+    admis (Analyse Hilbertienne)
+}
+
+\remarque{
+    \begin{itemize}
+        \item $a$ bilinéaire continue : $\exists M > 0, \forall (u, v) \in V^2, |a(u, v)| \leq M \| u \|_V \| v \|_V$.
+        \item $a$ coercive : $\exists \alpha > 0, \forall v \in V, a(v, v) \geq \alpha \| v \|_V^2$.
+        \item $l$ linéaire continue : $\exists C > 0, \forall v \in V, |l(v)| \leq C \| v \|_V$.
+    \end{itemize}
+}
+
+\propriete{}{
+    Sous les hypothèses du théorème de Lax-Milgram, la solution $u \in V$ du problème de Lax-Milgram dépend continûment de $l \in V^{'}$.
+}
+
+\preuve{
+    Soient $l_1, l_2$, deux formes linéaires continues. On note $u_1 \in V$ et $u_2 \in V$ les solutions associées du problème de Lax-Milgram. \\
+    $\forall v \in V, \begin{cases}
+        a(u_1, v) = l_1(v) \\
+        a(u_2, v) = l_2(v)
+    \end{cases}$ \\
+
+    Par coercivité de $a$, $\exists \alpha > 0, \forall v \in V, a(v, v) \geq \alpha \| v \|_V^2$. \\
+
+    \textit{Texte manquant}
+}
+
+\remarque{
+    $|||l||| = \underset{v \in V \backslash \{0\}}{\sup} \frac{|l(v)|}{\| v \|_V} = \underset{\| v \|_V = 1}{\sup} |l(v)|$.
+}
+
+\propriete{}{
+    Sous les hypothèses du théorème de Lax-Milgram, en supposant $a$ symétrique, les deux problèmes suivants sont équivalents :
+    \begin{enumerate}[label=\roman*)]
+        \item Trouver $u \in V$ tel que $\forall v \in V, a(u, v) = l(v) $.
+        \item $\underset{v \in V}{\text{min }} \frac{1}{2} a(v, v) - l(v)$.
+    \end{enumerate}
+}
+
+\preuve{
+    \textit{Texte manquant}
+}
+
+
+\subsection{Application aux équations aux dérivées partielles}
+
+\important{
+    \underline{Problème :}
+    \begin{equation}
+        (P) \qquad
+        \begin{cases}
+            -\Delta u + c(x)u = f(x) & \text{sur } \Omega \text{ domaine de } \mathbb{R}^n \\
+            u = 0 & \text{sur } \Gamma \text{ frontière de } \Omega
+        \end{cases}
+    \end{equation}
+    avec $f \in L^2(\Omega)$, $c \in L^{\infty}(\Omega)$ tel que $c(x) \geq 0$ presque partout sur $\Omega$.
+}
+
+\underline{Objectif :}
+\begin{enumerate}
+    \item Formulation variationnelle : Se ramener à un problème de Lax-Milgram.
+    \item Existence et unicité de la solution de la formulation variationnelle.
+    \item Lien avec le problème original $(P)$.
+\end{enumerate}
 
 
 \end{document}
