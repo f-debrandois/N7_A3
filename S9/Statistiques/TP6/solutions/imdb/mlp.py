@@ -1,7 +1,7 @@
 embedding_size = 32
 
 mlp = Sequential(name="MLP")
-mlp.add(Embedding(vocab_size, embedding_size, input_length=max_words))
+mlp.add(Embedding(vocab_size, embedding_size))
 mlp.add(Flatten())
 mlp.add(Dropout(0.5))
 mlp.add(Dense(5))
