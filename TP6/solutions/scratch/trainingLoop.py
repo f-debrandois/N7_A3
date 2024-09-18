@@ -10,10 +10,10 @@ for x, y in train_data.items():
     probs = softmax(out)
 
     # Build dL/dy
-    d_L_d_y = probs
-    d_L_d_y[target] -= 1
+    d_y = probs
+    d_y[target] -= 1
     
     # Backward
-    rnn.backprop(d_L_d_y)
+    rnn.backprop(d_y)
     
 print(probs)

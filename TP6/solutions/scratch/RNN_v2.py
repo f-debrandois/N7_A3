@@ -63,12 +63,12 @@ class RNN:
 
             # dL/db = dL/dh * (1 - h^2)
             d_bh += tmp
-            # dL/dWhh = dL/dh * (1 - h^2) * h_{t-1}
+            # dL/dWhh = dL/dh * (1 - h^2) @ h_{t-1}^T
             d_Whh += tmp @ self.hs[t].transpose()
-            # dL/dWxh = dL/dh * (1 - h^2) * x
+            # dL/dWxh = dL/dh * (1 - h^2) @ x^T
             d_Wxh += tmp @ self.inputs[t].transpose()
-            # Next dL/dh = dL/dh * (1 - h^2) * Whh
-            d_h = self.Whh @ tmp
+            # Next dL/dh =  Whh^T @ [dL/dh * (1 - h^2)]
+            d_h = self.Whh.transpose() @ tmp
             
         # Clip to prevent exploding gradients.
         for d in [d_Wxh, d_Whh, d_Why, d_bh, d_by]:
