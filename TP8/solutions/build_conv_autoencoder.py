@@ -1,6 +1,6 @@
 def build_conv_autoencoder():
     conv_encoder = Sequential(name="conv_encoder")
-    conv_encoder.add(shape=(28,28,1))
+    conv_encoder.add(Input(shape=(28,28,1)))
     conv_encoder.add(Conv2D(16, (3,3) , activation='relu', padding='same' ))
     conv_encoder.add(MaxPooling2D((2, 2), padding='same'))
     conv_encoder.add(Conv2D(8, (3, 3), activation='relu', padding='same'))
