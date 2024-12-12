@@ -1,0 +1,44 @@
+// Exercice 1
+// 1.1 Création de la bordure carrée
+border B1(t = 0, 1) {x = t; y = 0; label = 1;};    // Bord inférieur (de (0, 0) à (1, 0))
+border B2(t = 0, 1) {x = 1; y = t; label = 2;};    // Bord droit (de (1, 0) à (1, 1))
+border B3(t = 0, 1) {x = 1 - t; y = 1; label = 3;}; // Bord supérieur (de (1, 1) à (0, 1))
+border B4(t = 0, 1) {x = 0; y = 1 - t; label = 4;}; // Bord gauche (de (0, 1) à (0, 0))
+
+// 1.2 Création du maillage
+int np = 20; // nombre de points par bord
+mesh Th1 = buildmesh(B1(np) + B2(np) + B3(np) + B4(np));
+//plot(Th, wait = 1);
+
+// 1.3 Création d'un cercle
+real r = 0.2;
+border C(t = 0, 2*pi) { x = 0.5 + r*cos(t); y = 0.5 + r*sin(t); label = 5; }
+
+// 1.4 Carré avec un trou
+real perimeter = 2*pi*r;
+mesh Th2 = buildmesh(B1(np) + B2(np) + B3(np) + B4(np) + C(-floor(np*perimeter)));
+//plot(Th2, wait = 1);
+
+
+// 2.1 Définition des espaces de fonctions
+fespace V2(Th2, P2);
+fespace V1(Th2, P1);
+fespace V0(Th2, P0);
+
+// 2.2 Définition des fonctions
+V1 u, v;
+V0 f = 1;
+
+// 3.1 Formulation variationnelle
+
+
+// 3.2 Définition du problème
+problem Poisson(u, v) = int2d(Th2)(dx(u)*dx(v) + dy(u)*dy(v)) - int2d(Th2)(f*v)
+                        + on(1, u = 0) + on(2, u = 0) + on(3, u = 0) + on(4, u = 0) + on(5, u = 0);
+
+
+// 4.1 Résolution du problème
+Poisson;
+
+// 4.2 Visualisation de la solution
+plot(u, wait = 1, dim = 3, value = 1, fill = 1);
