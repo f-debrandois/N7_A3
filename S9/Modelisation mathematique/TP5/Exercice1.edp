@@ -1,4 +1,4 @@
-// Exercice 1
+// Introduction
 // 1.1 Création de la bordure carrée
 border B1(t = 0, 1) {x = t; y = 0; label = 1;};    // Bord inférieur (de (0, 0) à (1, 0))
 border B2(t = 0, 1) {x = 1; y = t; label = 2;};    // Bord droit (de (1, 0) à (1, 1))
@@ -17,7 +17,7 @@ border C(t = 0, 2*pi) { x = 0.5 + r*cos(t); y = 0.5 + r*sin(t); label = 5; }
 // 1.4 Carré avec un trou
 real perimeter = 2*pi*r;
 mesh Th2 = buildmesh(B1(np) + B2(np) + B3(np) + B4(np) + C(-floor(np*perimeter)));
-//plot(Th2, wait = 1);
+plot(Th2, wait = 1);
 
 
 // 2.1 Définition des espaces de fonctions

@@ -1,0 +1,32 @@
+// Vitesse de convergence sur un carré
+// 1.1 Formulation variationnelle
+// Bordure carrée
+int np = 2^7; // nombre de points par bord
+mesh Th = square(np, np);
+
+fespace V2(Th, P2);
+fespace V1(Th, P1);
+fespace V0(Th, P0);
+
+int p = 1, q = 1;
+
+V1 upq = sin(p*pi*x)*sin(q*pi*y);
+
+for (int k = 3; k <= 7; k++) {
+    np = 2^k;
+    mesh Sh = square(np, np);
+    fespace ShV1(Sh, P1);
+    fespace ShV0(Sh, P0);
+
+    ShV1 u, v;
+    ShV0 f = ((p*pi)^2 + (q*pi)^2) * sin(p*pi*x) * sin(q*pi*y);
+
+    problem Poisson(u, v) = int2d(Sh)(dx(u)*dx(v) + dy(u)*dy(v)) - int2d(Sh)(f*v)
+                            + on(1, u = 0) + on(2, u = 0) + on(3, u = 0) + on(4, u = 0);
+
+    Poisson;
+
+    real err = sqrt(int2d(Th)( (u - upq)^2 ));
+    cout << "Erreur en norme : " << err << endl;
+
+}
