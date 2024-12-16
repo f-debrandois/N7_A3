@@ -65,7 +65,7 @@ with $z_{1 - \alpha}$ being the $(1 - \alpha)$-th quantile of the standard norma
 The p-value measures the probability of obtaining a test statistic at least as extreme as the observed $F_{\text{obs}}$, under $H_0$.
 It is given by:
 \begin{equation}
-    \hat{\alpha} = \mathbb{P}_{H_0}(F \geq F_{\text{obs}}) = 1 - \Phi(\frac{F_{\text{obs}} - \frac{n}{2}}{\sqrt{\frac{n}{12}}})
+    \hat{\alpha} = \mathbb{P}_{H_0}(F \geq F_{\text{obs}}) = 1 - \Phi\left(\frac{F_{\text{obs}} - \frac{n}{2}}{\sqrt{\frac{n}{12}}}\right)
     \label{eq:laplace_p_value}
 \end{equation}
 
@@ -256,7 +256,7 @@ We applied the Laplace test and Boswell's likelihood ratio test to a real-world 
 The dataset contains large fire insurance claims in Denmark from 1980 to 1990.
 We are primarily interested in the arrival times of the claims to determine if there is an increasing trend in the intensity of claims over time. \\
 The figure \ref{fig:fire_insurance_claims} shows the distribution of the arrival times of the claims.
-Given the large number of claims ($n = 1644$), if the intensity of claims were constant, we would expect the curve to be relatively flat along the diagonal. \\
+Given the large number of claims ($n = 2166$), if the intensity of claims were constant, we would expect the curve to be relatively flat along the diagonal. \\
 
 \begin{figure}[H]
     \centering
@@ -309,6 +309,18 @@ Since this p-value is below the significance level of $0.05$, we reject the null
 The Boswell test statistic $W$ was calculated using the formula \eqref{eq:boswell_test_statistic}.
 However, we were unable to correctly implement the p-value for the Boswell test, as it requires to compute Stirling numbers of the first kind and a factorial of a large number, which is computationally expensive.
 We tried to bypass this issue by using a logaritmic transformation, but the results were not satisfactory. \\
+We also tried to find an asymptotic approximation of the threshold $w_{\alpha}$ to compare the test statistic $W$ to: \\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{src/walpha_approximation.png}
+    \caption{Approximation of the Threshold $w_{\alpha}$}
+    \label{fig:walpha_approximation}
+\end{figure}
+
+The figure \ref{fig:walpha_approximation} shows the value of the threshold $w_{\alpha}$ for different values of $n$ (with $\alpha = 0.04$). \\
+We can see that the threshold don't seems to converge to a fixed value, as it keeps increasing with $n$.
+We can't therefore predict its value for our dataset.
 
 
 \section{Conclusion}
@@ -378,7 +390,7 @@ We can find the form of $M(\alpha, \beta)$ by derviating the product of $f_i(x)$
 \begin{equation*}
     \begin{split}
         \frac{d}{dx} \prod_{i=\alpha}^{\beta} f_i(x) &= (\beta - \alpha + 1) x^{\beta - \alpha} \exp(-x(T_{\beta + 1} - T_{\alpha})) - x^{\beta - \alpha + 1} \exp(-x(T_{\beta + 1} - T_{\alpha})) (T_{\beta + 1} - T_{\alpha}) \\
-        &= x^{\beta - \alpha} \exp(-x(T_{\beta + 1} - T_{\alpha})) * (\beta - \alpha + 1 - x(T_{\beta + 1} - T_{\alpha}))
+        &= x^{\beta - \alpha} \exp(-x(T_{\beta + 1} - T_{\alpha})) \times (\beta - \alpha + 1 - x(T_{\beta + 1} - T_{\alpha}))
     \end{split}
 \end{equation*}
 

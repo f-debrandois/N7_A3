@@ -363,7 +363,7 @@ plot.PP(times, lambda_cum_func)
 
 We then compute the power of the Laplace and Boswell tests for each scenario.
 
-```{r exp_power_T, eval=TRUE, echo=FALSE}
+```{r exp_power_T, eval=TRUE, echo=TRUE}
 # Compute the power of the Laplace and Boswell tests for each beta value
 n <- 20
 T_list <- c(1.0, 2.0, 4.0)
@@ -476,7 +476,7 @@ for (beta in beta_values) {
 legend("topright", legend = paste("beta =", beta_values), col = rainbow(length(beta_values)), lty = 1)
 ```
 
-We have simulated a Nonhomogeneous Poisson Process for each scenario (with $n = 20$, $T^* = 2.0$ and $\beta = 1.0$):
+We have simulated a Nonhomogeneous Poisson Process for each scenario (with $n = 20$, $T^* = 2.0$ and $\beta = 2.0$):
 
 ```{r weibull_nhpp, eval=TRUE}
 # Simulation and plot of a Nonhomogeneous Poisson Process
@@ -495,7 +495,7 @@ plot.PP(times, lambda_cum_func)
 
 We then compute the power of the Laplace and Boswell tests for each scenario.
 
-```{r weibull_power_T, eval=TRUE, echo=FALSE}
+```{r weibull_power_T, eval=TRUE, echo=TRUE}
 # Compute the power of the Laplace and Boswell tests for each beta value
 n <- 20
 T_list <- c(1.0, 2.0, 4.0)
@@ -642,11 +642,12 @@ times_intervals = as.numeric(diff(df_data$Times), units="days")
 head(df_data)
 ```
 
-We plot the cumulative number of claims over time to visualize the data.
+We plot the cumulative number of claims over time to visualize the data.  
+We also plot the cumulative intensity function of a homogeneous Poisson process to compare it with the data.
 
 ```{r Danish_plot, eval=TRUE, echo=FALSE, fig.width=10, fig.height=5}
 # Plot the number of claims over time
-plot.PP(cumsum(times_intervals))
+plot.PP(cumsum(times_intervals), lambda_cum_func = function(t) t)
 ```
 
 We adjust an exponential distribution to the time intervals to check if the inter-arrival times follow an exponential distribution.
@@ -666,7 +667,7 @@ legend("topright", legend = c("Data", "Fitted Exponential"), col = c("skyblue", 
 
 We then check the autocorrelation of the time intervals to assess the independence of the time intervals.
 
-```{r Danish_autocorr, eval=TRUE, echo=FALSE, fig.width=10, fig.height=5}
+```{r Danish_autocorr, eval=TRUE, echo=TRUE, fig.width=10, fig.height=5}
 # Autocorrelation of the time intervals
 acf(times_intervals, main = "Autocorrelation of Time Intervals")
 ```
@@ -679,12 +680,32 @@ We ensure that the Poisson process is simple by removing duplicate time values.
 new_times_intervals <- times_intervals[times_intervals != 0]
 ```
 
-```{r Danish_parameters, eval=TRUE, include=FALSE}
+```{r Danish_parameters, eval=TRUE, include=TRUE}
 # Variable declarations
 times <- cumsum(new_times_intervals)
 T_max <- max(times)
 n <- length(times)
 ```
+
+
+## Application of the tests
+
+We apply the Laplace and Boswell tests to the Danish dataset to detect an increasing trend in the intensity of the Poisson process.
+
+### Laplace Test
+
+```{r Danish_Laplace, eval=TRUE}
+# Laplace Test
+Z_obs <- laplace_test(times, T_max, n)
+
+# Compute the p-value
+p_val <- 1 - pnorm(Z_obs)
+
+print(p_val)
+```
+
+
+### Boswell Test
 
 ```{r tool3, eval=TRUE, include=TRUE}
 # Function to generate a matrix of log Stirling numbers of the first kind
@@ -726,25 +747,6 @@ boswell_log_survival_func <- function(w, n) {
 ```
 
 
-## Application of the tests
-
-We apply the Laplace and Boswell tests to the Danish dataset to detect an increasing trend in the intensity of the Poisson process.
-
-### Laplace Test
-
-```{r Danish_Laplace, eval=TRUE}
-# Laplace Test
-Z_obs <- laplace_test(times, T_max, n)
-
-# Compute the p-value
-p_val <- 1 - pnorm(Z_obs)
-
-print(p_val)
-```
-
-
-### Boswell Test
-
 ```{r Danish_Boswell, eval=FALSE}
 # Boswell Test
 W_obs <- boswell_test(times, T_max, n)
@@ -753,4 +755,18 @@ W_obs <- boswell_test(times, T_max, n)
 p_val <- boswell_log_survival_func(W_obs, n)
 
 print(p_val)
+```
+
+
+We plot the value of $w_{\alpha}$ as a function of $n$ to check if we can find an approximate value for the critical value.
+
+```{r Danish_Boswell_plot, eval=TRUE, echo=TRUE, fig.width=10, fig.height=5}
+# Plot the critical value for the Boswell test
+n_values <- seq(10, 170, by = 10)
+alpha <- 0.04
+w_alpha_values <- sapply(n_values, function(n) boswell_critical_value(alpha, n))
+
+plot(n_values, w_alpha_values, type = "b", col = "blue", lwd = 2,
+     xlab = "n", ylab = expression(w[alpha]),
+     main = "Critical Value for the Boswell Test")
 ```
