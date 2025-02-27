@@ -9,6 +9,7 @@ _build/
 *.fdb_latexmk
 *.fls
 *.log
+*.out
 *.run.xml
 *.synctex.gz
 *.toc
