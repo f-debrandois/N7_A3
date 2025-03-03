@@ -1,0 +1,3 @@
+[submodule "S10/AIF"]
+	path = S10/AIF
+	url = https://github.com/f-debrandois/AIF.git
