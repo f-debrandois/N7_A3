@@ -1,4 +1,5 @@
 .vscode/
+.gradio/
 __pycache__/
 _build/
 
