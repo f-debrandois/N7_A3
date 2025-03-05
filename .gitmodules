@@ -1,3 +1,6 @@
 [submodule "S10/AIF"]
 	path = S10/AIF
 	url = https://github.com/f-debrandois/AIF.git
+[submodule "S9/Poisson/Poisson-Process-Project"]
+	path = S9/Poisson/Poisson-Process-Project
+	url = https://github.com/f-debrandois/Poisson-Process-Project.git
