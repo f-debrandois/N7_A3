@@ -1,0 +1,3 @@
+[submodule "S7/Stats/Occitanie-Air-Quality-Analysis"]
+	path = S7/Stats/Occitanie-Air-Quality-Analysis
+	url = https://github.com/f-debrandois/Occitanie-Air-Quality-Analysis.git
