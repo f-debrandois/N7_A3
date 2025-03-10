@@ -1,0 +1,137 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}		       
+\usepackage{lmodern}			       
+\usepackage{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{stmaryrd}
+\usepackage{dsfont}
+\usepackage{pgf, tikz}
+\usetikzlibrary{shapes.misc}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage[text={15cm,24.5cm},centering]{geometry}
+
+
+% Définir le texte affiché en fin de page
+\pagestyle{fancy}
+\fancyhf{}  % Clear the default headers and footers
+\rfoot{\hrule
+    \vspace{0.3cm}
+    \noindent\textsf{Félix de Brandois}
+    \hfill \thepage
+}
+\renewcommand{\headrulewidth}{0pt}
+
+% Style de l'entete
+\newcommand{\entete}{
+    \noindent\textbf{INSA - ModIA, 5$^e$ année.}
+    \hfill \textbf{Années 2024-2025}
+    
+    \begin{center}
+        \textbf{\LARGE Résolution de systèmes linéaires issus d'EDP}
+    \end{center}
+}
+
+
+% Définir la fonction pour créer une boîte de propriété
+\newcommand{\propriete}[2]{%
+    \begin{tcolorbox}[colback=white,colframe=green!25!white,title=\textbf{Propriété #1}, coltitle=black]
+        #2
+    \end{tcolorbox}
+}
+
+% Définir la fonction pour créer une boîte de définition
+\newcommand{\definition}[2]{%
+    \begin{tcolorbox}[colback=white,colframe=blue!25!white,title=\textbf{Définition #1}, coltitle=black]
+        #2
+    \end{tcolorbox}
+}
+
+% Définir la fonction pour créer une boîte de théorème
+\newcommand{\theoreme}[2]{%
+    \begin{tcolorbox}[colback=white,colframe=red!25!white,title=\textbf{Théorème #1}, coltitle=black]
+        #2
+    \end{tcolorbox}
+}
+
+% Définir la fonction pour créer une boîte de remarque
+\definecolor{customRed}{RGB}{150, 30, 30}
+\newcommand{\remarque}[1]{%
+    \leftline{\noindent
+    \textcolor{customRed}{\vrule width 3pt}\hspace{10pt}%
+    \parbox{0.9\textwidth}{%
+        \textbf{Remarque :}
+        #1
+    }}
+    \vspace{10pt}
+}
+
+% Définir la fonction pour créer une boîte de preuve
+\newcommand{\preuve}[1]{%
+    \begin{quote}
+        $\blacktriangleright$~#1
+    \end{quote}
+}
+
+% Définir la fonction pour créer un encadrement de texte
+\newcommand{\important}[1]{%
+    \begin{tcolorbox}[colback=red!10!white,colframe=red!30!black]
+        #1
+    \end{tcolorbox}
+}
+
+
+
+\begin{document}
+
+\entete
+
+\vspace{0.5cm}
+
+
+\textit{Partie Manquante}
+
+
+\theoreme{}{
+    Let $\rho(S) = \max (\lambda(S))$ be the \textit{spectral radius} of the matrix $S$.
+    The iteration associated to the matrix $S$ converges for all initial guess $x^{(0)}$ if and only if $\rho(S) < 1$.
+}
+
+\remarque{
+    Suppose that the matrix $S$ is symmetric and positive definite.
+    We have
+    $$
+    \frac{||e^{(m)}||}{||e^{(0)}||} \leq ||S^{m}|| \leq \rho(S)^{m}
+    $$
+}
+
+\remarque{
+    How many iterations are needed to guarantee the reduction of the error by a factor of $10^{-p}$?
+    $$
+    m \geq \frac{\log(10^{-p})}{\log(|\rho(S)|)}
+    $$
+}
+
+\definition{- Convergence factor}{
+    The \textit{convergence factor} is defined as the worst factor of reduction of the error in one step : $\rho(S)$.
+}
+
+\definition{- Convergence rate}{
+    The \textit{convergence rate} highlights the speed of convergence of the method : $-\log_{10}(\rho(S))$.
+    The convergence becomes faster, the higher the convergence rate is.
+}
+
+
+
+
+
+
+\end{document}
