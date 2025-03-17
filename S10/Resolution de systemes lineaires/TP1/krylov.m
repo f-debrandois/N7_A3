@@ -86,7 +86,9 @@ function [x, flag, relres, iter, resvec] = krylov(A, b, x0, tol, maxit, type)
             % résolution de argmin ||beta.e1 - H_barre.y|| avec '\'
             y = H(1:j+1, 1:j)\e1;
             % estimation de l'erreur
-            estimateur = 0;
+            [Q, R] = qr(H(1:j+1, 1:j), 0);
+            g = Q'*e1;
+            estimateur = abs(g(end));
         end
         
         % calcul de l'itérée courante x à partir de x0, de V et de y
