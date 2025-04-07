@@ -1,11 +1,10 @@
 clear all;
-
 % Setup maillage
 N = 256;
 h = 1/N;
-
-% Interior mesh points
-xi=h:h:1-h; xi = xi'; % row vector to column vector
+% Inner mesh points
+xi=h:h:1-h;
+xi=xi'; % row vector to column vector
 
 % Jacobi weighting parameter
 omega = 2/3;
@@ -19,9 +18,9 @@ v(1:N-1,1) = 0;
 
 % We do 10 iterations.
 maxit = 10;
-res = zeros(maxit+1,1);
+res(1:maxit+1) = 0;
 
-% Initial residual
+% Initial residual error
 res(1) = norm(rhsf - Ah*v);
 
 nu1=1;
