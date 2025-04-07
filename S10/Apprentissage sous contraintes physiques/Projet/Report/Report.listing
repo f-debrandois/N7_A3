@@ -1,0 +1,4 @@
+## Dans la classe Gaussian, methode __init__
+minexp = torch.Tensor([-8.0])
+maxexp = torch.Tensor([8.0])
+diaga = torch.clamp(diaga, min=minexp, max=maxexp)
