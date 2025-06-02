@@ -4,3 +4,6 @@
 [submodule "S9/Poisson/Poisson-Process-Project"]
 	path = S9/Poisson/Poisson-Process-Project
 	url = https://github.com/f-debrandois/Poisson-Process-Project.git
+[submodule "S10/Apprentissage sous contraintes physiques/Molecular_Energy_Prediction"]
+	path = S10/Apprentissage sous contraintes physiques/Molecular_Energy_Prediction
+	url = https://github.com/JulesGourio/Molecular_Energy_Prediction.git
