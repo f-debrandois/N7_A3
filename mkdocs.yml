@@ -1,0 +1,108 @@
+site_name: lh2pac
+repo_url: https://gitlab.com/MatthiasDeLozzo/lh2pac
+repo_name: lh2pac
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.instant
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/lightbulb
+        name: Switch to light mode
+  icon:
+    logo: material/airplane
+    repo: fontawesome/brands/gitlab
+
+plugins:
+- search
+- gen-files:
+    scripts:
+    - docs/gen_ref_pages.py
+- literate-nav:
+    nav_file: SUMMARY.md
+- section-index
+- mkdocstrings:
+    handlers:
+      python:
+        paths: [src]
+        options:
+          extensions:
+          - griffe_inherited_docstrings
+          - docstring_inheritance.griffe
+          filters:
+          - "!^_"
+          docstring_options:
+            returns_multiple_items: False
+          docstring_section_style: list
+          inherited_members: true
+          merge_init_into_class: true
+          separate_signature: true
+          show_root_heading: true
+          show_root_full_path: false
+          show_signature_annotations: true
+          show_symbol_type_heading: true
+          show_symbol_type_toc: true
+          show_category_heading: true
+          signature_crossrefs: true
+- gallery:
+    conf_script: docs/gallery_conf.py
+    default_thumb_file: docs/images/aeroplane.png
+- include-markdown
+- bibtex:
+    bib_file: "docs/references.bib"
+
+nav:
+- Presentation:
+  - Overview: index.md
+  - The use cases: presentation/use_cases.md
+  - The deliverables: presentation/deliverables.md
+  - The important dates: presentation/dates.md
+- Utils:
+  - Install LH2PAC: utils/installation.md
+  - Write in markdown: utils/markdown.md
+  - Examples: generated/scripts/examples
+  - API documentation: reference/lh2pac/
+- Scripts: generated/scripts/project
+- Report:
+  - Report: report/index.md
+  - Introduction: report/introduction.md
+  - Part 1: report/part1.md
+  - Part 2: report/part2.md
+  - Part 3: report/part3.md
+  - Conclusion: report/conclusion.md
+
+markdown_extensions:
+- admonition
+- pymdownx.details
+- pymdownx.arithmatex:
+    generic: true
+- pymdownx.tabbed:
+    alternate_style: true
+- pymdownx.superfences:
+    custom_fences:
+      - name: mermaid
+        class: mermaid
+- footnotes
+- toc:
+    permalink: true
+- pymdownx.snippets
+- pymdownx.emoji:
+    emoji_index: !!python/name:material.extensions.emoji.twemoji
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra_javascript:
+- javascripts/mathjax.js
+- https://polyfill.io/v3/polyfill.min.js?features=es6
+- https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+watch:
+  # mkdoc serve will rebuild the pages when changes in the docstrings.
+  - src/lh2pac
+
