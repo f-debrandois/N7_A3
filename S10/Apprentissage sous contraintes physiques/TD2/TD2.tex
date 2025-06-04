@@ -38,7 +38,7 @@
         \includegraphics[height=0.8cm]{src/inp_n7.png}
     \end{center}
     \begin{center}
-        \textbf{\LARGE TD: Basic knowledge}
+        \textbf{\LARGE TD: Basic knowledge 2}
     \end{center}
 }
 
@@ -47,134 +47,170 @@
 
 \entete
 
-\section{Matrix Calculus}
+\section{Invariant representation}
 
 \noindent\textbf{Question 1 :}
-Let $A$ and $X$ be two real-valued matrices, computes
-$$
-\frac{\partial \text{Tr}(XA)}{\partial X}
-$$
+Which of the following representations are invariant to circular translations of $x \in \mathbb{R}^N$? Justify your answer.
+
+\begin{enumerate}
+    \item $\Phi(x) = x(0)$
+    \item $\Phi(x) = \frac{1}{N} \sum_{i=1}^N x(i)$
+    \item $\Phi(x) = \frac{1}{N} \sum_{i=1}^N i \cdot x(i)$
+    \item $\Phi(x) = \frac{1}{N} \sum_{i=1}^N x(i) \cdot x(i-2)$
+\end{enumerate}
 
 \color{blue}
 
-\begin{align*}
-    \frac{\partial \text{Tr}(XA)}{\partial X} &= \left(\frac{\partial \text{Tr}(XA)}{\partial X_{ij}}\right)_{1\leq i,j\leq d} \\
-    &= \left(\frac{\partial}{\partial X_{ij}}\sum_{k}\left[XA\right]_{kk}\right)_{1\leq i,j\leq d} \\
-    &= \left(\frac{\partial}{\partial X_{ij}}\sum_{k} \sum_{l}X_{kl}A_{lk}\right)_{1\leq i,j\leq d} \\
-    &= \left(\frac{\partial}{\partial X_{ij}}\sum_{k} \sum_{l}X_{kl}A_{lk}\right)_{1\leq i,j\leq d} \\
-    &= \left(A_{ji}\right)_{1\leq i,j\leq d} \\
-    &= A^T
-\end{align*}
+Let $T$ be the circular translation of $x$ by $1$ steps: $(T x)(i) = x(i+1 \mod N)$. \\
+with $x(0) = x(N)$
+
+
+\begin{enumerate}
+    \item $\Phi(T x) = (T x)(0) = x(1) \neq x(0)$, so $\Phi$ is not invariant.
+    \item $\Phi(T x) = \frac{1}{N} \sum_{i=1}^N (T x)(i)$ \\
+    $= \frac{1}{N} \sum_{i=1}^N x(i+1 \mod N)$ \\
+    $ = \frac{1}{N} \sum_{j=0}^{N-1} x(j) = \Phi(x)$, so $\Phi$ is invariant.
+    \item $\Phi(T x) = \frac{1}{N} \sum_{i=1}^N i \cdot (T x)(i)$ \\
+    $ = \frac{1}{N} \sum_{i=1}^N i \cdot x(i+1 \mod N)$ \\
+    $ = \frac{1}{N} \sum_{j=0}^{N-1} (j+1) \cdot x(j)$ \\
+    $ = \frac{1}{N} \sum_{j=0}^{N-1} j \cdot x(j) + \frac{1}{N} \sum_{j=0}^{N-1} x(j) = \Phi(x) + \frac{1}{N} \sum_{j=0}^{N-1} x(j)$, so $\Phi$ is not invariant.
+    \item $\Phi(T x) = \frac{1}{N} \sum_{i=1}^N (T x)(i) \cdot (T x)(i-2)$ \\
+    $ = \frac{1}{N} \sum_{i=1}^N x(i+1 \mod N) \cdot x(i-1 \mod N)$ \\
+    $ = \frac{1}{N} \sum_{j=0}^{N-1} x(j) \cdot x(j-2) = \Phi(x)$, so $\Phi$ is invariant.
+\end{enumerate}
 
 \color{black}
 
-\noindent\textbf{Question 2 :}
-Let $X$ be an invertible real-valued matrix, computes
-$$
-\frac{\partial \text{det}(X)}{\partial X}
-$$
+\section{Linear discriminant analysis (LDA)}
 
-\color{blue}
-
-\begin{align*}
-    \frac{\partial \text{det}(X)}{\partial X} &= \left(\frac{\partial \text{det}(X)}{\partial X_{ij}}\right)_{1\leq i,j\leq d} \\
-    &= \left(\frac{\partial}{\partial X_{ij}}\text{det}(X)\right)_{1\leq i,j\leq d} \\
-    &= \left(\frac{\partial}{\partial X_{ij}}\sum_i \sum_j X_{ij}C_{ij}\right)_{1\leq i,j\leq d} \quad \text{where } C_{ij} = (-1)^{i+j}\det(X_{-i,-j}) \text{ is the cofactor of } X_{ij} \\
-    &= \left(C_{ij}\right)_{1\leq i,j\leq d} \\
-    &= \text{Cof}(X)^T \quad \text{where } \text{Cof}(X) \text{ is the cofactor matrix of } X \\
-    &= \text{det}(X)(X^{-1})^T
-\end{align*}
-
-
-\color{black}
-
-\section{Joint and Posterior Distributions}
-
-Use Bayesian formula to show that if $v \sim \mathcal{N}(\mu, K), u|v \sim \mathcal{N}(Lv + m, \Sigma)$, then
-$$
-v|u \sim \mathcal{N}(\mu + J\left[u - (Lv + m)\right], K - JLK)
-$$
-where $J = K^TL^T(\Sigma + LKL^T)^{-1}$. \\
-
-\color{blue}
-
-We can express $u$ as a linear transformation of $v$ and a noise term:
-$$
-u = Lv + m + \varepsilon \quad \text{where } \varepsilon \sim \mathcal{N}(0, \Sigma)
-$$
+The idea of Fisher is to find $w \in \mathbb{R}^N$ such that
 \begin{itemize}
-    \item $\mathbb{E}(v) = \mu$
-    \item $\mathbb{E}(u) = \mathbb{E}(Lv + m + \varepsilon) = L\mathbb{E}(v) + m = L\mu + m$
-    \item $\text{Cov}(v) = K$
-    \item $\text{Cov}(u) = \text{Cov}(Lv + m + \varepsilon) = L\text{Cov}(v)L^T + \text{Cov}(\varepsilon) = LKL^T + \Sigma$
-    \item $\text{Cov}(v, u) = \text{Cov}(v, Lv + m + \varepsilon) = \text{Cov}(v, Lv + m) = K^TL^T$
-    \item $\text{Cov}(u, v) = \text{Cov}(Lv + m + \varepsilon, v) = \text{Cov}(v, Lv + m + \varepsilon)^T = LK$
+    \item $|w^T(\mu_1 - \mu_2)|$ is large,
+    \item $s_k(w) = \sum_{i:y_i=c_k} (w^T (x_i - \mu_k))^2$ is small.
 \end{itemize}
 
-Therefore, the joint distribution of $u$ and $v$ is
+This can be achieved by solving
 $$
-\begin{pmatrix}
-    v \\
-    u
-\end{pmatrix}
-\sim \mathcal{N}\left(
-\begin{pmatrix}
-    \mu \\
-    L\mu + m
-\end{pmatrix},
-\begin{pmatrix}
-    K & K^TL^T \\
-    LK & LKL^T + \Sigma
-\end{pmatrix}
-\right)
-$$\\
-
-Using the conditional distribution formula for Gaussian vectors, we have
-$$
-\mathbb{E}(v|u) = \mathbb{E}(v) + \text{Cov}(v, u)\text{Cov}(u)^{-1}(u - \mathbb{E}(u)) = \mu + K^TL^T(\Sigma + LKL^T)^{-1}(u - L\mu - m)
-$$
-$$
-\text{Cov}(v|u) = \text{Cov}(v) - \text{Cov}(v, u)\text{Cov}(u)^{-1}\text{Cov}(u, v) = K - K^TL^T(\Sigma + LKL^T)^{-1}LK
-$$\\
-
-Let $J = K^TL^T(\Sigma + LKL^T)^{-1}$, we have
-$$
-v|u \sim \mathcal{N}(\mu + J\left[u - (Lv + m)\right], K - JLK)
+\max_{w \in \mathbb{R}^N} J(w) = \frac{|w^T(\mu_1 - \mu_2)|^2}{s_1(w) + s_2(w)}
 $$
 
 \newpage
-\color{black}
 
-\section{EM Algorithm}
 
-In the slide on the justification of EM algorithm using log partition function, explain how the key idea of EM is related to
-$$
-\log Z = \underset{q}{\max} \int f(x)q(x)dx - \int \log q(x)q(x)dx
-$$
-
-You should specify the function $f$ and the density $q$ in order to make the connection. \\
+\noindent\textbf{Question 2 :}
+Derive an optimal $w$ by solving $\frac{\partial J}{\partial w} = 0$.\\
 
 \color{blue}
 
-The Expectation-Maximization (EM) algorithm is a powerful iterative method used to perform maximum likelihood estimation (MLE) in the presence of latent (unobserved) variables. \\
-
-The EM algorithm alternates between two steps:
-\begin{enumerate}
-    \item E-step: Compute the expected value of the log-likelihood function with respect to the conditional distribution of the latent variables given the observed data and the current estimate of the parameters.
-    \item M-step: Maximize the expected value of the log-likelihood function with respect to the parameters.
-\end{enumerate}
-
-In the context of the log partition function $\log Z$, we have
-\begin{itemize}
-    \item $f(x) = \log p(x, z|\theta)$ is the log-likelihood function of the complete data $x$ and latent variable $z$ given the parameters $\theta$.
-    \item $q(x) = p(z|x, \theta^{(t)})$ is the conditional distribution of the latent variable $z$ given the observed data $x$ and the current estimate of the parameters $\theta^{(t)}$.
-\end{itemize}
-
-The connection to the log partition function is that the EM algorithm can be seen as maximizing a lower bound on the log-likelihood, which is analogous to maximizing the log partition function $\log Z$.
-The optimal $q(x)$ is given by
+We rewrite $J(w)$ using matrices:
 $$
-q(x) = \frac{e^{f(x)}}{Z}
+(w^T(\mu_1 - \mu_2))^2 = w^T (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T w = w^T A w
 $$
-where $Z = \int e^{f(x)}dx$ is the partition function. \\
+and
+$$
+s_1(w) + s_2(w) = \sum_{k=1}^2 \sum_{i:y_i=c_k} (w^T (x_i - \mu_k))^2 = w^T \left( \sum_{k=1}^2 \sum_{i:y_i=c_k} (x_i - \mu_k)(x_i - \mu_k)^T \right) w = w^T B w
+$$
+with $A = (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T$ and $B = \sum_{k=1}^2 \sum_{i:y_i=c_k} (x_i - \mu_k)(x_i - \mu_k)^T$. \\
+
+Thus, we have
+$$
+J(w) = \frac{w^T A w}{w^T B w}
+$$
+We can then solve:
+\begin{align*}
+    &\quad \frac{\partial J}{\partial w} = 0 \\
+    &\Leftrightarrow \frac{\partial}{\partial w} \left( \frac{w^T A w}{w^T B w} \right) = 0 \\
+    &\Leftrightarrow \frac{2 B w \cdot (w^T A w) - 2A w \cdot (w^T B w)}{(w^T B w)^2} = 0 \\
+    &\Leftrightarrow B w \cdot (w^T A w) = A w \cdot (w^T B w) \\
+    &\Leftrightarrow B w \cdot \lambda = A w \qquad \text{with } \lambda = \frac{w^T A w}{w^T B w} = J(w) \text{ (scalar)} \\
+    &\Leftrightarrow \lambda B w = (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T w \\
+    &\Leftrightarrow \lambda B w = \gamma (\mu_1 - \mu_2) \qquad \text{with } \gamma = (\mu_1 - \mu_2)^T w \text{ (scalar)} \\
+    &\Leftrightarrow w = \frac{\gamma}{\lambda} B^{-1} (\mu_1 - \mu_2) \\
+    &\Leftrightarrow w \propto B^{-1} (\mu_1 - \mu_2)
+\end{align*}\\
+
+
+
+
+\color{black}
+
+\noindent\textbf{Question 3 :}
+How is this $w$ related to the $g_k(x) = \mathbb{P}(y = c_k | x)$ in LDA when $K = 2$? \\
+
+\color{blue}
+
+We have
+\[
+g_k(x) = \mathbb{P}(y = c_k | x) = \frac{\mathbb{P}(x | y = c_k) \mathbb{P}(y = c_k)}{\mathbb{P}(x)}
+\]
+Therefore:
+\[
+\log(g_k(x)) = \log(\mathbb{P}(x | y = c_k)) + \log(\mathbb{P}(y = c_k)) - \log(\mathbb{P}(x))
+\]
+In LDA, we assume that the conditional distribution $\mathbb{P}(x | y = c_k)$ is Gaussian with mean $\mu_k$ and covariance matrix $\Sigma$. Thus, we have:
+\[
+\log(g_k(x)) = \log(\pi_k) -\frac{1}{2} (x - \mu_k)^T \Sigma^{-1} (x - \mu_k) + \text{constant}
+\]
+where $\pi_k = \mathbb{P}(y = c_k)$ is the prior probability of class $c_k$.
+
+\newpage
+We can rewrite this as:
+\[
+\log(g_k(x)) = -\frac{1}{2} x^T \Sigma^{-1} x + x^T \Sigma^{-1} \mu_k + \log(\pi_k) - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \text{constant}
+\]
+
+The decision boundary is when $g_1(x) = g_2(x)$:
+\begin{align*}
+    &\quad g_1(x) = g_2(x) \\
+    &\Leftrightarrow \log(g_1(x)) = \log(g_2(x)) \\
+    &\Leftrightarrow x^T \Sigma^{-1} \mu_1 + \log(\pi_1) - \frac{1}{2} \mu_1^T \Sigma^{-1} \mu_1 = x^T \Sigma^{-1} \mu_2 + \log(\pi_2) - \frac{1}{2} \mu_2^T \Sigma^{-1} \mu_2 \\
+    &\Leftrightarrow x^T \Sigma^{-1} (\mu_1 - \mu_2) = \frac{1}{2} (\mu_1^T \Sigma^{-1} \mu_1 - \mu_2^T \Sigma^{-1} \mu_2) + \log(\frac{\pi_2}{\pi_1}) \\
+    &\Leftrightarrow x^T \Sigma^{-1} (\mu_1 - \mu_2) = \text{constant}
+\end{align*}
+
+This is a linear equation in $x$, which means that the decision boundary is a hyperplane.
+The normal vector of this hyperplane is $w' = \Sigma^{-1} (\mu_1 - \mu_2)$. \\
+
+In the previous question, we defined $B = \sum_{k=1}^2 \sum_{i:y_i=c_k} (x_i - \mu_k)(x_i - \mu_k)^T$, which is the covariance matrix of the data. \\
+
+The optimal $w$ obtained from Fisher's LDA is:
+\[
+w \propto B^{-1} (\mu_1 - \mu_2)
+\]
+
+The normal vector to the decision hyperplane in Gaussian LDA is:
+\[
+w' = \Sigma^{-1} (\mu_1 - \mu_2)
+\]
+
+\color{black}
+
+\section{Discrete Fourier transform}
+
+\noindent\textbf{Question 4 :}
+Let $x \in \mathbb{R}^N$ and $\phi_k(u) = e^{i w_k u}$, $w_k = \frac{2 \pi k}{N}$. Is the following equation true ? Justify your answer.
+$$
+||x||^2 = \sum_{k=0}^{N-1} | \langle x, \phi_k \rangle |^2
+$$
+
+\color{blue}
+
+By definition, we have
+$$
+\langle x, \phi_k \rangle = \sum_{u=0}^{N-1} x(u) \cdot \overline{\phi_k(u)} = \sum_{u=0}^{N-1} x(u) \cdot e^{-i w_k u} = \hat{x}(w_k) \qquad \text{(discrete Fourier transform of } x)
+$$
+
+According to the Parseval's identity, we have
+$$
+||x||^2 = \sum_{u=0}^{N-1} |x(u)|^2 = \frac{1}{N} \sum_{k=0}^{N-1} | \hat{x}(w_k) |^2
+$$
+Thus, the true equation is
+$$
+||x||^2 = \frac{1}{N} \sum_{k=0}^{N-1} | \langle x, \phi_k \rangle |^2
+$$
+
+
+
+
 
 \end{document}
