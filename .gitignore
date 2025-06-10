@@ -5,6 +5,7 @@ _build/
 .metadata/
 data/
 results/
+.venv/
 
 *.aux
 *.bbl
