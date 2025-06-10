@@ -6,6 +6,7 @@ _build/
 data/
 results/
 .venv/
+.settings/
 
 *.aux
 *.bbl
@@ -20,6 +21,7 @@ results/
 *.toc
 *.lof
 .Rhistory
+.project
 
 *.toml
 *.pkl
