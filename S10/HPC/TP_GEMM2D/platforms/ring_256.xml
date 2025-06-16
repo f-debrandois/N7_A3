@@ -1,0 +1,1299 @@
+<?xml version='1.0'?>
+<!DOCTYPE platform SYSTEM "http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd">
+<platform version="4.1">
+
+<!--  WARNING:  This <config></config> clause below
+makes it so that NO COMPUTATION TIME is simulated. This is because
+in this module, for pedagogic purposes, we don't want to muddy the
+(simulation) waters with computational times. As a results, this
+XML platform file may not be suitable for running other
+simulations, unless you remove the <config></config> clause.
+-->
+<config>
+<prop id="smpi/simulate-computation" value="0"></prop>
+<prop id="smpi/host-speed" value="1f"></prop>
+</config>
+
+<AS id="AS0" routing="Floyd">
+  <host id="host-0.hawaii.edu" speed="10Gf"/>
+  <host id="host-1.hawaii.edu" speed="10Gf"/>
+  <host id="host-2.hawaii.edu" speed="10Gf"/>
+  <host id="host-3.hawaii.edu" speed="10Gf"/>
+  <host id="host-4.hawaii.edu" speed="10Gf"/>
+  <host id="host-5.hawaii.edu" speed="10Gf"/>
+  <host id="host-6.hawaii.edu" speed="10Gf"/>
+  <host id="host-7.hawaii.edu" speed="10Gf"/>
+  <host id="host-8.hawaii.edu" speed="10Gf"/>
+  <host id="host-9.hawaii.edu" speed="10Gf"/>
+  <host id="host-10.hawaii.edu" speed="10Gf"/>
+  <host id="host-11.hawaii.edu" speed="10Gf"/>
+  <host id="host-12.hawaii.edu" speed="10Gf"/>
+  <host id="host-13.hawaii.edu" speed="10Gf"/>
+  <host id="host-14.hawaii.edu" speed="10Gf"/>
+  <host id="host-15.hawaii.edu" speed="10Gf"/>
+  <host id="host-16.hawaii.edu" speed="10Gf"/>
+  <host id="host-17.hawaii.edu" speed="10Gf"/>
+  <host id="host-18.hawaii.edu" speed="10Gf"/>
+  <host id="host-19.hawaii.edu" speed="10Gf"/>
+  <host id="host-20.hawaii.edu" speed="10Gf"/>
+  <host id="host-21.hawaii.edu" speed="10Gf"/>
+  <host id="host-22.hawaii.edu" speed="10Gf"/>
+  <host id="host-23.hawaii.edu" speed="10Gf"/>
+  <host id="host-24.hawaii.edu" speed="10Gf"/>
+  <host id="host-25.hawaii.edu" speed="10Gf"/>
+  <host id="host-26.hawaii.edu" speed="10Gf"/>
+  <host id="host-27.hawaii.edu" speed="10Gf"/>
+  <host id="host-28.hawaii.edu" speed="10Gf"/>
+  <host id="host-29.hawaii.edu" speed="10Gf"/>
+  <host id="host-30.hawaii.edu" speed="10Gf"/>
+  <host id="host-31.hawaii.edu" speed="10Gf"/>
+  <host id="host-32.hawaii.edu" speed="10Gf"/>
+  <host id="host-33.hawaii.edu" speed="10Gf"/>
+  <host id="host-34.hawaii.edu" speed="10Gf"/>
+  <host id="host-35.hawaii.edu" speed="10Gf"/>
+  <host id="host-36.hawaii.edu" speed="10Gf"/>
+  <host id="host-37.hawaii.edu" speed="10Gf"/>
+  <host id="host-38.hawaii.edu" speed="10Gf"/>
+  <host id="host-39.hawaii.edu" speed="10Gf"/>
+  <host id="host-40.hawaii.edu" speed="10Gf"/>
+  <host id="host-41.hawaii.edu" speed="10Gf"/>
+  <host id="host-42.hawaii.edu" speed="10Gf"/>
+  <host id="host-43.hawaii.edu" speed="10Gf"/>
+  <host id="host-44.hawaii.edu" speed="10Gf"/>
+  <host id="host-45.hawaii.edu" speed="10Gf"/>
+  <host id="host-46.hawaii.edu" speed="10Gf"/>
+  <host id="host-47.hawaii.edu" speed="10Gf"/>
+  <host id="host-48.hawaii.edu" speed="10Gf"/>
+  <host id="host-49.hawaii.edu" speed="10Gf"/>
+  <host id="host-50.hawaii.edu" speed="10Gf"/>
+  <host id="host-51.hawaii.edu" speed="10Gf"/>
+  <host id="host-52.hawaii.edu" speed="10Gf"/>
+  <host id="host-53.hawaii.edu" speed="10Gf"/>
+  <host id="host-54.hawaii.edu" speed="10Gf"/>
+  <host id="host-55.hawaii.edu" speed="10Gf"/>
+  <host id="host-56.hawaii.edu" speed="10Gf"/>
+  <host id="host-57.hawaii.edu" speed="10Gf"/>
+  <host id="host-58.hawaii.edu" speed="10Gf"/>
+  <host id="host-59.hawaii.edu" speed="10Gf"/>
+  <host id="host-60.hawaii.edu" speed="10Gf"/>
+  <host id="host-61.hawaii.edu" speed="10Gf"/>
+  <host id="host-62.hawaii.edu" speed="10Gf"/>
+  <host id="host-63.hawaii.edu" speed="10Gf"/>
+  <host id="host-64.hawaii.edu" speed="10Gf"/>
+  <host id="host-65.hawaii.edu" speed="10Gf"/>
+  <host id="host-66.hawaii.edu" speed="10Gf"/>
+  <host id="host-67.hawaii.edu" speed="10Gf"/>
+  <host id="host-68.hawaii.edu" speed="10Gf"/>
+  <host id="host-69.hawaii.edu" speed="10Gf"/>
+  <host id="host-70.hawaii.edu" speed="10Gf"/>
+  <host id="host-71.hawaii.edu" speed="10Gf"/>
+  <host id="host-72.hawaii.edu" speed="10Gf"/>
+  <host id="host-73.hawaii.edu" speed="10Gf"/>
+  <host id="host-74.hawaii.edu" speed="10Gf"/>
+  <host id="host-75.hawaii.edu" speed="10Gf"/>
+  <host id="host-76.hawaii.edu" speed="10Gf"/>
+  <host id="host-77.hawaii.edu" speed="10Gf"/>
+  <host id="host-78.hawaii.edu" speed="10Gf"/>
+  <host id="host-79.hawaii.edu" speed="10Gf"/>
+  <host id="host-80.hawaii.edu" speed="10Gf"/>
+  <host id="host-81.hawaii.edu" speed="10Gf"/>
+  <host id="host-82.hawaii.edu" speed="10Gf"/>
+  <host id="host-83.hawaii.edu" speed="10Gf"/>
+  <host id="host-84.hawaii.edu" speed="10Gf"/>
+  <host id="host-85.hawaii.edu" speed="10Gf"/>
+  <host id="host-86.hawaii.edu" speed="10Gf"/>
+  <host id="host-87.hawaii.edu" speed="10Gf"/>
+  <host id="host-88.hawaii.edu" speed="10Gf"/>
+  <host id="host-89.hawaii.edu" speed="10Gf"/>
+  <host id="host-90.hawaii.edu" speed="10Gf"/>
+  <host id="host-91.hawaii.edu" speed="10Gf"/>
+  <host id="host-92.hawaii.edu" speed="10Gf"/>
+  <host id="host-93.hawaii.edu" speed="10Gf"/>
+  <host id="host-94.hawaii.edu" speed="10Gf"/>
+  <host id="host-95.hawaii.edu" speed="10Gf"/>
+  <host id="host-96.hawaii.edu" speed="10Gf"/>
+  <host id="host-97.hawaii.edu" speed="10Gf"/>
+  <host id="host-98.hawaii.edu" speed="10Gf"/>
+  <host id="host-99.hawaii.edu" speed="10Gf"/>
+  <host id="host-100.hawaii.edu" speed="10Gf"/>
+  <host id="host-101.hawaii.edu" speed="10Gf"/>
+  <host id="host-102.hawaii.edu" speed="10Gf"/>
+  <host id="host-103.hawaii.edu" speed="10Gf"/>
+  <host id="host-104.hawaii.edu" speed="10Gf"/>
+  <host id="host-105.hawaii.edu" speed="10Gf"/>
+  <host id="host-106.hawaii.edu" speed="10Gf"/>
+  <host id="host-107.hawaii.edu" speed="10Gf"/>
+  <host id="host-108.hawaii.edu" speed="10Gf"/>
+  <host id="host-109.hawaii.edu" speed="10Gf"/>
+  <host id="host-110.hawaii.edu" speed="10Gf"/>
+  <host id="host-111.hawaii.edu" speed="10Gf"/>
+  <host id="host-112.hawaii.edu" speed="10Gf"/>
+  <host id="host-113.hawaii.edu" speed="10Gf"/>
+  <host id="host-114.hawaii.edu" speed="10Gf"/>
+  <host id="host-115.hawaii.edu" speed="10Gf"/>
+  <host id="host-116.hawaii.edu" speed="10Gf"/>
+  <host id="host-117.hawaii.edu" speed="10Gf"/>
+  <host id="host-118.hawaii.edu" speed="10Gf"/>
+  <host id="host-119.hawaii.edu" speed="10Gf"/>
+  <host id="host-120.hawaii.edu" speed="10Gf"/>
+  <host id="host-121.hawaii.edu" speed="10Gf"/>
+  <host id="host-122.hawaii.edu" speed="10Gf"/>
+  <host id="host-123.hawaii.edu" speed="10Gf"/>
+  <host id="host-124.hawaii.edu" speed="10Gf"/>
+  <host id="host-125.hawaii.edu" speed="10Gf"/>
+  <host id="host-126.hawaii.edu" speed="10Gf"/>
+  <host id="host-127.hawaii.edu" speed="10Gf"/>
+  <host id="host-128.hawaii.edu" speed="10Gf"/>
+  <host id="host-129.hawaii.edu" speed="10Gf"/>
+  <host id="host-130.hawaii.edu" speed="10Gf"/>
+  <host id="host-131.hawaii.edu" speed="10Gf"/>
+  <host id="host-132.hawaii.edu" speed="10Gf"/>
+  <host id="host-133.hawaii.edu" speed="10Gf"/>
+  <host id="host-134.hawaii.edu" speed="10Gf"/>
+  <host id="host-135.hawaii.edu" speed="10Gf"/>
+  <host id="host-136.hawaii.edu" speed="10Gf"/>
+  <host id="host-137.hawaii.edu" speed="10Gf"/>
+  <host id="host-138.hawaii.edu" speed="10Gf"/>
+  <host id="host-139.hawaii.edu" speed="10Gf"/>
+  <host id="host-140.hawaii.edu" speed="10Gf"/>
+  <host id="host-141.hawaii.edu" speed="10Gf"/>
+  <host id="host-142.hawaii.edu" speed="10Gf"/>
+  <host id="host-143.hawaii.edu" speed="10Gf"/>
+  <host id="host-144.hawaii.edu" speed="10Gf"/>
+  <host id="host-145.hawaii.edu" speed="10Gf"/>
+  <host id="host-146.hawaii.edu" speed="10Gf"/>
+  <host id="host-147.hawaii.edu" speed="10Gf"/>
+  <host id="host-148.hawaii.edu" speed="10Gf"/>
+  <host id="host-149.hawaii.edu" speed="10Gf"/>
+  <host id="host-150.hawaii.edu" speed="10Gf"/>
+  <host id="host-151.hawaii.edu" speed="10Gf"/>
+  <host id="host-152.hawaii.edu" speed="10Gf"/>
+  <host id="host-153.hawaii.edu" speed="10Gf"/>
+  <host id="host-154.hawaii.edu" speed="10Gf"/>
+  <host id="host-155.hawaii.edu" speed="10Gf"/>
+  <host id="host-156.hawaii.edu" speed="10Gf"/>
+  <host id="host-157.hawaii.edu" speed="10Gf"/>
+  <host id="host-158.hawaii.edu" speed="10Gf"/>
+  <host id="host-159.hawaii.edu" speed="10Gf"/>
+  <host id="host-160.hawaii.edu" speed="10Gf"/>
+  <host id="host-161.hawaii.edu" speed="10Gf"/>
+  <host id="host-162.hawaii.edu" speed="10Gf"/>
+  <host id="host-163.hawaii.edu" speed="10Gf"/>
+  <host id="host-164.hawaii.edu" speed="10Gf"/>
+  <host id="host-165.hawaii.edu" speed="10Gf"/>
+  <host id="host-166.hawaii.edu" speed="10Gf"/>
+  <host id="host-167.hawaii.edu" speed="10Gf"/>
+  <host id="host-168.hawaii.edu" speed="10Gf"/>
+  <host id="host-169.hawaii.edu" speed="10Gf"/>
+  <host id="host-170.hawaii.edu" speed="10Gf"/>
+  <host id="host-171.hawaii.edu" speed="10Gf"/>
+  <host id="host-172.hawaii.edu" speed="10Gf"/>
+  <host id="host-173.hawaii.edu" speed="10Gf"/>
+  <host id="host-174.hawaii.edu" speed="10Gf"/>
+  <host id="host-175.hawaii.edu" speed="10Gf"/>
+  <host id="host-176.hawaii.edu" speed="10Gf"/>
+  <host id="host-177.hawaii.edu" speed="10Gf"/>
+  <host id="host-178.hawaii.edu" speed="10Gf"/>
+  <host id="host-179.hawaii.edu" speed="10Gf"/>
+  <host id="host-180.hawaii.edu" speed="10Gf"/>
+  <host id="host-181.hawaii.edu" speed="10Gf"/>
+  <host id="host-182.hawaii.edu" speed="10Gf"/>
+  <host id="host-183.hawaii.edu" speed="10Gf"/>
+  <host id="host-184.hawaii.edu" speed="10Gf"/>
+  <host id="host-185.hawaii.edu" speed="10Gf"/>
+  <host id="host-186.hawaii.edu" speed="10Gf"/>
+  <host id="host-187.hawaii.edu" speed="10Gf"/>
+  <host id="host-188.hawaii.edu" speed="10Gf"/>
+  <host id="host-189.hawaii.edu" speed="10Gf"/>
+  <host id="host-190.hawaii.edu" speed="10Gf"/>
+  <host id="host-191.hawaii.edu" speed="10Gf"/>
+  <host id="host-192.hawaii.edu" speed="10Gf"/>
+  <host id="host-193.hawaii.edu" speed="10Gf"/>
+  <host id="host-194.hawaii.edu" speed="10Gf"/>
+  <host id="host-195.hawaii.edu" speed="10Gf"/>
+  <host id="host-196.hawaii.edu" speed="10Gf"/>
+  <host id="host-197.hawaii.edu" speed="10Gf"/>
+  <host id="host-198.hawaii.edu" speed="10Gf"/>
+  <host id="host-199.hawaii.edu" speed="10Gf"/>
+  <host id="host-200.hawaii.edu" speed="10Gf"/>
+  <host id="host-201.hawaii.edu" speed="10Gf"/>
+  <host id="host-202.hawaii.edu" speed="10Gf"/>
+  <host id="host-203.hawaii.edu" speed="10Gf"/>
+  <host id="host-204.hawaii.edu" speed="10Gf"/>
+  <host id="host-205.hawaii.edu" speed="10Gf"/>
+  <host id="host-206.hawaii.edu" speed="10Gf"/>
+  <host id="host-207.hawaii.edu" speed="10Gf"/>
+  <host id="host-208.hawaii.edu" speed="10Gf"/>
+  <host id="host-209.hawaii.edu" speed="10Gf"/>
+  <host id="host-210.hawaii.edu" speed="10Gf"/>
+  <host id="host-211.hawaii.edu" speed="10Gf"/>
+  <host id="host-212.hawaii.edu" speed="10Gf"/>
+  <host id="host-213.hawaii.edu" speed="10Gf"/>
+  <host id="host-214.hawaii.edu" speed="10Gf"/>
+  <host id="host-215.hawaii.edu" speed="10Gf"/>
+  <host id="host-216.hawaii.edu" speed="10Gf"/>
+  <host id="host-217.hawaii.edu" speed="10Gf"/>
+  <host id="host-218.hawaii.edu" speed="10Gf"/>
+  <host id="host-219.hawaii.edu" speed="10Gf"/>
+  <host id="host-220.hawaii.edu" speed="10Gf"/>
+  <host id="host-221.hawaii.edu" speed="10Gf"/>
+  <host id="host-222.hawaii.edu" speed="10Gf"/>
+  <host id="host-223.hawaii.edu" speed="10Gf"/>
+  <host id="host-224.hawaii.edu" speed="10Gf"/>
+  <host id="host-225.hawaii.edu" speed="10Gf"/>
+  <host id="host-226.hawaii.edu" speed="10Gf"/>
+  <host id="host-227.hawaii.edu" speed="10Gf"/>
+  <host id="host-228.hawaii.edu" speed="10Gf"/>
+  <host id="host-229.hawaii.edu" speed="10Gf"/>
+  <host id="host-230.hawaii.edu" speed="10Gf"/>
+  <host id="host-231.hawaii.edu" speed="10Gf"/>
+  <host id="host-232.hawaii.edu" speed="10Gf"/>
+  <host id="host-233.hawaii.edu" speed="10Gf"/>
+  <host id="host-234.hawaii.edu" speed="10Gf"/>
+  <host id="host-235.hawaii.edu" speed="10Gf"/>
+  <host id="host-236.hawaii.edu" speed="10Gf"/>
+  <host id="host-237.hawaii.edu" speed="10Gf"/>
+  <host id="host-238.hawaii.edu" speed="10Gf"/>
+  <host id="host-239.hawaii.edu" speed="10Gf"/>
+  <host id="host-240.hawaii.edu" speed="10Gf"/>
+  <host id="host-241.hawaii.edu" speed="10Gf"/>
+  <host id="host-242.hawaii.edu" speed="10Gf"/>
+  <host id="host-243.hawaii.edu" speed="10Gf"/>
+  <host id="host-244.hawaii.edu" speed="10Gf"/>
+  <host id="host-245.hawaii.edu" speed="10Gf"/>
+  <host id="host-246.hawaii.edu" speed="10Gf"/>
+  <host id="host-247.hawaii.edu" speed="10Gf"/>
+  <host id="host-248.hawaii.edu" speed="10Gf"/>
+  <host id="host-249.hawaii.edu" speed="10Gf"/>
+  <host id="host-250.hawaii.edu" speed="10Gf"/>
+  <host id="host-251.hawaii.edu" speed="10Gf"/>
+  <host id="host-252.hawaii.edu" speed="10Gf"/>
+  <host id="host-253.hawaii.edu" speed="10Gf"/>
+  <host id="host-254.hawaii.edu" speed="10Gf"/>
+  <host id="host-255.hawaii.edu" speed="10Gf"/>
+  <link id="link-0" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-1" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-2" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-3" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-4" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-5" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-6" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-7" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-8" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-9" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-10" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-11" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-12" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-13" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-14" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-15" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-16" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-17" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-18" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-19" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-20" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-21" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-22" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-23" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-24" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-25" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-26" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-27" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-28" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-29" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-30" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-31" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-32" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-33" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-34" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-35" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-36" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-37" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-38" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-39" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-40" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-41" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-42" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-43" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-44" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-45" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-46" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-47" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-48" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-49" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-50" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-51" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-52" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-53" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-54" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-55" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-56" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-57" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-58" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-59" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-60" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-61" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-62" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-63" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-64" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-65" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-66" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-67" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-68" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-69" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-70" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-71" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-72" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-73" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-74" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-75" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-76" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-77" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-78" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-79" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-80" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-81" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-82" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-83" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-84" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-85" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-86" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-87" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-88" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-89" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-90" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-91" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-92" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-93" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-94" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-95" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-96" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-97" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-98" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-99" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-100" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-101" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-102" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-103" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-104" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-105" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-106" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-107" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-108" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-109" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-110" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-111" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-112" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-113" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-114" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-115" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-116" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-117" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-118" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-119" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-120" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-121" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-122" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-123" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-124" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-125" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-126" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-127" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-128" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-129" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-130" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-131" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-132" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-133" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-134" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-135" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-136" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-137" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-138" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-139" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-140" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-141" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-142" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-143" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-144" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-145" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-146" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-147" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-148" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-149" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-150" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-151" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-152" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-153" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-154" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-155" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-156" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-157" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-158" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-159" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-160" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-161" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-162" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-163" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-164" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-165" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-166" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-167" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-168" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-169" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-170" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-171" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-172" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-173" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-174" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-175" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-176" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-177" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-178" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-179" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-180" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-181" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-182" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-183" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-184" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-185" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-186" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-187" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-188" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-189" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-190" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-191" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-192" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-193" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-194" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-195" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-196" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-197" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-198" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-199" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-200" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-201" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-202" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-203" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-204" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-205" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-206" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-207" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-208" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-209" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-210" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-211" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-212" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-213" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-214" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-215" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-216" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-217" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-218" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-219" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-220" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-221" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-222" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-223" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-224" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-225" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-226" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-227" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-228" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-229" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-230" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-231" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-232" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-233" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-234" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-235" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-236" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-237" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-238" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-239" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-240" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-241" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-242" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-243" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-244" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-245" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-246" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-247" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-248" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-249" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-250" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-251" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-252" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-253" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-254" latency="10us" bandwidth="10Gbps"/>
+  <link id="link-255" latency="10us" bandwidth="10Gbps"/>
+  <route src="host-0.hawaii.edu" dst="host-1.hawaii.edu">
+	<link_ctn id="link-0"/>
+  </route>
+  <route src="host-1.hawaii.edu" dst="host-2.hawaii.edu">
+	<link_ctn id="link-1"/>
+  </route>
+  <route src="host-2.hawaii.edu" dst="host-3.hawaii.edu">
+	<link_ctn id="link-2"/>
+  </route>
+  <route src="host-3.hawaii.edu" dst="host-4.hawaii.edu">
+	<link_ctn id="link-3"/>
+  </route>
+  <route src="host-4.hawaii.edu" dst="host-5.hawaii.edu">
+	<link_ctn id="link-4"/>
+  </route>
+  <route src="host-5.hawaii.edu" dst="host-6.hawaii.edu">
+	<link_ctn id="link-5"/>
+  </route>
+  <route src="host-6.hawaii.edu" dst="host-7.hawaii.edu">
+	<link_ctn id="link-6"/>
+  </route>
+  <route src="host-7.hawaii.edu" dst="host-8.hawaii.edu">
+	<link_ctn id="link-7"/>
+  </route>
+  <route src="host-8.hawaii.edu" dst="host-9.hawaii.edu">
+	<link_ctn id="link-8"/>
+  </route>
+  <route src="host-9.hawaii.edu" dst="host-10.hawaii.edu">
+	<link_ctn id="link-9"/>
+  </route>
+  <route src="host-10.hawaii.edu" dst="host-11.hawaii.edu">
+	<link_ctn id="link-10"/>
+  </route>
+  <route src="host-11.hawaii.edu" dst="host-12.hawaii.edu">
+	<link_ctn id="link-11"/>
+  </route>
+  <route src="host-12.hawaii.edu" dst="host-13.hawaii.edu">
+	<link_ctn id="link-12"/>
+  </route>
+  <route src="host-13.hawaii.edu" dst="host-14.hawaii.edu">
+	<link_ctn id="link-13"/>
+  </route>
+  <route src="host-14.hawaii.edu" dst="host-15.hawaii.edu">
+	<link_ctn id="link-14"/>
+  </route>
+  <route src="host-15.hawaii.edu" dst="host-16.hawaii.edu">
+	<link_ctn id="link-15"/>
+  </route>
+  <route src="host-16.hawaii.edu" dst="host-17.hawaii.edu">
+	<link_ctn id="link-16"/>
+  </route>
+  <route src="host-17.hawaii.edu" dst="host-18.hawaii.edu">
+	<link_ctn id="link-17"/>
+  </route>
+  <route src="host-18.hawaii.edu" dst="host-19.hawaii.edu">
+	<link_ctn id="link-18"/>
+  </route>
+  <route src="host-19.hawaii.edu" dst="host-20.hawaii.edu">
+	<link_ctn id="link-19"/>
+  </route>
+  <route src="host-20.hawaii.edu" dst="host-21.hawaii.edu">
+	<link_ctn id="link-20"/>
+  </route>
+  <route src="host-21.hawaii.edu" dst="host-22.hawaii.edu">
+	<link_ctn id="link-21"/>
+  </route>
+  <route src="host-22.hawaii.edu" dst="host-23.hawaii.edu">
+	<link_ctn id="link-22"/>
+  </route>
+  <route src="host-23.hawaii.edu" dst="host-24.hawaii.edu">
+	<link_ctn id="link-23"/>
+  </route>
+  <route src="host-24.hawaii.edu" dst="host-25.hawaii.edu">
+	<link_ctn id="link-24"/>
+  </route>
+  <route src="host-25.hawaii.edu" dst="host-26.hawaii.edu">
+	<link_ctn id="link-25"/>
+  </route>
+  <route src="host-26.hawaii.edu" dst="host-27.hawaii.edu">
+	<link_ctn id="link-26"/>
+  </route>
+  <route src="host-27.hawaii.edu" dst="host-28.hawaii.edu">
+	<link_ctn id="link-27"/>
+  </route>
+  <route src="host-28.hawaii.edu" dst="host-29.hawaii.edu">
+	<link_ctn id="link-28"/>
+  </route>
+  <route src="host-29.hawaii.edu" dst="host-30.hawaii.edu">
+	<link_ctn id="link-29"/>
+  </route>
+  <route src="host-30.hawaii.edu" dst="host-31.hawaii.edu">
+	<link_ctn id="link-30"/>
+  </route>
+  <route src="host-31.hawaii.edu" dst="host-32.hawaii.edu">
+	<link_ctn id="link-31"/>
+  </route>
+  <route src="host-32.hawaii.edu" dst="host-33.hawaii.edu">
+	<link_ctn id="link-32"/>
+  </route>
+  <route src="host-33.hawaii.edu" dst="host-34.hawaii.edu">
+	<link_ctn id="link-33"/>
+  </route>
+  <route src="host-34.hawaii.edu" dst="host-35.hawaii.edu">
+	<link_ctn id="link-34"/>
+  </route>
+  <route src="host-35.hawaii.edu" dst="host-36.hawaii.edu">
+	<link_ctn id="link-35"/>
+  </route>
+  <route src="host-36.hawaii.edu" dst="host-37.hawaii.edu">
+	<link_ctn id="link-36"/>
+  </route>
+  <route src="host-37.hawaii.edu" dst="host-38.hawaii.edu">
+	<link_ctn id="link-37"/>
+  </route>
+  <route src="host-38.hawaii.edu" dst="host-39.hawaii.edu">
+	<link_ctn id="link-38"/>
+  </route>
+  <route src="host-39.hawaii.edu" dst="host-40.hawaii.edu">
+	<link_ctn id="link-39"/>
+  </route>
+  <route src="host-40.hawaii.edu" dst="host-41.hawaii.edu">
+	<link_ctn id="link-40"/>
+  </route>
+  <route src="host-41.hawaii.edu" dst="host-42.hawaii.edu">
+	<link_ctn id="link-41"/>
+  </route>
+  <route src="host-42.hawaii.edu" dst="host-43.hawaii.edu">
+	<link_ctn id="link-42"/>
+  </route>
+  <route src="host-43.hawaii.edu" dst="host-44.hawaii.edu">
+	<link_ctn id="link-43"/>
+  </route>
+  <route src="host-44.hawaii.edu" dst="host-45.hawaii.edu">
+	<link_ctn id="link-44"/>
+  </route>
+  <route src="host-45.hawaii.edu" dst="host-46.hawaii.edu">
+	<link_ctn id="link-45"/>
+  </route>
+  <route src="host-46.hawaii.edu" dst="host-47.hawaii.edu">
+	<link_ctn id="link-46"/>
+  </route>
+  <route src="host-47.hawaii.edu" dst="host-48.hawaii.edu">
+	<link_ctn id="link-47"/>
+  </route>
+  <route src="host-48.hawaii.edu" dst="host-49.hawaii.edu">
+	<link_ctn id="link-48"/>
+  </route>
+  <route src="host-49.hawaii.edu" dst="host-50.hawaii.edu">
+	<link_ctn id="link-49"/>
+  </route>
+  <route src="host-50.hawaii.edu" dst="host-51.hawaii.edu">
+	<link_ctn id="link-50"/>
+  </route>
+  <route src="host-51.hawaii.edu" dst="host-52.hawaii.edu">
+	<link_ctn id="link-51"/>
+  </route>
+  <route src="host-52.hawaii.edu" dst="host-53.hawaii.edu">
+	<link_ctn id="link-52"/>
+  </route>
+  <route src="host-53.hawaii.edu" dst="host-54.hawaii.edu">
+	<link_ctn id="link-53"/>
+  </route>
+  <route src="host-54.hawaii.edu" dst="host-55.hawaii.edu">
+	<link_ctn id="link-54"/>
+  </route>
+  <route src="host-55.hawaii.edu" dst="host-56.hawaii.edu">
+	<link_ctn id="link-55"/>
+  </route>
+  <route src="host-56.hawaii.edu" dst="host-57.hawaii.edu">
+	<link_ctn id="link-56"/>
+  </route>
+  <route src="host-57.hawaii.edu" dst="host-58.hawaii.edu">
+	<link_ctn id="link-57"/>
+  </route>
+  <route src="host-58.hawaii.edu" dst="host-59.hawaii.edu">
+	<link_ctn id="link-58"/>
+  </route>
+  <route src="host-59.hawaii.edu" dst="host-60.hawaii.edu">
+	<link_ctn id="link-59"/>
+  </route>
+  <route src="host-60.hawaii.edu" dst="host-61.hawaii.edu">
+	<link_ctn id="link-60"/>
+  </route>
+  <route src="host-61.hawaii.edu" dst="host-62.hawaii.edu">
+	<link_ctn id="link-61"/>
+  </route>
+  <route src="host-62.hawaii.edu" dst="host-63.hawaii.edu">
+	<link_ctn id="link-62"/>
+  </route>
+  <route src="host-63.hawaii.edu" dst="host-64.hawaii.edu">
+	<link_ctn id="link-63"/>
+  </route>
+  <route src="host-64.hawaii.edu" dst="host-65.hawaii.edu">
+	<link_ctn id="link-64"/>
+  </route>
+  <route src="host-65.hawaii.edu" dst="host-66.hawaii.edu">
+	<link_ctn id="link-65"/>
+  </route>
+  <route src="host-66.hawaii.edu" dst="host-67.hawaii.edu">
+	<link_ctn id="link-66"/>
+  </route>
+  <route src="host-67.hawaii.edu" dst="host-68.hawaii.edu">
+	<link_ctn id="link-67"/>
+  </route>
+  <route src="host-68.hawaii.edu" dst="host-69.hawaii.edu">
+	<link_ctn id="link-68"/>
+  </route>
+  <route src="host-69.hawaii.edu" dst="host-70.hawaii.edu">
+	<link_ctn id="link-69"/>
+  </route>
+  <route src="host-70.hawaii.edu" dst="host-71.hawaii.edu">
+	<link_ctn id="link-70"/>
+  </route>
+  <route src="host-71.hawaii.edu" dst="host-72.hawaii.edu">
+	<link_ctn id="link-71"/>
+  </route>
+  <route src="host-72.hawaii.edu" dst="host-73.hawaii.edu">
+	<link_ctn id="link-72"/>
+  </route>
+  <route src="host-73.hawaii.edu" dst="host-74.hawaii.edu">
+	<link_ctn id="link-73"/>
+  </route>
+  <route src="host-74.hawaii.edu" dst="host-75.hawaii.edu">
+	<link_ctn id="link-74"/>
+  </route>
+  <route src="host-75.hawaii.edu" dst="host-76.hawaii.edu">
+	<link_ctn id="link-75"/>
+  </route>
+  <route src="host-76.hawaii.edu" dst="host-77.hawaii.edu">
+	<link_ctn id="link-76"/>
+  </route>
+  <route src="host-77.hawaii.edu" dst="host-78.hawaii.edu">
+	<link_ctn id="link-77"/>
+  </route>
+  <route src="host-78.hawaii.edu" dst="host-79.hawaii.edu">
+	<link_ctn id="link-78"/>
+  </route>
+  <route src="host-79.hawaii.edu" dst="host-80.hawaii.edu">
+	<link_ctn id="link-79"/>
+  </route>
+  <route src="host-80.hawaii.edu" dst="host-81.hawaii.edu">
+	<link_ctn id="link-80"/>
+  </route>
+  <route src="host-81.hawaii.edu" dst="host-82.hawaii.edu">
+	<link_ctn id="link-81"/>
+  </route>
+  <route src="host-82.hawaii.edu" dst="host-83.hawaii.edu">
+	<link_ctn id="link-82"/>
+  </route>
+  <route src="host-83.hawaii.edu" dst="host-84.hawaii.edu">
+	<link_ctn id="link-83"/>
+  </route>
+  <route src="host-84.hawaii.edu" dst="host-85.hawaii.edu">
+	<link_ctn id="link-84"/>
+  </route>
+  <route src="host-85.hawaii.edu" dst="host-86.hawaii.edu">
+	<link_ctn id="link-85"/>
+  </route>
+  <route src="host-86.hawaii.edu" dst="host-87.hawaii.edu">
+	<link_ctn id="link-86"/>
+  </route>
+  <route src="host-87.hawaii.edu" dst="host-88.hawaii.edu">
+	<link_ctn id="link-87"/>
+  </route>
+  <route src="host-88.hawaii.edu" dst="host-89.hawaii.edu">
+	<link_ctn id="link-88"/>
+  </route>
+  <route src="host-89.hawaii.edu" dst="host-90.hawaii.edu">
+	<link_ctn id="link-89"/>
+  </route>
+  <route src="host-90.hawaii.edu" dst="host-91.hawaii.edu">
+	<link_ctn id="link-90"/>
+  </route>
+  <route src="host-91.hawaii.edu" dst="host-92.hawaii.edu">
+	<link_ctn id="link-91"/>
+  </route>
+  <route src="host-92.hawaii.edu" dst="host-93.hawaii.edu">
+	<link_ctn id="link-92"/>
+  </route>
+  <route src="host-93.hawaii.edu" dst="host-94.hawaii.edu">
+	<link_ctn id="link-93"/>
+  </route>
+  <route src="host-94.hawaii.edu" dst="host-95.hawaii.edu">
+	<link_ctn id="link-94"/>
+  </route>
+  <route src="host-95.hawaii.edu" dst="host-96.hawaii.edu">
+	<link_ctn id="link-95"/>
+  </route>
+  <route src="host-96.hawaii.edu" dst="host-97.hawaii.edu">
+	<link_ctn id="link-96"/>
+  </route>
+  <route src="host-97.hawaii.edu" dst="host-98.hawaii.edu">
+	<link_ctn id="link-97"/>
+  </route>
+  <route src="host-98.hawaii.edu" dst="host-99.hawaii.edu">
+	<link_ctn id="link-98"/>
+  </route>
+  <route src="host-99.hawaii.edu" dst="host-100.hawaii.edu">
+	<link_ctn id="link-99"/>
+  </route>
+  <route src="host-100.hawaii.edu" dst="host-101.hawaii.edu">
+	<link_ctn id="link-100"/>
+  </route>
+  <route src="host-101.hawaii.edu" dst="host-102.hawaii.edu">
+	<link_ctn id="link-101"/>
+  </route>
+  <route src="host-102.hawaii.edu" dst="host-103.hawaii.edu">
+	<link_ctn id="link-102"/>
+  </route>
+  <route src="host-103.hawaii.edu" dst="host-104.hawaii.edu">
+	<link_ctn id="link-103"/>
+  </route>
+  <route src="host-104.hawaii.edu" dst="host-105.hawaii.edu">
+	<link_ctn id="link-104"/>
+  </route>
+  <route src="host-105.hawaii.edu" dst="host-106.hawaii.edu">
+	<link_ctn id="link-105"/>
+  </route>
+  <route src="host-106.hawaii.edu" dst="host-107.hawaii.edu">
+	<link_ctn id="link-106"/>
+  </route>
+  <route src="host-107.hawaii.edu" dst="host-108.hawaii.edu">
+	<link_ctn id="link-107"/>
+  </route>
+  <route src="host-108.hawaii.edu" dst="host-109.hawaii.edu">
+	<link_ctn id="link-108"/>
+  </route>
+  <route src="host-109.hawaii.edu" dst="host-110.hawaii.edu">
+	<link_ctn id="link-109"/>
+  </route>
+  <route src="host-110.hawaii.edu" dst="host-111.hawaii.edu">
+	<link_ctn id="link-110"/>
+  </route>
+  <route src="host-111.hawaii.edu" dst="host-112.hawaii.edu">
+	<link_ctn id="link-111"/>
+  </route>
+  <route src="host-112.hawaii.edu" dst="host-113.hawaii.edu">
+	<link_ctn id="link-112"/>
+  </route>
+  <route src="host-113.hawaii.edu" dst="host-114.hawaii.edu">
+	<link_ctn id="link-113"/>
+  </route>
+  <route src="host-114.hawaii.edu" dst="host-115.hawaii.edu">
+	<link_ctn id="link-114"/>
+  </route>
+  <route src="host-115.hawaii.edu" dst="host-116.hawaii.edu">
+	<link_ctn id="link-115"/>
+  </route>
+  <route src="host-116.hawaii.edu" dst="host-117.hawaii.edu">
+	<link_ctn id="link-116"/>
+  </route>
+  <route src="host-117.hawaii.edu" dst="host-118.hawaii.edu">
+	<link_ctn id="link-117"/>
+  </route>
+  <route src="host-118.hawaii.edu" dst="host-119.hawaii.edu">
+	<link_ctn id="link-118"/>
+  </route>
+  <route src="host-119.hawaii.edu" dst="host-120.hawaii.edu">
+	<link_ctn id="link-119"/>
+  </route>
+  <route src="host-120.hawaii.edu" dst="host-121.hawaii.edu">
+	<link_ctn id="link-120"/>
+  </route>
+  <route src="host-121.hawaii.edu" dst="host-122.hawaii.edu">
+	<link_ctn id="link-121"/>
+  </route>
+  <route src="host-122.hawaii.edu" dst="host-123.hawaii.edu">
+	<link_ctn id="link-122"/>
+  </route>
+  <route src="host-123.hawaii.edu" dst="host-124.hawaii.edu">
+	<link_ctn id="link-123"/>
+  </route>
+  <route src="host-124.hawaii.edu" dst="host-125.hawaii.edu">
+	<link_ctn id="link-124"/>
+  </route>
+  <route src="host-125.hawaii.edu" dst="host-126.hawaii.edu">
+	<link_ctn id="link-125"/>
+  </route>
+  <route src="host-126.hawaii.edu" dst="host-127.hawaii.edu">
+	<link_ctn id="link-126"/>
+  </route>
+  <route src="host-127.hawaii.edu" dst="host-128.hawaii.edu">
+	<link_ctn id="link-127"/>
+  </route>
+  <route src="host-128.hawaii.edu" dst="host-129.hawaii.edu">
+	<link_ctn id="link-128"/>
+  </route>
+  <route src="host-129.hawaii.edu" dst="host-130.hawaii.edu">
+	<link_ctn id="link-129"/>
+  </route>
+  <route src="host-130.hawaii.edu" dst="host-131.hawaii.edu">
+	<link_ctn id="link-130"/>
+  </route>
+  <route src="host-131.hawaii.edu" dst="host-132.hawaii.edu">
+	<link_ctn id="link-131"/>
+  </route>
+  <route src="host-132.hawaii.edu" dst="host-133.hawaii.edu">
+	<link_ctn id="link-132"/>
+  </route>
+  <route src="host-133.hawaii.edu" dst="host-134.hawaii.edu">
+	<link_ctn id="link-133"/>
+  </route>
+  <route src="host-134.hawaii.edu" dst="host-135.hawaii.edu">
+	<link_ctn id="link-134"/>
+  </route>
+  <route src="host-135.hawaii.edu" dst="host-136.hawaii.edu">
+	<link_ctn id="link-135"/>
+  </route>
+  <route src="host-136.hawaii.edu" dst="host-137.hawaii.edu">
+	<link_ctn id="link-136"/>
+  </route>
+  <route src="host-137.hawaii.edu" dst="host-138.hawaii.edu">
+	<link_ctn id="link-137"/>
+  </route>
+  <route src="host-138.hawaii.edu" dst="host-139.hawaii.edu">
+	<link_ctn id="link-138"/>
+  </route>
+  <route src="host-139.hawaii.edu" dst="host-140.hawaii.edu">
+	<link_ctn id="link-139"/>
+  </route>
+  <route src="host-140.hawaii.edu" dst="host-141.hawaii.edu">
+	<link_ctn id="link-140"/>
+  </route>
+  <route src="host-141.hawaii.edu" dst="host-142.hawaii.edu">
+	<link_ctn id="link-141"/>
+  </route>
+  <route src="host-142.hawaii.edu" dst="host-143.hawaii.edu">
+	<link_ctn id="link-142"/>
+  </route>
+  <route src="host-143.hawaii.edu" dst="host-144.hawaii.edu">
+	<link_ctn id="link-143"/>
+  </route>
+  <route src="host-144.hawaii.edu" dst="host-145.hawaii.edu">
+	<link_ctn id="link-144"/>
+  </route>
+  <route src="host-145.hawaii.edu" dst="host-146.hawaii.edu">
+	<link_ctn id="link-145"/>
+  </route>
+  <route src="host-146.hawaii.edu" dst="host-147.hawaii.edu">
+	<link_ctn id="link-146"/>
+  </route>
+  <route src="host-147.hawaii.edu" dst="host-148.hawaii.edu">
+	<link_ctn id="link-147"/>
+  </route>
+  <route src="host-148.hawaii.edu" dst="host-149.hawaii.edu">
+	<link_ctn id="link-148"/>
+  </route>
+  <route src="host-149.hawaii.edu" dst="host-150.hawaii.edu">
+	<link_ctn id="link-149"/>
+  </route>
+  <route src="host-150.hawaii.edu" dst="host-151.hawaii.edu">
+	<link_ctn id="link-150"/>
+  </route>
+  <route src="host-151.hawaii.edu" dst="host-152.hawaii.edu">
+	<link_ctn id="link-151"/>
+  </route>
+  <route src="host-152.hawaii.edu" dst="host-153.hawaii.edu">
+	<link_ctn id="link-152"/>
+  </route>
+  <route src="host-153.hawaii.edu" dst="host-154.hawaii.edu">
+	<link_ctn id="link-153"/>
+  </route>
+  <route src="host-154.hawaii.edu" dst="host-155.hawaii.edu">
+	<link_ctn id="link-154"/>
+  </route>
+  <route src="host-155.hawaii.edu" dst="host-156.hawaii.edu">
+	<link_ctn id="link-155"/>
+  </route>
+  <route src="host-156.hawaii.edu" dst="host-157.hawaii.edu">
+	<link_ctn id="link-156"/>
+  </route>
+  <route src="host-157.hawaii.edu" dst="host-158.hawaii.edu">
+	<link_ctn id="link-157"/>
+  </route>
+  <route src="host-158.hawaii.edu" dst="host-159.hawaii.edu">
+	<link_ctn id="link-158"/>
+  </route>
+  <route src="host-159.hawaii.edu" dst="host-160.hawaii.edu">
+	<link_ctn id="link-159"/>
+  </route>
+  <route src="host-160.hawaii.edu" dst="host-161.hawaii.edu">
+	<link_ctn id="link-160"/>
+  </route>
+  <route src="host-161.hawaii.edu" dst="host-162.hawaii.edu">
+	<link_ctn id="link-161"/>
+  </route>
+  <route src="host-162.hawaii.edu" dst="host-163.hawaii.edu">
+	<link_ctn id="link-162"/>
+  </route>
+  <route src="host-163.hawaii.edu" dst="host-164.hawaii.edu">
+	<link_ctn id="link-163"/>
+  </route>
+  <route src="host-164.hawaii.edu" dst="host-165.hawaii.edu">
+	<link_ctn id="link-164"/>
+  </route>
+  <route src="host-165.hawaii.edu" dst="host-166.hawaii.edu">
+	<link_ctn id="link-165"/>
+  </route>
+  <route src="host-166.hawaii.edu" dst="host-167.hawaii.edu">
+	<link_ctn id="link-166"/>
+  </route>
+  <route src="host-167.hawaii.edu" dst="host-168.hawaii.edu">
+	<link_ctn id="link-167"/>
+  </route>
+  <route src="host-168.hawaii.edu" dst="host-169.hawaii.edu">
+	<link_ctn id="link-168"/>
+  </route>
+  <route src="host-169.hawaii.edu" dst="host-170.hawaii.edu">
+	<link_ctn id="link-169"/>
+  </route>
+  <route src="host-170.hawaii.edu" dst="host-171.hawaii.edu">
+	<link_ctn id="link-170"/>
+  </route>
+  <route src="host-171.hawaii.edu" dst="host-172.hawaii.edu">
+	<link_ctn id="link-171"/>
+  </route>
+  <route src="host-172.hawaii.edu" dst="host-173.hawaii.edu">
+	<link_ctn id="link-172"/>
+  </route>
+  <route src="host-173.hawaii.edu" dst="host-174.hawaii.edu">
+	<link_ctn id="link-173"/>
+  </route>
+  <route src="host-174.hawaii.edu" dst="host-175.hawaii.edu">
+	<link_ctn id="link-174"/>
+  </route>
+  <route src="host-175.hawaii.edu" dst="host-176.hawaii.edu">
+	<link_ctn id="link-175"/>
+  </route>
+  <route src="host-176.hawaii.edu" dst="host-177.hawaii.edu">
+	<link_ctn id="link-176"/>
+  </route>
+  <route src="host-177.hawaii.edu" dst="host-178.hawaii.edu">
+	<link_ctn id="link-177"/>
+  </route>
+  <route src="host-178.hawaii.edu" dst="host-179.hawaii.edu">
+	<link_ctn id="link-178"/>
+  </route>
+  <route src="host-179.hawaii.edu" dst="host-180.hawaii.edu">
+	<link_ctn id="link-179"/>
+  </route>
+  <route src="host-180.hawaii.edu" dst="host-181.hawaii.edu">
+	<link_ctn id="link-180"/>
+  </route>
+  <route src="host-181.hawaii.edu" dst="host-182.hawaii.edu">
+	<link_ctn id="link-181"/>
+  </route>
+  <route src="host-182.hawaii.edu" dst="host-183.hawaii.edu">
+	<link_ctn id="link-182"/>
+  </route>
+  <route src="host-183.hawaii.edu" dst="host-184.hawaii.edu">
+	<link_ctn id="link-183"/>
+  </route>
+  <route src="host-184.hawaii.edu" dst="host-185.hawaii.edu">
+	<link_ctn id="link-184"/>
+  </route>
+  <route src="host-185.hawaii.edu" dst="host-186.hawaii.edu">
+	<link_ctn id="link-185"/>
+  </route>
+  <route src="host-186.hawaii.edu" dst="host-187.hawaii.edu">
+	<link_ctn id="link-186"/>
+  </route>
+  <route src="host-187.hawaii.edu" dst="host-188.hawaii.edu">
+	<link_ctn id="link-187"/>
+  </route>
+  <route src="host-188.hawaii.edu" dst="host-189.hawaii.edu">
+	<link_ctn id="link-188"/>
+  </route>
+  <route src="host-189.hawaii.edu" dst="host-190.hawaii.edu">
+	<link_ctn id="link-189"/>
+  </route>
+  <route src="host-190.hawaii.edu" dst="host-191.hawaii.edu">
+	<link_ctn id="link-190"/>
+  </route>
+  <route src="host-191.hawaii.edu" dst="host-192.hawaii.edu">
+	<link_ctn id="link-191"/>
+  </route>
+  <route src="host-192.hawaii.edu" dst="host-193.hawaii.edu">
+	<link_ctn id="link-192"/>
+  </route>
+  <route src="host-193.hawaii.edu" dst="host-194.hawaii.edu">
+	<link_ctn id="link-193"/>
+  </route>
+  <route src="host-194.hawaii.edu" dst="host-195.hawaii.edu">
+	<link_ctn id="link-194"/>
+  </route>
+  <route src="host-195.hawaii.edu" dst="host-196.hawaii.edu">
+	<link_ctn id="link-195"/>
+  </route>
+  <route src="host-196.hawaii.edu" dst="host-197.hawaii.edu">
+	<link_ctn id="link-196"/>
+  </route>
+  <route src="host-197.hawaii.edu" dst="host-198.hawaii.edu">
+	<link_ctn id="link-197"/>
+  </route>
+  <route src="host-198.hawaii.edu" dst="host-199.hawaii.edu">
+	<link_ctn id="link-198"/>
+  </route>
+  <route src="host-199.hawaii.edu" dst="host-200.hawaii.edu">
+	<link_ctn id="link-199"/>
+  </route>
+  <route src="host-200.hawaii.edu" dst="host-201.hawaii.edu">
+	<link_ctn id="link-200"/>
+  </route>
+  <route src="host-201.hawaii.edu" dst="host-202.hawaii.edu">
+	<link_ctn id="link-201"/>
+  </route>
+  <route src="host-202.hawaii.edu" dst="host-203.hawaii.edu">
+	<link_ctn id="link-202"/>
+  </route>
+  <route src="host-203.hawaii.edu" dst="host-204.hawaii.edu">
+	<link_ctn id="link-203"/>
+  </route>
+  <route src="host-204.hawaii.edu" dst="host-205.hawaii.edu">
+	<link_ctn id="link-204"/>
+  </route>
+  <route src="host-205.hawaii.edu" dst="host-206.hawaii.edu">
+	<link_ctn id="link-205"/>
+  </route>
+  <route src="host-206.hawaii.edu" dst="host-207.hawaii.edu">
+	<link_ctn id="link-206"/>
+  </route>
+  <route src="host-207.hawaii.edu" dst="host-208.hawaii.edu">
+	<link_ctn id="link-207"/>
+  </route>
+  <route src="host-208.hawaii.edu" dst="host-209.hawaii.edu">
+	<link_ctn id="link-208"/>
+  </route>
+  <route src="host-209.hawaii.edu" dst="host-210.hawaii.edu">
+	<link_ctn id="link-209"/>
+  </route>
+  <route src="host-210.hawaii.edu" dst="host-211.hawaii.edu">
+	<link_ctn id="link-210"/>
+  </route>
+  <route src="host-211.hawaii.edu" dst="host-212.hawaii.edu">
+	<link_ctn id="link-211"/>
+  </route>
+  <route src="host-212.hawaii.edu" dst="host-213.hawaii.edu">
+	<link_ctn id="link-212"/>
+  </route>
+  <route src="host-213.hawaii.edu" dst="host-214.hawaii.edu">
+	<link_ctn id="link-213"/>
+  </route>
+  <route src="host-214.hawaii.edu" dst="host-215.hawaii.edu">
+	<link_ctn id="link-214"/>
+  </route>
+  <route src="host-215.hawaii.edu" dst="host-216.hawaii.edu">
+	<link_ctn id="link-215"/>
+  </route>
+  <route src="host-216.hawaii.edu" dst="host-217.hawaii.edu">
+	<link_ctn id="link-216"/>
+  </route>
+  <route src="host-217.hawaii.edu" dst="host-218.hawaii.edu">
+	<link_ctn id="link-217"/>
+  </route>
+  <route src="host-218.hawaii.edu" dst="host-219.hawaii.edu">
+	<link_ctn id="link-218"/>
+  </route>
+  <route src="host-219.hawaii.edu" dst="host-220.hawaii.edu">
+	<link_ctn id="link-219"/>
+  </route>
+  <route src="host-220.hawaii.edu" dst="host-221.hawaii.edu">
+	<link_ctn id="link-220"/>
+  </route>
+  <route src="host-221.hawaii.edu" dst="host-222.hawaii.edu">
+	<link_ctn id="link-221"/>
+  </route>
+  <route src="host-222.hawaii.edu" dst="host-223.hawaii.edu">
+	<link_ctn id="link-222"/>
+  </route>
+  <route src="host-223.hawaii.edu" dst="host-224.hawaii.edu">
+	<link_ctn id="link-223"/>
+  </route>
+  <route src="host-224.hawaii.edu" dst="host-225.hawaii.edu">
+	<link_ctn id="link-224"/>
+  </route>
+  <route src="host-225.hawaii.edu" dst="host-226.hawaii.edu">
+	<link_ctn id="link-225"/>
+  </route>
+  <route src="host-226.hawaii.edu" dst="host-227.hawaii.edu">
+	<link_ctn id="link-226"/>
+  </route>
+  <route src="host-227.hawaii.edu" dst="host-228.hawaii.edu">
+	<link_ctn id="link-227"/>
+  </route>
+  <route src="host-228.hawaii.edu" dst="host-229.hawaii.edu">
+	<link_ctn id="link-228"/>
+  </route>
+  <route src="host-229.hawaii.edu" dst="host-230.hawaii.edu">
+	<link_ctn id="link-229"/>
+  </route>
+  <route src="host-230.hawaii.edu" dst="host-231.hawaii.edu">
+	<link_ctn id="link-230"/>
+  </route>
+  <route src="host-231.hawaii.edu" dst="host-232.hawaii.edu">
+	<link_ctn id="link-231"/>
+  </route>
+  <route src="host-232.hawaii.edu" dst="host-233.hawaii.edu">
+	<link_ctn id="link-232"/>
+  </route>
+  <route src="host-233.hawaii.edu" dst="host-234.hawaii.edu">
+	<link_ctn id="link-233"/>
+  </route>
+  <route src="host-234.hawaii.edu" dst="host-235.hawaii.edu">
+	<link_ctn id="link-234"/>
+  </route>
+  <route src="host-235.hawaii.edu" dst="host-236.hawaii.edu">
+	<link_ctn id="link-235"/>
+  </route>
+  <route src="host-236.hawaii.edu" dst="host-237.hawaii.edu">
+	<link_ctn id="link-236"/>
+  </route>
+  <route src="host-237.hawaii.edu" dst="host-238.hawaii.edu">
+	<link_ctn id="link-237"/>
+  </route>
+  <route src="host-238.hawaii.edu" dst="host-239.hawaii.edu">
+	<link_ctn id="link-238"/>
+  </route>
+  <route src="host-239.hawaii.edu" dst="host-240.hawaii.edu">
+	<link_ctn id="link-239"/>
+  </route>
+  <route src="host-240.hawaii.edu" dst="host-241.hawaii.edu">
+	<link_ctn id="link-240"/>
+  </route>
+  <route src="host-241.hawaii.edu" dst="host-242.hawaii.edu">
+	<link_ctn id="link-241"/>
+  </route>
+  <route src="host-242.hawaii.edu" dst="host-243.hawaii.edu">
+	<link_ctn id="link-242"/>
+  </route>
+  <route src="host-243.hawaii.edu" dst="host-244.hawaii.edu">
+	<link_ctn id="link-243"/>
+  </route>
+  <route src="host-244.hawaii.edu" dst="host-245.hawaii.edu">
+	<link_ctn id="link-244"/>
+  </route>
+  <route src="host-245.hawaii.edu" dst="host-246.hawaii.edu">
+	<link_ctn id="link-245"/>
+  </route>
+  <route src="host-246.hawaii.edu" dst="host-247.hawaii.edu">
+	<link_ctn id="link-246"/>
+  </route>
+  <route src="host-247.hawaii.edu" dst="host-248.hawaii.edu">
+	<link_ctn id="link-247"/>
+  </route>
+  <route src="host-248.hawaii.edu" dst="host-249.hawaii.edu">
+	<link_ctn id="link-248"/>
+  </route>
+  <route src="host-249.hawaii.edu" dst="host-250.hawaii.edu">
+	<link_ctn id="link-249"/>
+  </route>
+  <route src="host-250.hawaii.edu" dst="host-251.hawaii.edu">
+	<link_ctn id="link-250"/>
+  </route>
+  <route src="host-251.hawaii.edu" dst="host-252.hawaii.edu">
+	<link_ctn id="link-251"/>
+  </route>
+  <route src="host-252.hawaii.edu" dst="host-253.hawaii.edu">
+	<link_ctn id="link-252"/>
+  </route>
+  <route src="host-253.hawaii.edu" dst="host-254.hawaii.edu">
+	<link_ctn id="link-253"/>
+  </route>
+  <route src="host-254.hawaii.edu" dst="host-255.hawaii.edu">
+	<link_ctn id="link-254"/>
+  </route>
+  <route src="host-255.hawaii.edu" dst="host-0.hawaii.edu">
+	<link_ctn id="link-255"/>
+  </route>
+</AS>
+</platform>
