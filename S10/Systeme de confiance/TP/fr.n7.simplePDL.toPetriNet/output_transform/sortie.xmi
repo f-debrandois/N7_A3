@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<petriNet:PetriNet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:petriNet="http://petriNet">
+  <places name="p_a1"/>
+  <places name="p_a2"/>
+  <places name="p_a1_to_a2"/>
+  <transitions name="t_a1"/>
+  <transitions name="t_a2"/>
+  <arcs weight="1" sourcePlace="//@places.0" targetTransition="//@transitions.0"/>
+  <arcs weight="1" sourcePlace="//@places.1" targetTransition="//@transitions.1"/>
+  <arcs weight="1" sourceTransition="//@transitions.0" targetPlace="//@places.2"/>
+  <arcs weight="1" sourcePlace="//@places.2" targetTransition="//@transitions.1"/>
+</petriNet:PetriNet>
