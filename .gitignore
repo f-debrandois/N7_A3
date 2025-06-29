@@ -7,6 +7,7 @@ data/
 results/
 .venv/
 .settings/
+bin/
 
 *.aux
 *.bbl
