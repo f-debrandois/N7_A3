@@ -15,11 +15,11 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
 ]
-dynamic = ["version"]
+version = "0.1.0"
 requires-python = ">=3.9, <3.13"
 dependencies = [
     "gemseo[all] >= 6.1.0",
-    "gemseo-oad-training @ git+https://gitlab.com/gemseo/dev/gemseo-oad-training.git@develop",
+    "gemseo-oad-training @ git+https://gitlab.com/gemseo/dev/gemseo-oad-training.git@draw_aircraft",
     "gemseo-mlearning >= 2.0.1",
     "gemseo-umdo >= 4.1.0",
     "griffe-inherited-docstrings",
@@ -46,9 +46,6 @@ content-type = "text/markdown"
 
 [build-system]
 requires = [
-    "setuptools",
-    "setuptools_scm[toml]",
+    "setuptools"
 ]
 build-backend = "setuptools.build_meta"
-
-[tool.setuptools_scm]
