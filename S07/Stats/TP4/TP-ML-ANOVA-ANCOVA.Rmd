@@ -1,0 +1,343 @@
+--- 
+title: "TP modèles linéaires - Partie 2" 
+date : "4modIA - 2023-2024" 
+output:
+  html_document: 
+    toc: true 
+    toc_float: true 
+    toc_depth : 4 
+    number_sections : true
+---
+
+```{css,echo=F} 
+.badCode { background-color: #C9DDE4; } 
+```
+
+```{r setup, echo=FALSE, cache=FALSE} 
+library(knitr)
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE,
+               class.source="badCode")
+opts_knit$set(width=75)
+options(max.print=999) 
+```
+
+L'objectif de ce TP est d'illustrer les notions abordées dans les chapitres
+dédiés à l'ANOVA et l'ANCOVA.
+
+Les librairies R nécessaires pour ce TP sont :
+
+```{r,echo=T, error=F,warning=F} 
+library(ggplot2)  
+library(tidyverse)
+```
+
+# Description du jeu de données
+Nous allons reprendre le jeu de données "Ozone.txt" contenant 112 mesures de
+concentration d'ozone (en $\mu$gr/m3) et différentes variables observées,
+recueillies à Rennes durant l'été 2001. 
+Les 13 variables observées sont :
+
++ maxO3 : Maximum de concentration d'ozone observé sur la journée en $\mu$gr/m3
++ T9, T12, T15 : Température observée à 9, 12 et 15h 
++ Ne9, Ne12, Ne15 : Nébulosité observée à 9, 12 et 15h 
++ Vx9, Vx12, Vx15 : Composante E-O du vent à 9, 12 et 15h 
++ maxO3v : Teneur maximum en ozone observée la veille 
++ vent : orientation du vent à 12h 
++ pluie : occurrence ou non de précipitations
+
+```{r, message=F} 
+ozone = read.table("Ozone.txt")
+ozone$vent=as.factor(ozone$vent) 
+ozone$pluie=as.factor(ozone$pluie) 
+head(ozone)
+summary(ozone[,c(1,11,12,13)]) 
+```
+
+# Analyse de la variance
+## ANOVA  à un facteur 
+
+Dans cette section, nous souhaitons analyser la relation
+entre la concentration maximale d'ozone (maxO3) et la direction du vent (vent).
+On va pour cela mettre en place un modèle d'anova à un facteur 
+
+$$
+\left\{\begin{array}{l} maxO3_{ij}= \mu + \alpha_i +\varepsilon_{ij},\ \
+i=1,\ldots,I=4,\ j=1,\ldots,n_i.\\ (\varepsilon_{ij})_{i,j} \textrm{ i.i.d
+}\mathcal{N}(0,\sigma^2) \end{array}\right. 
+$$
+1. Représentez la concentration maximale d'ozone en fonction du vent. Commentez
+
+```{r} 
+ggplot(ozone, aes(x = vent, y = maxO3)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(title = "Concentration maximale d'ozone en fonction du vent",
+       x = "Direction du vent",
+       y = "Concentration maximale d'ozone (µgr/m3)") +
+  theme_minimal()
+
+```
+
+Le Nord et l'Ouest ont tendance à avoir des concentrations maximales d'ozone plus faible. \
+
+
+
+2. Utilisez la fonction `lm()` pour ajuster un modèle d'ANOVA à un facteur. Commentez. \
+
+Interprétez en particulier les pvaleurs $0.7700$ et $0.02074$. 
+
+```{r}
+# Ajustement du modèle ANOVA à un facteur
+aovent <- lm(maxO3 ~ vent, data = ozone)
+
+# Affichage du résumé du modèle
+summary(aovent)
+```
+
+La pvaleurs $0.7700$ correspond au test de nullité de l'effet de ventSud par rapport à ventEst.
+La p-valeur est élevée, ce qui signifie que les vents de l'Est et du Sud ont la même importance sur le modèle.\
+La pvaleurs $0.02074$ correspond au test du modèle : $maxO3_{ij}= \mu +\varepsilon_{ij}$\
+
+
+
+3. A l'aide de la fonction `anova()`, testez la significativité du facteur vent. Commentez.
+
+```{r} 
+anova(aovent)
+```
+
+La table d'analyse de variance montre que le facteur vent a un effet significatif sur la concentration maximale d'ozone, puisque la p-valeur est inférieure à 0.05 ($0.02074$) : On rejette l'hypothèse selon laquelle les moyennes des groupes définis par la direction du vent sont égales. \
+
+4. On s'intéresse ici à l'estimation des paramètres. 
+
+- Comparez les différents résultats obtenus par les commandes suivantes. 
+- Vérifiez mathématiquement et numériquement les estimations des paramètres. 
+Vous pourrez utiliser `Yi. = by(ozone[,"maxO3"],ozone[,"vent"],mean)`. 
+
+**Cas 1 :** 
+```{r}
+summary(lm(maxO3~vent,data=ozone))
+```
+
+Ici, on considère la contrainte $\alpha_1 = 0$. Les estimations sont $\hat{\mu} = Y_{1 .}$ et $\hat{\alpha_i} = Y_{i .} - Y_{1 .}$ \
+*Vérification :* \
+
+```{r}
+Yi. = by(ozone[,"maxO3"],ozone[,"vent"],mean)
+print(Yi.[1])
+print(Yi. - Yi.[1])
+```
+
+**Cas 2 :** 
+```{r}
+summary(lm(maxO3~C(vent,base=2),data=ozone))
+```
+
+Ici, on considère la contrainte $\alpha_2 = 0$. Les estimations sont $\hat{\mu} = Y_{2 .}$ et $\hat{\alpha_i} = Y_{i .} - Y_{2 .}$ \
+*Vérification :* \
+
+```{r}
+Yi. = by(ozone[,"maxO3"],ozone[,"vent"],mean)
+print(Yi.[2])
+print(Yi. - Yi.[2])
+```
+
+**Cas 3 :** 
+```{r}
+summary(lm(maxO3~C(vent,sum),data=ozone)) 
+```
+
+Ici, on considère la contrainte $\sum_{i=1}^{I} \alpha_i= 0$. Les estimations sont $\hat{\mu} = \frac{1}{I}\sum_{i=1}^{I} Y_{i.}$ et $\hat{\alpha_i} = Y_{i .} - \hat{\mu}$ \
+*Vérification :* \
+
+```{r}
+Yi. = by(ozone[,"maxO3"],ozone[,"vent"],mean)
+print(mean(Yi.))
+print(Yi. - mean(Yi.))
+```
+5. Au vu des différentes conclusions, quelle modification de la variable vent peut-on considérer pour expliquer la concentration en ozone ? Vérifiez numériquement votre proposition. 
+
+```{r}
+ozonenew = ozone[, c('maxO3', 'vent')]
+ozonenew <- ozonenew %>%
+  mutate(vent = str_replace(vent, "Nord", "N-O")) %>%
+  mutate(vent = str_replace(vent, "Ouest", "N-O")) %>%
+  mutate(vent = str_replace(vent, "Est", "E-S")) %>%
+  mutate(vent = str_replace(vent, "Sud", "E-S"))
+ozonenew$vent = as.factor(ozonenew$vent)
+
+anova(lm(maxO3 ~ vent, data = ozonenew), lm(maxO3 ~ vent, data = ozone))
+```
+
+
+```{r}
+summary(lm(maxO3~vent,data=ozonenew))
+```
+
+
+## ANOVA à deux facteurs 
+
+Dans cette section, nous souhaitons analyser la
+relation entre la concentration maximale d'ozone (maxO3) avec la direction du
+vent (vent) et la précipitation (pluie). 
+On va donc mettre en place un modèle d'analyse de la variance à deux facteurs. 
+
+1. Représentez la concentration en ozone pour chaque modalité croisée du vent et
+de la pluie à l'aide de la commande suivante et commentez. 
+
+```{r}
+ggplot(ozone,aes(x=vent,y=maxO3,fill=pluie))+ 
+  geom_boxplot() 
+``` 
+
+La pluie semble avoir un effet sur la concentration maximale d'ozone.\
+
+Une autre façon d'analyser graphiquement l'interaction est la suivante : 
+
+```{r}
+par(mfrow=c(1,2)) 
+interaction.plot(ozone[,"vent"],ozone[,"pluie"],
+ozone[,"maxO3"],col=c(2,4),pch=c(18,24), main="Interaction plot",type="b",
+xlab="vent",ylab="maxO3",trace.label="pluie")
+interaction.plot(ozone[,"pluie"],ozone[,"vent"],
+ozone[,"maxO3"],col=c(2,4),pch=c(18,24), main="Interaction plot",type="b",
+xlab="pluie",ylab="maxO3",trace.label="vent") 
+```
+
+2. Mettez en place un modèle d'analyse de la variance avec interaction.
+Commentez les résultats.
+$$
+Y_{ijk} = \mu + \alpha_i + \beta_j + \gamma_{ij} + \epsilon_{ijk}
+$$
+
+```{r}
+mod.int <- lm(maxO3 ~ vent * pluie, data = ozone)
+summary(mod.int)
+```
+
+3. A l'aide de la fonction `anova()`, testez si l'on peut simplifier ce modèle d'ANOVA à deux facteurs avec interaction. 
+
+```{r}
+# Test d'anova pour la simplification du modèle (enlever les interactions)
+anova(lm(maxO3 ~ vent + pluie, data = ozone), lm(maxO3 ~ vent * pluie, data = ozone))$"Pr(>F)"[2]
+```
+
+On obtient une p-valeur > $0.05$ : on peut donc enlever les interactions.
+
+```{r}
+# Test d'anova pour la simplification du modèle (enlever le vent ou la pluie)
+anova(lm(maxO3 ~ vent, data = ozone), lm(maxO3 ~ vent + pluie, data = ozone))$"Pr(>F)"[2]
+anova(lm(maxO3 ~ pluie, data = ozone), lm(maxO3 ~ vent + pluie, data = ozone))$"Pr(>F)"[2]
+```
+
+Pour le modèle dépendant uniquement de la pluie, on obtient une p-valeur > $0.05$ : on peut donc enlever la variable vent.
+
+
+```{r}
+# Test d'anova pour la simplification du modèle (uniquement l'intercept)
+anova(lm(maxO3 ~ 1, data = ozone), lm(maxO3 ~ pluie, data = ozone))$"Pr(>F)"[2]
+```
+
+
+```{r}
+# Vérification de la simplification
+anova(lm(maxO3 ~ pluie, data = ozone), lm(maxO3 ~ vent * pluie, data = ozone))$"Pr(>F)"[2]
+```
+
+4. Reprenez les questions 1. et 2. en considérant les regroupements de modalités de la variable vent comme en section 2.1, question 5. 
+
+# Analyse de la covariance 
+
+Dans cette partie, on s'intéresse à la relation du
+taux maximal d'ozone (maxO3) par rapport à celui de la veille (maxO3v) et en
+fonction des précipitations (pluie). Pour cela, on va mettre en place un modèle
+d'analyse de la covariance.
+
+1. A l'aide des commandes suivantes, représentez le nuage de points entre la
+variable à expliquer et la variable quantitative explicative, en fonction des
+modalités de la variable qualitative. Commentez. 
+
+```{r}
+ggplot(ozone,aes(x=maxO3v,y=maxO3))+ 
+  geom_point(aes(shape=pluie,col=pluie)) 
+```
+
+2. On ajuste un modèle d'analyse de covariance complet. 
+Ecrivez le modèle mathématiquement (version régulière et version singulière), et commentez les résultats obtenus. 
+
+```{r} 
+# version singulière
+complet=lm(maxO3~pluie * maxO3v,data=ozone) 
+summary(complet)
+
+# version régulière
+alt=lm(maxO3~-1+pluie+pluie:maxO3v,data=ozone) 
+summary(alt)
+```
+
+```{r}
+ggplot(ozone,aes(x=maxO3v,y=maxO3, shape=pluie,col=pluie))+ 
+  geom_point()+
+  geom_smooth(method='lm',se=T) 
+```
+
+3. Les commandes suivantes permettent de tester l'égalité des pentes. Ecrivez
+les modèles en compétition et commentez les résultats. 
+
+```{r} 
+penteu = lm(maxO3~-1+pluie+ maxO3v,data=ozone) 
+predm1 = predict(penteu) 
+ggplot(ozone, aes(maxO3v, maxO3, color = pluie)) + 
+  geom_point() + 
+  geom_line(aes(y= predm1))
+anova(penteu,complet) 
+```
+
+4. On souhaite ici comparer un modèle avec pente commune contre un modèle de
+régression linéaire simple. Commentez les résultats. 
+
+```{r} 
+simple = lm(maxO3~maxO3v,data=ozone)
+ggplot(ozone,aes(x=maxO3v,y=maxO3))+ 
+  geom_point(aes(shape=pluie,col=pluie))+
+  geom_smooth(method='lm',se=F)
+anova(simple,penteu) 
+```
+
+
+# A vous de jouer! 
+
+Dans cette partie, je vous propose quelques jeux de données
+pour mettre en pratique les notions  vues dans les deux TP consacrés au modèle
+linéaire. A vous de choisir le modèle linéaire adapté à chacun des problèmes et
+de mener une analyse statistique pertinente.
+
+## Hauteur des eucalyptus 
+
+Dans le jeu de données "eucalyptus.txt", on dispose de
+la circonférence et de la hauteur de 1429 eucalyptus. 
+
+Expliquez la hauteur des
+eucalyptus en fonction de la circonférence. On pourra aussi s'intéresser à un
+modèle expliquant la hauteur en fonction de la circonférence et de la racine de
+la circonférence.
+
+## Rendement des tomates 
+
+A partir du jeu de données "tomates.csv", étudiez le
+lien entre le rendement des pieds de tomates, la parcelle dans laquelle ils ont
+été cultivés et le traitement reçu.
+
+## Cidres 
+
+Dans le fichier "cidre.csv", on dispose de l'évaluation de la saveur
+sucrée et de la saveur amère fournie par un jury sensoriel pour chacun des 50
+cidres bruts, 30 cidres demi-secs et 10 cidres doux. Etudiez la relation entre
+la saveur sucrée et la saveur amère en fonction du type de cidre.

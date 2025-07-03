@@ -74,12 +74,57 @@
 
 \section{Introduction}
 
-L'objectif de ce projet est d'étudier 
+L'objectif de ce rapport est de présenter les résultats d'une étude sur l'estimation de la bathymétrie des rivières à partir de mesures de surface.
+Le modèle d'écoulement considéré est le modèle semi-linéarisé, décrit par l'équation :
+\begin{equation}
+    -\Lambda_{ref}(b)(x)\frac{\partial^{2}H}{\partial x^{2}}(x) + \frac{\partial H}{\partial x}(x) = \frac{\partial b}{\partial x}(x) \quad \forall x \in [0,L]
+\end{equation}
+avec les conditions aux limites de Dirichlet, et :
+$$
+\Lambda_{ref}(b) \equiv \Lambda(H_{ref}, b) = \frac{3}{10} \frac{(H_{ref}(x) - b(x))}{|\partial_{x}H_{ref}(x)|}
+$$
+où $H_{ref}$ est une élévation de surface de référence.
+En présence d'observations, on définit : $H_{ref}(x) = H_{obs}(x)$. \\
 
-L’objectif de ce projet est d’estimer la bathymétrie $b(x)$ (profondeur) des rivières à partir de mesures de la surface de l'eau $H^{\text{obs}}(x)$, en utilisant une approche d’assimilation de données variationnelle (VDA).
-On modélise le système par un modèle d'écoulement 
+Le problème inverse consiste à retrouver la bathymétrie $b(x)$ à partir d’observations partielles et potentiellement bruitées de la surface $H_{obs}(x)$.
 
 
+
+\section{Analyses des simulations directes}
+\subsection{Organisation du code}
+Le code fourni est structuré en plusieurs modules :
+\begin{itemize}
+    \item \textbf{\texttt{main.py}} : Point d'entrée principal. Gère la génération des cas de test, l'exécution du modèle direct et le processus VDA.
+    \item \textbf{\texttt{class\_vda.py}} : Implémente la classe \texttt{vda\_river} qui contient les solveurs du modèle direct, adjoint, et les méthodes d'optimisation.
+    \item \textbf{\texttt{generate\_case.py}} : Génère des bathymétries synthétiques et définit les conditions aux limites.
+    \item \textbf{\texttt{plots.py}} : Produit les visualisations des résultats.
+\end{itemize}
+
+
+La figure \ref{fig:direct_model} présente le résultat de la simulation directe pour différentes bathymétries.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{src/direct_model.png}
+    \caption{Résultats de la simulation directe pour différentes bathymétries.}
+    \label{fig:direct_model}
+\end{figure}
+
+lqksjdhfqlkjfh
+
+\subsection{Sensibilité du modèle à la "signature" de surface}
+
+La \textit{signature} de surface désigne 
+
+
+\section{Problème inverse : Inférence de la bathymétrie}
+\subsection{Analyse mathématique de la (non-)unicité de la solution}
+
+Le problème inverse est mal posé car il admet une infinité de solutions pour $b(x)$.
+Cependant, si une valeur de $b(x_0)$ est fixée à un point $x_0$, alors la solution devient unique (démontré dans le document supplémentaire).
+
+
+\subsection{Résolution complète du problème inverse}
 
 
 \end{document}
