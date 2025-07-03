@@ -1,0 +1,47 @@
+// Vitesse de convergence sur un carré
+// 1.1 Formulation variationnelle
+// Bordure carrée
+int npmax = 2^7; // nombre de points par bord
+
+border B1(t = 0, 1){x = t; y = 0; label = 1;};
+border B2(t = 0, 1){x = 1; y = t; label = 2;};
+border B3(t = 0, 1){x = 1 - t; y = 1; label = 3;};
+border B4(t = 0, 1){x = 0; y = 1 - t; label = 4;};
+
+mesh Th0 = buildmesh(B1(npmax) + B2(npmax) + B3(npmax) + B4(npmax));
+
+int p = 1, q = 1;
+
+fespace V1(Th0, P1);
+
+V1 upq = sin(p*pi*x)*sin(q*pi*y);
+
+// Créer un fichier de sortie
+ofstream file("output.txt");
+
+int n0 = 3, n1 = 7;
+int k;
+
+for (k = n0; k <= n1; k++) {
+    int np = 2^k;
+    mesh Th = buildmesh(B1(np) + B2(np) + B3(np) + B4(np));
+
+    fespace V1k(Th, P1);
+    fespace V0k(Th, P0);
+
+    V1k u, v;
+    V0k f = ((p*pi)^2 + (q*pi)^2) * sin(p*pi*x) * sin(q*pi*y);
+
+    problem Poisson(u, v) = int2d(Th)(dx(u)*dx(v) + dy(u)*dy(v))
+                            - int2d(Th)(f*v) + on(1, u=0)
+                            + on(2, u=0) + on(3, u=0) + on(4, u=0);
+
+    Poisson;
+
+    real errL2 = sqrt(int2d(Th)( (u - upq)^2 ));
+    real err = sqrt(int2d(Th0)( (u - upq)^2 ) + int2d(Th0)( (dx(u)-dx(upq))^2 + (dy(u)-dy(upq))^2 ));
+    real h = 1.0 / np;
+
+    file << "k = " << k << ", np = " << np << ", h = " << h << ", Erreur L2 = " << errL2 << ", Erreur H1 = " << err << endl;
+}
+

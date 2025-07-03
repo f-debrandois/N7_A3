@@ -1,0 +1,44 @@
+// Chauffage d’une pièce (cas stationnaire).
+// Création du domaine
+real a = 1, b = 2;
+real r = 0.2;
+real xc = 0.5, yc = 0.5;
+real perimeter = 2*pi*r;
+
+border B1(t=-a,a){x=t; y=-b; label=1;};
+border B2(t=-b,b){x=a; y=t; label=2;};
+border B3(t=a,-a){x=t; y=b; label=3;};
+border B4(t=b,-b){x=-a; y=t; label=4;};
+border C(t=0,2*pi){x=xc+r*cos(t); y=yc+r*sin(t); label=5;};
+
+int n=20;
+
+mesh Th = buildmesh(B1(n*2*a)+B2(n*2*b)+B3(n*2*a)+B4(n*2*b));
+
+plot(Th,wait=1);
+
+// Définition des espaces de fonctions
+fespace V2(Th,P2); // Espace des éléments finis de degré 2
+fespace V1(Th,P1); // Espace des éléments finis de degré 1
+fespace V0(Th,P0); // Espace des éléments finis de degré 0
+
+// Définition des fonctions
+V1 T, v;
+V0 f = (sqrt((x-xc)^2+(y-yc)^2)<=r) ? 1 : 0;// Source de chaleur
+
+// Affichage de la source de chaleur
+plot(f,wait=1,dim=3,value=1,fill=1);
+
+// Définition du problème
+real eps = 1e-5; // Coefficient de diffusion thermique
+real Tf = 50; // Température de la source de chaleur
+real Text = 0; // Température extérieure
+real Tvois = 25; // Température des murs voisins
+
+problem SourceChaleur(T, v, solver=UMFPACK) = int2d(Th)((dx(T)*dx(v) + dy(T)*dy(v)) * (1 - f)) // Diffusion thermique
+                                            - int2d(Th)((1/eps)*f*T*v) + int2d(Th)((1/eps)*f*Tf*v) // Source de chaleur
+                                            + on(1, T = Text) + on(2, T = Tvois) + on(3, T = Tvois) + on(4, T = Tvois); // Conditions aux limites
+
+SourceChaleur;
+
+plot(T,wait=1,dim=3,value=1,fill=1);

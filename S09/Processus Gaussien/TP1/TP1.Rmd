@@ -1,0 +1,316 @@
+---
+title: "TP 1  : Metamodeling - Gaussian process regression"
+date : "ModIA - 5ème année - 2024-2025"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{css,echo=F}
+.badCode {
+background-color: #C9DDE4;
+}
+```
+
+```{r setup, echo=FALSE, cache=FALSE}
+library(knitr)
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE,
+               class.source="badCode")
+opts_knit$set(width=75)
+```
+
+# Sampling from a GP
+
+1. The script $\texttt{kernFun.R}$ contains the implementation of the following type of kernels : linear ($\texttt{linKern}$), cosine ($\texttt{cosKern}$) and exponential ($\texttt{expKern}$). Each function takes as input the vectors $\texttt{x}$, $\texttt{y}$ and $\texttt{param}$, and returns the matrix with general term $k(x_i,y_j)$. \
+Using similar structure, implement the function for the Matern 5/2 kernel ($\texttt{mat5_2Kern}$).
+
+```{r}
+# Linear kernel
+linKern <- function(x, y, param){
+  # input:
+  #  x,y: input vectors
+  #  param: parameters (sigma)
+  # output:
+  #  kern: covariance matrix cov(x,y)
+  sigma <- param[1]
+  kern <- sigma^2*outer(x, y, '*')
+  return(kern)
+}
+```
+
+```{r}
+# Cosine kernel
+cosKern <- function(x, y, param){
+  # input:
+  #  x,y: input vectors
+  #  param: parameters (sigma,theta)
+  # output:
+  #  kern: covariance matrix cov(x,y)
+  sigma <- param[1]
+  theta <- param[2]
+  dist <- outer(x/theta, y/theta, '-')
+  kern <- sigma^2*cos(dist)
+  return(kern)
+}
+```
+
+```{r}
+# Exponential kernel
+expKern <- function(x, y, param){
+  # input:
+  #  x,y: input vectors
+  #  param: parameters (sigma,theta)
+  # output:
+  #  kern: covariance matrix cov(x,y)
+  sigma <- param[1]
+  theta <- param[2]
+  dist <- outer(x/theta, y/theta, '-')
+  kern <- sigma^2*exp(-abs(dist))
+  return(kern)
+}
+```
+
+```{r}
+# Matern kernel
+mat5_2Kern <- function(x, y, param){
+  # input:
+  #  x,y: input vectors
+  #  param: parameters (sigma,theta)
+  # output:
+  #  kern: covariance matrix cov(x,y)
+  sigma <- param[1]
+  theta <- param[2]
+  dist <- outer(x/theta, y/theta, '-')
+  kern <- sigma^2*(1+sqrt(5)*abs(dist)+5/3*dist^2)*exp(-sqrt(5)*abs(dist))
+  return(kern)
+}
+```
+
+2. Create a design of experiments $X$ as a regular sequence of $n = 100$ points in $[0,1]$, and compute the covariance matrix $K$ at $X$ for the Matern 5/2 kernel.
+How can you simulate the zero-mean Gaussian samples based on this matrix ?
+The function $\texttt{mvrnorm}$ from the $\texttt{MASS}$ package can be used to simulate the samples.
+
+```{r}
+library(MASS)
+n <- 100
+X <- seq(0,1,length.out=n)
+param <- c(1,0.1)
+K <- mat5_2Kern(X,X,param)
+samples <- mvrnorm(n=15, mu=rep(0,n), Sigma=K)
+matplot(t(samples),type="l")
+```
+
+3. What is the interpretation of $\theta$ ? Hint : Consider the change of variable $x \mapsto x/\theta$.
+Check your proposition by drawing samples paths for different values of $\theta$.
+
+```{r}
+par(mfrow=c(2,2))
+for (theta in c(0.1,0.2,0.5,1)){
+  param <- c(1,theta)
+  K <- mat5_2Kern(X,X,param)
+  samples <- mvrnorm(n=15, mu=rep(0,n), Sigma=K)
+  matplot(t(samples),type="l")
+}
+```
+
+4. Choose $\theta = 1/2$ (for instance). Compare the sample paths obtained with the kernels Matern $\nu$ with $\nu = +\infty$ (squared exponential kernel), $\nu = 5/2$, $\nu = 3/2$ and $\nu = 1/2$ (exponential kernel).
+What is the interpretation of $\nu$ ?
+
+```{r}
+# Matern kernel
+mat3_2Kern <- function(x, y, param){
+  # input:
+  #  x,y: input vectors
+  #  param: parameters (sigma,theta)
+  # output:
+  #  kern: covariance matrix cov(x,y)
+  sigma <- param[1]
+  theta <- param[2]
+  dist <- outer(x/theta, y/theta, '-')
+  kern <- sigma^2*(1+sqrt(3)*abs(dist))*exp(-sqrt(3)*abs(dist))
+  return(kern)
+}
+```
+
+```{r}
+# Squared exponential kernel
+matInfKern <- function(x, y, param){
+  # input:
+  #  x,y: input vectors
+  #  param: parameters (sigma,theta)
+  # output:
+  #  kern: covariance matrix cov(x,y)
+  sigma <- param[1]
+  theta <- param[2]
+  dist <- outer(x/theta, y/theta, '-')
+  kern <- sigma^2*exp(-0.5*dist^2)
+  return(kern)
+}
+```
+
+```{r}
+par(mfrow=c(2,2))
+for (nu in c(Inf,5/2,3/2,1/2)){
+  if (nu == Inf){
+    matKern <- matInfKern
+  } else if (nu == 5/2){
+    matKern <- mat5_2Kern
+  } else if (nu == 3/2){
+    matKern <- mat3_2Kern
+  } else if (nu == 1/2){
+    matKern <- expKern
+  }
+  param <- c(1,0.5)
+  K <- matKern(X,X,param)
+  samples <- mvrnorm(n=15, mu=rep(0,n), Sigma=K)
+  matplot(t(samples),type="l", main=paste("nu =",nu))
+}
+```
+
+
+# Gaussian process regression
+
+From now on, let us choose the Matern 5/2 kernel. We want to approximate the test function
+\begin{equation}
+f : x \in [0,1] \mapsto x + sin(4\pi x)
+\end{equation}
+
+with Gaussian process regression.
+In the no-trend case ($\mu = 0$, 'simple kriging'), the conditional mean and covariance are given by : \
+$$
+m(x) = k(x,X)k(X,X)^{-1}Y
+$$
+$$
+c(x, x') = k(x,x') - k(x,X)k(X,X)^{-1}k(X,x')
+$$
+
+5. Create a design of experiments $X$ composed of $15$ points in the input space (regularly spaced for instance) and compute the vector of observations $Y = f(X)$.
+
+```{r}
+f <- function(x){
+  return(x+sin(4*pi*x))
+}
+X <- seq(0,1,length.out=15)
+Y <- f(X)
+plot(X,Y,type="p")
+```
+
+6. Write two functions $\texttt{condMean}$ and $\texttt{condCov}$ that return the conditional mean and covariance.
+These functions take as inputs the scalar/vector of prediction points $x$, the design of experiments (DoE) $X$, the vector of responses $Y$, the kernel function $\texttt{kern}$ and the vector $\texttt{param}$.
+
+```{r}
+condMean <- function(x, X, Y, kern, param){
+  # input:
+  #  x: prediction points
+  #  X: design of experiments
+  #  Y: vector of responses
+  #  kern: kernel function
+  #  param: parameters
+  # output:
+  #  m: conditional mean
+  K <- kern(X,X,param)
+  k <- kern(x,X,param)
+  m <- k %*% solve(K,Y)
+  return(m)
+}
+```
+
+```{r}
+condCov <- function(x, X, kern, param){
+  # input:
+  #  x: prediction points
+  #  X: design of experiments
+  #  kern: kernel function
+  #  param: parameters
+  # output:
+  #  c: conditional covariance
+  K <- kern(X,X,param)
+  k <- kern(x,x,param)
+  c <- k - kern(x,X,param) %*% solve(K,kern(X,x,param))
+  return(c)
+}
+```
+
+7. Draw on the same graph $f(x)$, $m(x)$ and $95%$ prediction intervals : $m(x) \pm 1.96\sqrt{c(x,x)}$.
+
+```{r}
+param <- c(1,0.1)
+kern <- mat5_2Kern
+x <- seq(0,1,length.out=100)
+m <- condMean(x, X, Y, kern, param)
+c <- condCov(x, X, kern, param)
+plot(x,f(x),type="l",col="blue",lwd=2)
+lines(x,m,col="red",lwd=2)
+lines(x,m+1.96*sqrt(diag(c)),col="red",lty=2)
+lines(x,m-1.96*sqrt(diag(c)),col="red",lty=2)
+points(X,Y,col="blue",pch=19)
+legend("topleft",legend=c("f(x)","m(x)","95% prediction interval"),col=c("blue","red","red"),lty=c(1,1,2),lwd=c(2,2,1))
+```
+
+8. Generate samples from the conditional process.
+
+```{r}
+samples <- mvrnorm(n=5, mu=m, Sigma=c)
+matplot(x, t(samples),type="l",col="red",lwd=1)
+lines(x,m,col="blue",lwd=2)
+points(X,Y,col="blue",pch=19)
+legend("topleft",legend=c("f(x)","m(x)","samples"),col=c("blue","blue","red"),lty=c(1,1,1),lwd=c(2,2,1))
+```
+
+9. What can you say about the size of the prediction intervals at $x$ ?
+What's happening when you replace $Y$ by another vector $Y'$ ?
+
+```{r}
+Yprime <- f(X) + rnorm(length(X),0,0.1)
+mprime <- condMean(x, X, Yprime, kern, param)
+cprime <- condCov(x, X, kern, param)
+plot(x,f(x),type="l",col="blue",lwd=2)
+lines(x,mprime,col="red",lwd=2)
+lines(x,mprime+1.96*sqrt(diag(cprime)),col="red",lty=2)
+lines(x,mprime-1.96*sqrt(diag(cprime)),col="red",lty=2)
+points(X,Yprime,col="blue",pch=19)
+legend("topleft",legend=c("f(x)","m(x)","95% prediction interval"),col=c("blue","red","red"),lty=c(1,1,2),lwd=c(2,2,1))
+```
+
+10. Draw the conditional mean for the Brownian kernel. Conclusion ?
+
+```{r}
+brownKern <- function(x, y, param){
+  # input:
+  #  x,y: input vectors
+  #  param: parameters (sigma)
+  # output:
+  #  kern: covariance matrix cov(x,y)
+  sigma <- param[1]
+  kern <- sigma^2*outer(x, y, pmin)
+  return(kern)
+}
+```
+
+```{r}
+param <- c(1, 0.1)
+kern <- mat5_2Kern
+m <- condMean(x, X, Y, kern, param)
+c <- condCov(x, X, kern, param)
+plot(x,f(x),type="l",col="blue",lwd=2)
+lines(x,m,col="red",lwd=2)
+lines(x,m+1.96*sqrt(diag(c)),col="red",lty=2)
+lines(x,m-1.96*sqrt(diag(c)),col="red",lty=2)
+points(X,Y,col="blue",pch=19)
+legend("topleft",legend=c("f(x)","m(x)","95% prediction interval"),col=c("blue","red","red"),lty=c(1,1,2),lwd=c(2,2,1))
+```
+
+
+# Making new from old (bonus)
+
+Implement a kernel such that the sample paths are smooth and ood functions (i.e such that $f(x) = -f(-x)$ for all $x \in \mathbb{R}$).
+How does it improves the approxiamtion on the test function $f$ on the interval $[-1,1]$ ? (by using the same design points $X$ as before).

@@ -1,0 +1,54 @@
+// Vitesse de convergence sur un domaine non convexe
+// 1.1 Formulation variationnelle
+// Bordure
+border B1(t = 0, 1) {x = t; y = 0; label = 1;};    // Bord inférieur (de (0, 0) à (1, 0))
+border B2(t = 0, 1) {x = 1; y = t; label = 2;};    // Bord droit (de (1, 0) à (1, 1))
+border B3(t = 0, 0.5) {x = 1 - t; y = 1; label = 3;}; // Bord supérieur (de (1, 1) à (0.5, 1))
+border B4(t = 0, 0.5) {x = 0.5; y = 1 - t; label = 4;}; // Bord gauche (de (0.5, 1) à (0.5, 0.5))
+border B5(t = 0, 0.5) {x = 0.5 - t; y = 0.5; label = 5;}; // Bord gauche (de (0.5, 0.5) à (0, 0.5))
+border B6(t = 0, 0.5) {x = 0; y = 0.5 - t; label = 6;}; // Bord gauche (de (0, 0.5) à (0, 0))
+
+// Maillage et espaces de fonctions
+int npfin = 2^9; // nombre de points par bord
+mesh Th = buildmesh(B1(npfin) + B2(npfin) + B3(0.5*npfin) + B4(0.5*npfin) + B5(0.5*npfin) + B6(0.5*npfin));
+plot(Th, wait = 1);
+
+fespace V2(Th, P2);
+fespace V1(Th, P1);
+fespace V0(Th, P0);
+
+V1 uref, vref;
+V0 f = 1;
+
+problem Poisson(uref, vref) = int2d(Th)(dx(uref)*dx(vref) + dy(uref)*dy(vref)) - int2d(Th)(f*vref)
+                        + on(1, uref = 0) + on(2, uref = 0) + on(3, uref = 0) + on(4, uref = 0) + on(5, uref = 0) + on(6, uref = 0);
+Poisson;
+
+// Création du fichier de sortie
+ofstream file("output.txt");
+
+// Calcul de l'erreur
+for (int k = 3; k <= 7; k++) {
+    int np = 2^k;
+    mesh Sh = buildmesh(B1(np) + B2(np) + B3(0.5*np) + B4(0.5*np) + B5(0.5*np) + B6(0.5*np));
+
+    fespace ShV1(Sh, P1);
+    fespace ShV0(Sh, P0);
+
+    real r = 0.2;
+
+    ShV1 u, v;
+    ShV0 fcar = sqrt((x-0.5)^2 + (y-0.5)^2) < r ? 0 : 1;
+
+    problem Poisson(u, v) = int2d(Sh)(dx(u)*dx(v) + dy(u)*dy(v)) - int2d(Sh)(f*v)
+                            + on(1, u = 0) + on(2, u = 0) + on(3, u = 0) + on(4, u = 0) + on(5, u = 0) + on(6, u = 0);
+
+    Poisson;
+
+    real errL2 = sqrt(int2d(Th)( ((u - uref)*fcar)^2 ));
+    real errH1 = sqrt(int2d(Th)( ((u - uref)*fcar)^2 + sqrt(int2d(Th)( ((dx(u) - dx(uref))*fcar)^2 + ((dy(u) - dy(uref))*fcar)^2 ))^2 ));
+
+    file << "Indice de raffinement k = " << k << " : L2 = " << errL2 << ", H1 = " << errH1 << endl;
+}
+
+
