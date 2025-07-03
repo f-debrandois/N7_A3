@@ -7,3 +7,9 @@
 [submodule "S10/Apprentissage sous contraintes physiques/Molecular_Energy_Prediction"]
 	path = S10/Apprentissage sous contraintes physiques/Molecular_Energy_Prediction
 	url = https://github.com/JulesGourio/Molecular_Energy_Prediction.git
+[submodule "S7/Stats/Occitanie-Air-Quality-Analysis"]
+	path = S7/Stats/Occitanie-Air-Quality-Analysis
+	url = https://github.com/f-debrandois/Occitanie-Air-Quality-Analysis.git
+[submodule "S8/Machine Learning/ImageNet-CNN-Bias-Analysis"]
+	path = S8/Machine Learning/ImageNet-CNN-Bias-Analysis
+	url = https://github.com/f-debrandois/ImageNet-CNN-Bias-Analysis.git
