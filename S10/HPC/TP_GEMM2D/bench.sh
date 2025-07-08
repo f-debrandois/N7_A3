@@ -1,23 +1,29 @@
 source utils.sh
 echo BENCHMARKING THE METHODS
-# you can modify these values
-p=2
-q=2
-P=$((p*q))
-#generate_hostfile $P
 
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 
-# proper benchmark <--- this could be a TODO for students ? (as in, show weak scaling and/or strong scaling)
-#mpi_options="-hostfile hostfiles/hostfile.$P.txt"
-mpi_options="-platform platforms/cluster_crossbar.xml -hostfile hostfiles/cluster_hostfile.txt -np $P"
+traces="traces/bench_traces"
+out="outputs/bench_outputs"
+csv="csv/bench.csv"
+echo m,n,k,b,p,q,algo,lookahead,gflops > $csv
+
+# you can modify these values
+p=2
+q=2
+P=$((p*q))
 b=256
 iter=5
-traces="bench_traces"
-out="bench_outputs"
-csv="bench.csv"
-echo m,n,k,b,p,q,algo,lookahead,gflops > $csv
+platform="platforms/cluster_crossbar.xml"
+hostfile="hostfiles/cluster_hostfile.txt"
+mpi_options="-platform $platform -hostfile $hostfile -np $P"
+
+#generate_hostfile $P
+
+# proper benchmark <--- this could be a TODO for students ? (as in, show weak scaling and/or strong scaling)
+#mpi_options="-hostfile hostfiles/hostfile.$P.txt"
+
 for i in 4 8 12
 do
   n=$((i*b))

@@ -1,8 +1,4 @@
-# to modify according to where you install simgrid on your computer
-TOOLS_DIR=/home/guivarch/opt
-SIMGRID_DIR=$TOOLS_DIR/simgrid-4.0
-
-export PATH=${SIMGRID_DIR}/bin:${PATH}
+# # File: S10/HPC/TP_GEMM2D/utils.sh
 
 # to modify according to the value given by --cfg=smpi/host-speed:auto
 COMPUTER=6.691Gf
@@ -11,7 +7,7 @@ COMPUTER=6.691Gf
 
 tmp=$HOME/tmp_simgrid
 mkdir -p $tmp
-my_mpirun="$SIMGRID_DIR/bin/smpirun -trace --cfg=smpi/tmpdir:$tmp --cfg=smpi/host-speed:$COMPUTER"
+my_mpirun="/usr/bin/smpirun -trace --cfg=smpi/tmpdir:$tmp --cfg=smpi/host-speed:$COMPUTER"
 traces="traces"
 exec=build/bin/main
 
